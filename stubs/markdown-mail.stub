@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailable;
+
+class {{ class }} extends Mailable
+{
+  use Queueable, SerializesModels;
+  
+  public function __construct()
+  {
+  }
+  
+  public function build()
+  {
+    return $this->markdown('{{ view }}');
+  }
+}
