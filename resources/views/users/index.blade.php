@@ -91,4 +91,7 @@
         });
       });
     </script>
+
+    {{-- Filtrar por columnas --}}
+    <script src="{{ URL::to('js/export.js') }}"></script>
   @endpush

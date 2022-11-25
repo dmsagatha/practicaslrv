@@ -25,7 +25,6 @@ class UserController extends Controller
       ->where('first_name', '=', $names)
       ->orWhere('last_name', '=', $surnames)
       ->get();
-    // dd($users);
 
     return view('users.index', compact('users'));
   }
