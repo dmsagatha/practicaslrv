@@ -28,7 +28,7 @@
 
         <div class="py-4">
           <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' name="search">
-            <i class="fa-solid fa-save mr-2"></i>Filtrar
+            <i class="fa-solid fa-magnifying-glass mr-2"></i>Filtrar
           </button>
         </div>
       </form>
@@ -47,9 +47,10 @@
 
   @push('scripts')
     {{-- Filtrar por columnas --}}
-    <script>
+    {{-- <script>
       $(document).ready(function () {
         $('#dtFilters').DataTable({
+          responsive: true,
           lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
           processing: true,
           language: {
@@ -66,9 +67,7 @@
           
           initComplete: function () {
             this.api()
-                // .columns([3,4,5,6,7,8,9]) // Columnas a filtrar
                 .columns([1,2,3,4,5,6,7,8,9]) // Columnas a filtrar
-                // .columns()
                 .every(function () {
                   var column = this;
                   var select = $('<select><option value=""></option></select>')
@@ -90,7 +89,7 @@
           },
         });
       });
-    </script>
+    </script> --}}
 
     {{-- Filtrar por columnas --}}
     <script src="{{ URL::to('js/export.js') }}"></script>
