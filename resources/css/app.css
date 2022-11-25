@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,4 +8,32 @@
   a {
     @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600
   }
+}
+
+.table {
+  @apply table-auto border border-b border-gray-300 divide-y divide-gray-300 font-light overflow-hidden;
+}
+
+.table thead {
+  @apply bg-blue-500 text-gray-50 text-xs text-center uppercase font-bold leading-4 tracking-wider;
+}
+
+.table thead tr {
+  @apply align-middle;
+}
+
+.table thead tr th {
+  @apply py-2;
+}
+
+.table tbody {
+  @apply bg-white divide-y divide-gray-300;
+}
+
+.table tbody tr {
+  @apply text-slate-900 text-sm hover:bg-gray-200;
+}
+
+.table tbody tr td {
+  @apply px-4 py-2;
 }
