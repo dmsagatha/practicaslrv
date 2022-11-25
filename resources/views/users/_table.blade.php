@@ -47,5 +47,5 @@
 </table>
 
 <button onclick="tablesToExcel(['dtFilters'], ['Users'], 'Users.xlsx', 'Excel')" class="inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
-  <i class="fa-solid fa-save mr-2"></i>Exportar a Excel
+  <i class="fa-solid fa-save mr-2"></i> Exportar a Excel
 </button>
