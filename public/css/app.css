@@ -561,9 +561,18 @@ a:hover{
   top: -0.75rem;
 }
 
+.m-10{
+  margin: 2.5rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
+}
+
+.mx-10{
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
 }
 
 .ml-1{
@@ -802,6 +811,11 @@ a:hover{
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .pt-8{

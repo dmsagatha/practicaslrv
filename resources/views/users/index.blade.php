@@ -2,8 +2,7 @@
   @section('title', 'Usuarios')
 
   @section('content')
-
-    <div class="flow-root w-full mx-auto shadow px-4 py-4 bg-white rounded sm:px-1 sm:py-2">
+    <div class="flow-root w-full mx-auto shadow m-10 py-4 bg-white rounded sm:px-1 sm:py-2">
       <form  action="{{route('users.search')}}" method ="POST">
         @csrf
 
@@ -31,3 +30,18 @@
       </div>
     </div>
   @endsection
+
+  @push('scripts')
+    <script>
+      $(document).ready(function () {
+        $('#dtFilters').DataTable({
+          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
+          processing: true,
+          language: {
+            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
+          },
+          scrollX: false,
+        });
+      });
+    </script>
+  @endpush
