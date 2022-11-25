@@ -18,10 +18,12 @@ class UserController extends Controller
   
   public function search(Request $request)
   {
-    $names = $request->input('names');
+    $names    = $request->input('names');
+    $surnames = $request->input('surnames');
 
     $users = DB::table('users')->select()
       ->where('first_name', '=', $names)
+      ->orWhere('last_name', '=', $surnames)
       ->get();
     // dd($users);
 
