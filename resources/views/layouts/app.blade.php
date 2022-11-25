@@ -61,7 +61,7 @@
             }
           ],
 
-          // Filtrar por columnas
+          // Filtrar por columnas <tfoot></tfoot>
           initComplete: function () {
             this.api()
                 .columns([1,2,3,4,5,6,7,8,9]) // Columnas a filtrar
