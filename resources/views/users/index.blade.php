@@ -32,6 +32,20 @@
   @endsection
 
   @push('scripts')
+    {{-- <script>
+      $(document).ready(function () {
+        $('#dtFilters').DataTable({
+          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
+          processing: true,
+          language: {
+            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
+          },
+          scrollX: false,
+        });
+      });
+    </script> --}}
+
+    {{-- Filtrar por columnas --}}
     <script>
       $(document).ready(function () {
         $('#dtFilters').DataTable({
@@ -41,6 +55,37 @@
             url: "{{ asset('plugins/dataTables/Spanish.json') }}"
           },
           scrollX: false,
+          columnDefs: [
+            {
+              targets: [0],
+              searchable: false,
+              orderable: false,
+            }
+          ],
+          
+          initComplete: function () {
+            this.api()
+                // .columns([3,4,5,6,7,8,9]) // Columnas a filtrar
+                .columns()
+                .every(function () {
+                  var column = this;
+                  var select = $('<select><option value=""></option></select>')
+                    .appendTo($(column.footer()).empty())
+                    .on('change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
+
+                  column
+                    .data()
+                    .unique()
+                    .sort()
+                    .each(function (d, j) {
+                      select.append('<option value="' + d + '">' + d + '</option>');
+                    });
+                });
+          },
         });
       });
     </script>
