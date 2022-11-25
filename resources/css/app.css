@@ -37,3 +37,7 @@
 .table tbody tr td {
   @apply px-4 py-2;
 }
+
+.table tfoot tr th {
+  @apply text-center;
+}

@@ -32,19 +32,6 @@
   @endsection
 
   @push('scripts')
-    {{-- <script>
-      $(document).ready(function () {
-        $('#dtFilters').DataTable({
-          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          processing: true,
-          language: {
-            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
-          },
-          scrollX: false,
-        });
-      });
-    </script> --}}
-
     {{-- Filtrar por columnas --}}
     <script>
       $(document).ready(function () {
@@ -66,7 +53,8 @@
           initComplete: function () {
             this.api()
                 // .columns([3,4,5,6,7,8,9]) // Columnas a filtrar
-                .columns()
+                .columns([1,2,3,4,5,6,7,8,9]) // Columnas a filtrar
+                // .columns()
                 .every(function () {
                   var column = this;
                   var select = $('<select><option value=""></option></select>')

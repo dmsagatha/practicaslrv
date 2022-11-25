@@ -570,11 +570,6 @@ a:hover{
   margin-right: auto;
 }
 
-.mx-10{
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
-}
-
 .ml-1{
   margin-left: 0.25rem;
 }
@@ -621,10 +616,6 @@ a:hover{
 
 .mt-6{
   margin-top: 1.5rem;
-}
-
-.mt-10{
-  margin-top: 2.5rem;
 }
 
 .block{
@@ -801,21 +792,6 @@ a:hover{
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-}
-
-.py-1{
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.py-10{
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-}
-
-.px-10{
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
 }
 
 .pt-8{
@@ -1013,6 +989,10 @@ a:hover{
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.table tfoot tr th{
+  text-align: center;
 }
 
 .hover\:bg-green-500:hover{
@@ -1214,4 +1194,3 @@ a:hover{
     padding-right: 2rem;
   }
 }
-
