@@ -7,7 +7,7 @@
         @csrf
 
         <div class="grid grid-cols-6 gap-x-10 gap-y-8">
-          <div class="col-span-6 sm:col-span-3 md:col-span-2">
+          <div class="col-span-6 sm:col-span-3">
             <div class="relative form-group">
               <label for="names" class='absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
                 Nombres
@@ -15,8 +15,8 @@
               <input type="text" class="f-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent focus:outline-none focus:border-black" id="names" name="names"/>
             </div>
           </div>
-          
-          <div class="col-span-6 sm:col-span-3 md:col-span-2">
+
+          <div class="col-span-6 sm:col-span-3">
             <div class="relative form-group">
               <label for="surnames" class='absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
                 Apellidos
