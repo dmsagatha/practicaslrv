@@ -1,4 +1,4 @@
-<table id="dtFilters" class="table min-w-full display" style="width: 60%">
+<table id="dtFilters" class="table min-w-full display" style="width: 100%">
   <thead>
     <tr>
       <th>ID</th>
