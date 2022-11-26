@@ -12,7 +12,7 @@
               <label for="names" class='form-label inline-block font-medium text-md text-gray-700'>
                 Nombres
               </label>
-              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="names" name="names">
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-400 shadow-sm" id="names" name="names">
             </div>
           </div>
 
@@ -21,16 +21,16 @@
               <label for="surnames" class='form-label inline-block font-medium text-md text-gray-700'>
                 Apellidos
               </label>
-              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="surnames" name="surnames">
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-400 shadow-sm" id="surnames" name="surnames">
             </div>
           </div>
 
           <div class="col-span-6 sm:col-span-3">
             <div class="group relative">
-              <label class='form-label inline-block font-medium text-md text-gray-700'>
+              <label for="other" class='form-label inline-block font-medium text-md text-gray-700'>
                 Otro
               </label>
-              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="other" name="other" placeholder="Buscar otro...">
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-400 shadow-sm" id="other" name="other">
             </div>
           </div>
 
@@ -44,7 +44,7 @@
 
       <div class="px-4 py-4">
         @if ($users->count())
-          @include('users._table')
+          @include('admin.users._table')
         @else
           <div class="flex justify-center px-4 mt-14 mb-2 space-x-4 text-green-600">
             No hay registros creados
