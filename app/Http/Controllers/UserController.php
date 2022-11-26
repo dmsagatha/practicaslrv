@@ -13,22 +13,22 @@ class UserController extends Controller
     // $users = DB::table('users')->select()->get();
     $users = User::orderBy('first_name')->get();
 
-    return view('users.index', compact('users'));
+    return view('admin.users.index', compact('users'));
   }
   
   public function search(Request $request)
   {
     $names    = $request->input('names');
     $surnames = $request->input('surnames');
-    $other    = $request->input('other');
+    // $other    = $request->input('other');
 
     $users = DB::table('users')->select()
-      ->where('first_name', '=', $names)
+      ->orWhere('first_name', '=', $names)
       ->orWhere('last_name', '=', $surnames)
-      ->orWhere('email', 'LIKE','%'.$other.'%')
+      // ->orWhere('email', 'LIKE','%'.$other.'%')
       ->get();
 
-    return view('users.index', compact('users'));
+    return view('admin.users.index', compact('users'));
   }
 
   public function create()
