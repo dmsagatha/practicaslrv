@@ -20,23 +20,16 @@ class UserController extends Controller
   {
     $names    = $request->input('names');
     $surnames = $request->input('surnames');
+    $other    = $request->input('other');
 
     $users = DB::table('users')->select()
       ->where('first_name', '=', $names)
       ->orWhere('last_name', '=', $surnames)
+      ->orWhere('email', 'LIKE','%'.$other.'%')
       ->get();
 
     return view('users.index', compact('users'));
   }
-
-  /* public function ajax()
-  {
-    $users = User::all();
-    $first_names = $users->sortBy('first_name')->pluck('first_name')->unique();
-    $last_names  = $users->sortBy('last_name')->pluck('last_name')->unique();
-
-    return view('users.ajax', compact('first_names', 'last_names'));
-  } */
 
   public function create()
   {

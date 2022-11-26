@@ -8,28 +8,37 @@
 
         <div class="grid grid-cols-6 gap-x-10 gap-y-8">
           <div class="col-span-6 sm:col-span-3">
-            <div class="relative form-group">
-              <label for="names" class='absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
+            <div class="group relative">
+              <label for="names" class='form-label inline-block font-medium text-md text-gray-700'>
                 Nombres
               </label>
-              <input type="text" class="f-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent focus:outline-none focus:border-black" id="names" name="names"/>
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="names" name="names">
             </div>
           </div>
 
           <div class="col-span-6 sm:col-span-3">
-            <div class="relative form-group">
-              <label for="surnames" class='absolute left-0 -top-3.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm'>
+            <div class="group relative">
+              <label for="surnames" class='form-label inline-block font-medium text-md text-gray-700'>
                 Apellidos
               </label>
-              <input type="text" class="f-full border-b-2 border-gray-300 bg-transparent text-gray-900 placeholder-transparent focus:outline-none focus:border-black" id="surnames" name="surnames"/>
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="surnames" name="surnames">
             </div>
           </div>
-        </div>
 
-        <div class="py-4">
-          <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' name="search">
-            <i class="fa-solid fa-magnifying-glass mr-2"></i>Filtrar
-          </button>
+          <div class="col-span-6 sm:col-span-3">
+            <div class="group relative">
+              <label class='form-label inline-block font-medium text-md text-gray-700'>
+                Otro
+              </label>
+              <input type="text" class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-3 ring-1 ring-slate-200 shadow-sm" id="other" name="other" placeholder="Buscar otro...">
+            </div>
+          </div>
+
+          <div class="pt-6">
+            <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' name="search">
+              <i class="fa-solid fa-magnifying-glass mr-2"></i>Filtrar
+            </button>
+          </div>
         </div>
       </form>
 
