@@ -26,7 +26,24 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   </head>
   <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 font-sans text-gray-900">
+    <div class="flex flex-col items-center justify-center mt-32">
+      <div class="flex flex-col">
+          <!-- Page Scroll Progress -->
+          <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5 bg-blue-500" :style="`width: ${percent}%`"></div>
+          <nav class="flex justify-around py-2 bg-white/80 backdrop-blur-md shadow-md w-full fixed top-0 left-0 right-0 z-10">
+            <div class="w-full flex items-center justify-between mt-0 px-6 py-2">
+              <div class="md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
+                <nav>
+                  <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
+                    <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">Usuarios | Filtrar</a></li>
+                    <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 2</a></li>
+                    <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 3</a></li>
+                  </ul>
+                </nav>
+               </div>
+            </div>
+         </nav>   
+      </div>
       <div class="container-fluid">
         @yield('content')
       </div>

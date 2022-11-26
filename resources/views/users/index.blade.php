@@ -2,7 +2,7 @@
   @section('title', 'Usuarios')
 
   @section('content')
-    <div class="flow-root w-full mx-auto shadow m-10 py-4 bg-white rounded sm:px-1 sm:py-2">
+  <div class="flow-root w-full mx-auto shadow bg-white rounded">
       <form  action="{{route('users.search')}}" method ="POST">
         @csrf
 
@@ -46,51 +46,6 @@
   @endsection
 
   @push('scripts')
-    {{-- Filtrar por columnas --}}
-    {{-- <script>
-      $(document).ready(function () {
-        $('#dtFilters').DataTable({
-          responsive: true,
-          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          processing: true,
-          language: {
-            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
-          },
-          scrollX: false,
-          columnDefs: [
-            {
-              targets: [0],
-              searchable: false,
-              orderable: false,
-            }
-          ],
-          
-          initComplete: function () {
-            this.api()
-                .columns([1,2,3,4,5,6,7,8,9]) // Columnas a filtrar
-                .every(function () {
-                  var column = this;
-                  var select = $('<select><option value=""></option></select>')
-                    .appendTo($(column.footer()).empty())
-                    .on('change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                        column.search(val ? '^' + val + '$' : '', true, false).draw();
-                    });
-
-                  column
-                    .data()
-                    .unique()
-                    .sort()
-                    .each(function (d, j) {
-                      select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-                });
-          },
-        });
-      });
-    </script> --}}
-
     {{-- Filtrar por columnas --}}
     <script src="{{ URL::to('js/export.js') }}"></script>
   @endpush
