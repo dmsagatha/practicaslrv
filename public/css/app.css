@@ -529,18 +529,6 @@ a:hover{
   --tw-backdrop-sepia:  ;
 }
 
-.sr-only{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
 .fixed{
   position: fixed;
 }
@@ -576,6 +564,11 @@ a:hover{
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-4{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .ml-1{
@@ -628,10 +621,6 @@ a:hover{
 
 .mb-2{
   margin-bottom: 0.5rem;
-}
-
-.block{
-  display: block;
 }
 
 .inline-block{
@@ -698,10 +687,6 @@ a:hover{
   width: 100%;
 }
 
-.min-w-full{
-  min-width: 100%;
-}
-
 .max-w-6xl{
   max-width: 72rem;
 }
@@ -763,12 +748,12 @@ a:hover{
   border-radius: 0.5rem;
 }
 
-.rounded-md{
-  border-radius: 0.375rem;
-}
-
 .rounded{
   border-radius: 0.25rem;
+}
+
+.rounded-md{
+  border-radius: 0.375rem;
 }
 
 .border{
@@ -779,9 +764,18 @@ a:hover{
   border-top-width: 1px;
 }
 
+.border-b{
+  border-bottom-width: 1px;
+}
+
 .border-gray-200{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .border-transparent{
