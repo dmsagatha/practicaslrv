@@ -79,7 +79,7 @@
           ],
 
           dom: 'Blfrtip',
-        buttons: [
+          buttons: [
           {
             extend: 'excel',
             split: [ 'pdf', 'csv'],
