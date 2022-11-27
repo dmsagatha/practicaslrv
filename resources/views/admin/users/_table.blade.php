@@ -1,4 +1,4 @@
-<table id="dtFilters" class="table min-w-full display" style="width: 100%">
+<table id="example" class="table min-w-full display" style="width: 100%">
   <thead>
     <tr>
       <th>ID</th>
@@ -46,6 +46,6 @@
   </tbody>
 </table>
 
-<button onclick="tablesToExcel(['dtFilters'], ['Users'], 'Users.xlsx', 'Excel')" class="inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+<button onclick="tablesToExcel(['example'], ['Users'], 'Users.xlsx', 'Excel')" class="inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
   <i class="fa-solid fa-file-excel mr-2"></i>Exportar a Excel
 </button>
