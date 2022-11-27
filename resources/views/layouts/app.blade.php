@@ -82,7 +82,7 @@
           buttons: [
           {
             extend: 'excel',
-            split: [ 'pdf', 'csv'],
+            split: ['pdf', 'csv'],
           }
         ],
 
