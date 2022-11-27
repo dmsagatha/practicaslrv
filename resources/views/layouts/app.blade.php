@@ -191,7 +191,7 @@
             }
           ],
 
-          // Filtrar por columnas <tfoot></tfoot>
+          // Filtros: Adicionar un tr después del thead
           /* initComplete: function() {
             this.api().columns('.head').every(function () {
               var column = this;
@@ -211,6 +211,7 @@
             });
           }, */
 
+          // Filtros en el tfoot
           initComplete: function () {
             this.api().columns('.head' ).every( function () {
               var column = this;
