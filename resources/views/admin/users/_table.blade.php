@@ -1,34 +1,27 @@
-<table id="example" class="table min-w-full display" style="width: 100%">
+<table id="example" class="stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nombres</th>
-      <th>Apellidos</th>
-      <th>Correo Electrónico</th>
-      <th>Fecha</th>
+      <th class="head">Nombres</th>
+      <th class="head">Apellidos</th>
+      <th class="head">Correo Electrónico</th>
+      <th class="head">Fecha</th>
+    </tr>
+    <tr>
+      <th>Filtros:</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tfoot>
     <tr>
-      <th>ID</th>
-      <th>Nombres
-        {{-- <select data-column="0" class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 filter-select">
-          <option value="">Seleccionar Nombres</option>
-          @foreach ($first_names as $name)
-            <option value="{{ $name }}">{{ $name }}</option>
-          @endforeach
-        </select> --}}
-      </th>
-      <th>Apellidos
-        {{-- <select data-column="1" class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 filter-select">
-          <option value="">Seleccionar Apellidos</option>
-          @foreach ($last_names as $name)
-            <option value="{{ $name }}">{{ $name }}</option>
-          @endforeach
-        </select> --}}
-      </th>
-      <th>Correo Electrónico</th>
-      <th>Fecha</th>
+      <th></th>
+      <th class="text-center">Nombres</th>
+      <th class="head">Apellidos</th>
+      <th class="head">Correo Electrónico</th>
+      <th class="head">Fecha</th>
     </tr>
   </tfoot>
   <tbody>

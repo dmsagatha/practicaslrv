@@ -17,6 +17,98 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 
+    <style>
+      /*Overrides for Tailwind CSS */
+  
+      /*Form fields*/
+      .dataTables_wrapper select,
+      .dataTables_wrapper .dataTables_filter input {
+        color: #4a5568;
+        /*text-gray-700*/
+        padding-left: 1rem;
+        /*pl-4*/
+        padding-right: 1rem;
+        /*pl-4*/
+        padding-top: .5rem;
+        /*pl-2*/
+        padding-bottom: .5rem;
+        /*pl-2*/
+        line-height: 1.25;
+        /*leading-tight*/
+        border-width: 2px;
+        /*border-2*/
+        border-radius: .25rem;
+        border-color: #edf2f7;
+        /*border-gray-200*/
+        background-color: #edf2f7;
+        /*bg-gray-200*/
+      }
+  
+      /*Row Hover*/
+      table.dataTable.hover tbody tr:hover,
+      table.dataTable.display tbody tr:hover {
+        background-color: #ebf4ff;
+        /*bg-indigo-100*/
+      }
+  
+      /*Pagination Buttons*/
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+        font-weight: 700;
+        /*font-bold*/
+        border-radius: .25rem;
+        /*rounded*/
+        border: 1px solid transparent;
+        /*border border-transparent*/
+      }
+  
+      /*Pagination Buttons - Current selected */
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        color: #fff !important;
+        /*text-white*/
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+        /*shadow*/
+        font-weight: 700;
+        /*font-bold*/
+        border-radius: .25rem;
+        /*rounded*/
+        background: #667eea !important;
+        /*bg-indigo-500*/
+        border: 1px solid transparent;
+        /*border border-transparent*/
+      }
+  
+      /*Pagination Buttons - Hover */
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        color: #fff !important;
+        /*text-white*/
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+        /*shadow*/
+        font-weight: 700;
+        /*font-bold*/
+        border-radius: .25rem;
+        /*rounded*/
+        background: #667eea !important;
+        /*bg-indigo-500*/
+        border: 1px solid transparent;
+        /*border border-transparent*/
+      }
+  
+      /*Add padding to bottom border */
+      table.dataTable.no-footer {
+        border-bottom: 1px solid #e2e8f0;
+        /*border-b-1 border-gray-300*/
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
+      }
+  
+      /*Change colour of responsive icon*/
+      table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
+      table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
+        background-color: #667eea !important;
+        /*bg-indigo-500*/
+      }
+    </style>
+
     @stack('styles')
 
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -58,7 +150,12 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 
-    <!-- Export Scripts -->
+    {{-- Filtrar por columnas <thead></thead> --}}
+    {{-- http://live.datatables.net/ruyezofa/1/edit
+    https://www.datatables.net/examples/api/multi_filter_select.html
+    http://live.datatables.net/cusologu/7/edit
+    Filtrar por columnas <tr></tr>
+    http://live.datatables.net/tamixov/1/edit --}}
     <script>
       $(document).ready(function(){
         $('#example').DataTable({
@@ -70,24 +167,39 @@
             url: "{{ asset('plugins/dataTables/Spanish.json') }}"
           },
           scrollX: false,
-          columnDefs: [
-            {
-              targets: [0],
-              searchable: false,
-              orderable: false,
-            }
-          ],
+          fixedHeader: true,
+          orderCellsTop: true,
 
           dom: 'Blfrtip',
           buttons: [
-          {
-            extend: 'excel',
-            split: ['pdf', 'csv'],
-          }
-        ],
+            {
+              extend: 'excel',
+              split: ['pdf', 'csv'],
+            }
+          ],
 
           // Filtrar por columnas <tfoot></tfoot>
-          initComplete: function () {
+          initComplete: function() {
+            this.api().columns('.head').every(function () {
+              var column = this;
+              var select = $('<select><option value=""></option></select>')
+                .appendTo($("#example thead tr:eq(1) th").eq(column.index()).empty())
+                .on('change', function () {
+                  var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                  );
+                  column
+                    .search(val ? '^'+val+'$' : '', true, false)
+                    .draw();
+                });
+
+              column.data().unique().sort().each(function (d, j) {
+                select.append('<option value="'+d+'">'+d+'</option>');
+              });
+            });
+          },
+
+          /* initComplete: function () {
             this.api()
                 .columns([1,2,3,4,5,6,7,8,9]) // Columnas a filtrar
                 .every(function () {
@@ -108,7 +220,7 @@
                       select.append('<option value="' + d + '">' + d + '</option>');
                     });
                 });
-          },
+          }, */
           
           /* dom: '<"html5buttons"B>lTfgitp',
           buttons: [
@@ -126,7 +238,9 @@
               }
             }
           ] */
-        });
+        })
+				.columns.adjust()
+				.responsive.recalc();
       });
     </script>
 
