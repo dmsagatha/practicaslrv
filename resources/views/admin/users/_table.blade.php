@@ -10,13 +10,23 @@
             <th class="head">Correo Electrónico</th>
             <th class="head">Fecha</th>
           </tr>
-          <tr>
+          {{-- <tr>
             <th>Filtros:</th>
             <th></th>
             <th></th>
             <th></th>
             <th></th>
+          </tr> --}}
+        </thead>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th class="text-center">Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo Electrónico</th>
+            <th>Fecha</th>
           </tr>
+        </tfoot>
         </thead>
         <tfoot>
           <tr>
