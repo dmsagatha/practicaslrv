@@ -170,6 +170,19 @@
           fixedHeader: true,
           orderCellsTop: true,
 
+          columnDefs: [
+            {
+              targets: 0,
+              render: function (data, type, row) {
+                if ( type === 'filter' ) {
+                  // Strip HTML from the cell data and return only the text
+                  return data.replace(/<[^>]*>?/gm, '');
+                }
+                return data;
+              }
+            }
+          ],
+
           dom: 'Blfrtip',
           buttons: [
             {
@@ -179,12 +192,11 @@
           ],
 
           // Filtrar por columnas <tfoot></tfoot>
-          initComplete: function() {
+          /* initComplete: function() {
             this.api().columns('.head').every(function () {
               var column = this;
               var select = $('<select><option value=""></option></select>')
                 .appendTo($("#example thead tr:eq(1) th").eq(column.index()).empty())
-                .on('change', function () {
                   var val = $.fn.dataTable.util.escapeRegex(
                     $(this).val()
                   );
@@ -197,7 +209,27 @@
                 select.append('<option value="'+d+'">'+d+'</option>');
               });
             });
-          },
+          }, */
+
+          initComplete: function () {
+            this.api().columns('.head' ).every( function () {
+              var column = this;
+              var select = $('<select><option value=""></option></select>')
+                .appendTo($(column.footer()).empty())
+                .on('change', function () {
+                  var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                  );
+
+                  column
+                    .search( val ? '^'+val+'$' : '', true, false )
+                    .draw();
+                });
+              column.data().unique().sort().each( function (d, j) {
+                select.append('<option value="'+d.replace(/<[^>]*>?/gm, '')+'">'+d+'</option>')
+              });
+            });
+          }
           
           /* dom: '<"html5buttons"B>lTfgitp',
           buttons: [
