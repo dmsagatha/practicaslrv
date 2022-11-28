@@ -125,7 +125,7 @@
             <div class="md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
               <nav>
                 <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
-                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">Usuarios | Filtrar</a></li>
+                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">Filtrar | TFoot</a></li>
                   <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 2</a></li>
                   <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 3</a></li>
                 </ul>
@@ -150,108 +150,9 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 
-    {{-- Filtrar por columnas <thead></thead> --}}
-    {{-- http://live.datatables.net/ruyezofa/1/edit
-    https://www.datatables.net/examples/api/multi_filter_select.html
-    http://live.datatables.net/cusologu/7/edit
-    Filtrar por columnas <tr></tr>
-    http://live.datatables.net/tamixov/1/edit --}}
+    <script src="{{ asset('js/filter-export.js') }}"></script>
+
     <script>
-      $(document).ready(function(){
-        $('#example').DataTable({
-          responsive: true,
-          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          pageLength: 10,
-          processing: true,
-          language: {
-            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
-          },
-          scrollX: false,
-          fixedHeader: true,
-          orderCellsTop: true,
-
-          columnDefs: [
-            {
-              targets: 0,
-              render: function (data, type, row) {
-                if ( type === 'filter' ) {
-                  // Strip HTML from the cell data and return only the text
-                  return data.replace(/<[^>]*>?/gm, '');
-                }
-                return data;
-              }
-            }
-          ],
-
-          dom: 'Blfrtip',
-          buttons: [
-            {
-              extend: 'excel',
-              split: ['pdf', 'csv'],
-            }
-          ],
-
-          // Filtros: Adicionar un tr después del thead
-          /* initComplete: function() {
-            this.api().columns('.head').every(function () {
-              var column = this;
-              var select = $('<select><option value=""></option></select>')
-                .appendTo($("#example thead tr:eq(1) th").eq(column.index()).empty())
-                  var val = $.fn.dataTable.util.escapeRegex(
-                    $(this).val()
-                  );
-                  column
-                    .search(val ? '^'+val+'$' : '', true, false)
-                    .draw();
-                });
-
-              column.data().unique().sort().each(function (d, j) {
-                select.append('<option value="'+d+'">'+d+'</option>');
-              });
-            });
-          }, */
-
-          // Filtros en el tfoot
-          initComplete: function () {
-            this.api().columns('.head' ).every( function () {
-              var column = this;
-              var select = $('<select><option value=""></option></select>')
-                .appendTo($(column.footer()).empty())
-                .on('change', function () {
-                  var val = $.fn.dataTable.util.escapeRegex(
-                    $(this).val()
-                  );
-
-                  column
-                    .search( val ? '^'+val+'$' : '', true, false )
-                    .draw();
-                });
-              column.data().unique().sort().each( function (d, j) {
-                select.append('<option value="'+d.replace(/<[^>]*>?/gm, '')+'">'+d+'</option>')
-              });
-            });
-          }
-          
-          /* dom: '<"html5buttons"B>lTfgitp',
-          buttons: [
-            {extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'ExampleFile'},
-            {extend: 'pdf', title: 'ExampleFile'},
-            {extend: 'print',
-              customize: function (win) {
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
-                $(win.document.body).find('table')
-                  .addClass('compact')
-                  .css('font-size', 'inherit');
-              }
-            }
-          ] */
-        })
-				.columns.adjust()
-				.responsive.recalc();
-      });
     </script>
 
     @stack('scripts')

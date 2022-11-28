@@ -2,7 +2,7 @@
   @section('title', 'Usuarios')
 
   @section('content')
-  <div class="flow-root w-full mx-auto shadow bg-white rounded mt-24 py-6 px-4">
+    <div class="flow-root w-full mx-auto shadow bg-white rounded mt-24 py-6 px-4">
       <form  action="{{route('users.search')}}" method ="POST">
         @csrf
 
