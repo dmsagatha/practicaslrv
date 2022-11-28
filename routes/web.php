@@ -26,4 +26,4 @@ Route::post('usuarios', [UserController::class, 'search'])->name('users.search')
  * http://live.datatables.net/vepedopa/10/edit
  * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
  */
-Route::get('filtro-select',  [UserController::class, 'filters'])->name('users.filters');
+Route::get('filtrar-con-select',  [UserController::class, 'filters'])->name('users.filters');

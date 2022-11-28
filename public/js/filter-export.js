@@ -24,7 +24,7 @@ $(document).ready(function() {
     buttons: [
       'excel', 'csv',
       { 
-        text: 'Reset Filters',   
+        text: 'Restablecer filtros',
         action: function () {
           table.search('').columns().search('').draw();
           $('tfoot input').val('');
