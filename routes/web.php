@@ -14,6 +14,9 @@ Route::get('/laravelMix', function () {
 /**
  * 𝗦𝗼𝗲𝗻𝗴 𝗦𝗼𝘂𝘆 - Search with date range in Laravel MySQL
  * https://www.youtube.com/@SoengSouy/videos
+ * 
+ * http://live.datatables.net/hokacefu/3/edit
+ * http://live.datatables.net/ruyezofa/1/edit
  */
 Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
 Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
