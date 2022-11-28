@@ -20,3 +20,10 @@ Route::get('/laravelMix', function () {
  */
 Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
 Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
+
+/**
+ * Filtrar con la etiqueta select
+ * http://live.datatables.net/vepedopa/10/edit
+ * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
+ */
+Route::get('filtro-select',  [UserController::class, 'filters'])->name('users.filters');

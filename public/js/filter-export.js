@@ -1,11 +1,14 @@
-/* Filtrar por columnas <thead></thead>
-http://live.datatables.net/ruyezofa/1/edit
-https://www.datatables.net/examples/api/multi_filter_select.html
-http://live.datatables.net/cusologu/7/edit
-Filtrar por columnas <tr></tr>
-http://live.datatables.net/tamixov/1/edit */
-$(document).ready(function(){
-  $('#example').DataTable({
+/* 
+  Filtrar por columnas <thead></thead>
+  http://live.datatables.net/ruyezofa/1/edit
+  https://www.datatables.net/examples/api/multi_filter_select.html
+  http://live.datatables.net/cusologu/7/edit
+  Filtrar por columnas <tr></tr>
+  http://live.datatables.net/tamixov/1/edit
+  Reset Selected columnas - https://jsfiddle.net/2k07k5ba/2/
+*/
+$(document).ready(function() {
+  var table = $('#example').DataTable({
     responsive: true,
     lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
     pageLength: 10,
@@ -16,6 +19,18 @@ $(document).ready(function(){
     scrollX: false,
     fixedHeader: true,
     orderCellsTop: true,
+
+    dom: 'Blfrtip',
+    buttons: [
+      'excel', 'csv',
+      { 
+        text: 'Reset Filters',   
+        action: function () {
+          table.search('').columns().search('').draw();
+          $('tfoot input').val('');
+        }
+      }
+    ],
 
     columnDefs: [
       {
@@ -29,14 +44,12 @@ $(document).ready(function(){
         }
       }
     ],
-
-    dom: 'Blfrtip',
-    buttons: [
-      {
-        extend: 'excel',
-        split: ['pdf', 'csv'],
-      }
-    ],
+    
+    select: {
+      style:    'os',
+      selector: 'td:first-child'
+    },
+    order: [[1, 'asc']],
 
     // Filtros: Adicionar un tr después del thead
     /* initComplete: function() {
@@ -78,28 +91,10 @@ $(document).ready(function(){
         });
       });
     }
-    
-    /* dom: '<"html5buttons"B>lTfgitp',
-    buttons: [
-      {extend: 'copy'},
-      {extend: 'csv'},
-      {extend: 'excel', title: 'ExampleFile'},
-      {extend: 'pdf', title: 'ExampleFile'},
-      {extend: 'print',
-        customize: function (win) {
-          $(win.document.body).addClass('white-bg');
-          $(win.document.body).css('font-size', '10px');
-          $(win.document.body).find('table')
-            .addClass('compact')
-            .css('font-size', 'inherit');
-        }
-      }
-    ] */
   })
   .columns.adjust()
   .responsive.recalc();
 });
-
 
 /* $('#example').DataTable( {
 // "dom" : '<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
@@ -110,17 +105,17 @@ $(document).ready(function(){
           $(column.header()).append("<br>")
           var select = $('<select><option value="">Seleccionar</option></select>')
             .appendTo($(column.header()))
-                      .on('change', function () {
-                          var val = $.fn.dataTable.util.escapeRegex(
-                              $(this).val()
-                          );
+            .on('change', function () {
+                var val = $.fn.dataTable.util.escapeRegex(
+                    $(this).val()
+                );
 
-                          column
-                              .search(val ? '^' + val + '$' : '', true, false)
-                              .draw();
-                      });
-                  column.data().unique().sort().each(function (d, j) {
-                      select.append('<option value="' + d + '">' + d + '</option>')
+                column
+                    .search(val ? '^' + val + '$' : '', true, false)
+                    .draw();
+            });
+          column.data().unique().sort().each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + '</option>')
             } );
       } );
   }
