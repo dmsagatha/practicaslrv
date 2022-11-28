@@ -31,27 +31,10 @@ class UserController extends Controller
     return view('admin.users.index', compact('users'));
   }
 
-  public function create()
+  public function filters()
   {
-  }
-  
-  public function store(Request $request)
-  {
-  }
-  
-  public function show(User $user)
-  {
-  }
-  
-  public function edit(User $user)
-  {
-  }
-  
-  public function update(Request $request, User $user)
-  {
-  }
-  
-  public function destroy(User $user)
-  {
+    $users = User::orderBy('first_name')->get();
+
+    return view('admin.users.index-filters', compact('users'));
   }
 }

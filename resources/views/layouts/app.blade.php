@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/dataTables/colReorder.dataTables.min.css') }}">
 
     <style>
       /*Overrides for Tailwind CSS */
@@ -126,8 +127,7 @@
               <nav>
                 <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
                   <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">Filtrar | TFoot</a></li>
-                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 2</a></li>
-                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="#">Menú 3</a></li>
+                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">Filtrar | Select tag</a></li>
                 </ul>
               </nav>
             </div>
@@ -141,6 +141,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="{{ asset('plugins/dataTables/colReorder.dataTables.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
@@ -149,10 +150,82 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.6.1/js/dataTables.colReorder.min.js"></script>
 
     <script src="{{ asset('js/filter-export.js') }}"></script>
 
+    {{-- 
+      Filtrar con la etiqueta select
+      http://live.datatables.net/vepedopa/10/edit
+      Reset Selected columnas - https://jsfiddle.net/2k07k5ba/2/ 
+    --}}
     <script>
+      $(document).ready(function() {
+        var DT1 = $('#exampleFilters').DataTable({
+          responsive: true,
+          lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
+          pageLength: 10,
+          processing: true,
+          language: {
+            url: "{{ asset('plugins/dataTables/Spanish.json') }}"
+          },
+          colReorder: true,
+
+          dom: 'Blfrtip',
+          buttons: [
+            {
+              extend: 'excel',
+              split: ['pdf', 'csv'],
+            },
+            { 
+              text: 'Restablecer filtros',   
+              action: function () {
+                DT1.search('').columns().search('').draw();
+              }
+            }
+          ],
+
+          columnDefs: [ 
+            {
+              orderable: false,
+              className: 'select-checkbox',
+              targets:   0,
+            } 
+          ],
+
+          select: {
+            style:    'os',
+            selector: 'td:first-child'
+          },
+          order: [[1, 'asc']]
+        });
+
+        /* $('#reset').click( function (e) {
+        e.preventDefault();
+         
+        DT1.colReorder.reset();
+    } ); */
+
+        $(".selectAll").on( "click", function(e) {
+          if ($(this).is( ":checked" )) {
+              DT1.rows(  ).select();        
+          } else {
+              DT1.rows(  ).deselect(); 
+          }
+        });
+      
+        $('#search').on('input', () => {
+          DT1.search($('#search').val()).draw();
+        });
+
+        $('#field1').on('change', () => {            
+          DT1.search($("#field1").val()).draw();
+        });
+
+        $('#field2').on('change', () => {            
+          DT1.search($("#field2").val()).draw();
+        });
+      });
     </script>
 
     @stack('scripts')
