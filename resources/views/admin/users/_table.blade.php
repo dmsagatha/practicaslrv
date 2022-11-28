@@ -27,16 +27,6 @@
             <th>Fecha</th>
           </tr>
         </tfoot>
-        </thead>
-        <tfoot>
-          <tr>
-            <th></th>
-            <th class="text-center">Nombres</th>
-            <th class="head">Apellidos</th>
-            <th class="head">Correo Electrónico</th>
-            <th class="head">Fecha</th>
-          </tr>
-        </tfoot>
         <tbody>
           @foreach ($users as $item)
             <tr>
