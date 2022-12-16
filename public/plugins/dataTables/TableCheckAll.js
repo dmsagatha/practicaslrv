@@ -11,6 +11,7 @@ $.fn.TableCheckAll = function (options) {
     checkAllCheckboxClass: '.check-all',
     checkboxClass: '.check'
   }, options);
+  
   return this.each(function () {
     $(this).find(settings.checkAllCheckboxClass).on('click', function () {
       if ($(this).is(':checked')) {
