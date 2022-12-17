@@ -202,10 +202,10 @@
         });
 
         /* $('#reset').click( function (e) {
-        e.preventDefault();
-         
-        DT1.colReorder.reset();
-    } ); */
+          e.preventDefault();
+          
+          DT1.colReorder.reset();
+        }); */
 
         $(".selectAll").on( "click", function(e) {
           if ($(this).is( ":checked" )) {
@@ -243,43 +243,73 @@
             selected.push($(this).val());
           });
 
-          Swal.fire({
-            icon: 'warning',
-            title: 'Esta seguro?',
-            text: "Este registro se eliminará definitivamente!",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: 'No, cancelar!',
-            reverseButtons: true,
-            showDenyButton: false
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              $.ajax({
-                type: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: button.data('route'),
-                data: {
-                  'selected': selected
-                },
-                success: function (response, textStatus, xhr) {
-                  Swal.fire({
-                    icon: 'success',
-                    title: response,
-                    showDenyButton: false,
-                    showCancelButton: false,
-                    confirmButtonText: 'Si'
-                  }).then((result) => {
-                    window.setTimeout("location.reload()", 1000); // window.location='/usuarios'
-                  });
-                }
-              });
-            }
-          });
+          if (selected.length <=0) {
+            // Swal.fire('Debe seleccionar al menos una fila.');
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Debe seleccionar al menos una fila!',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          } else {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Esta seguro?',
+              text: "Este registro se eliminará definitivamente!",
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, eliminar!',
+              cancelButtonText: 'No, cancelar!',
+              reverseButtons: true,
+              showDenyButton: false
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                $.ajax({
+                  type: 'post',
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  url: button.data('route'),
+                  data: {
+                    'selected': selected
+                  },
+                  success: function (response, textStatus, xhr) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: response,
+                      showDenyButton: false,
+                      showCancelButton: false,
+                      // confirmButtonText: 'Si',
+                      timer: 2000,
+                      showConfirmButton: false
+                    }).then((result) => {
+                      // window.setTimeout("location.reload()", 1000); // window.location='/usuarios'
+                      location.reload();
+                    });
+                  }, // success
+                  /* success: function (response, textStatus, xhr) {
+                    Swal.fire(
+                      'Eliminado!',
+                      'El registro fue eliminado.',
+                      'success'
+                    ).then((result) => {
+                      window.setTimeout("location.reload()", 500); // window.location='/usuarios'
+                    });
+                  }, */
+                  error: function (response, textStatus, xhr) {
+                    Swal.fire(
+                      'Cancelado',
+                      'Los registros no fueron eliminados!',
+                      'error'
+                    )
+                  }
+                });
+              } // if (result.isConfirmed) {
+            });
+          };
         });
 
         $('.delete-form').on('submit', function(e) {
