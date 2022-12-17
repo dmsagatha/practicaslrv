@@ -3,9 +3,9 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
 Route::get('/laravelMix', function () {
   return view('layouts.app');
@@ -21,9 +21,14 @@ Route::get('/laravelMix', function () {
 Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
 Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
 
-/**
- * Filtrar con la etiqueta select
- * http://live.datatables.net/vepedopa/10/edit
- * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
- */
-Route::get('filtrar-con-select',  [UserController::class, 'filters'])->name('users.filters');
+
+Route::controller(UserController::class)->group(function () {
+  /**
+   * Filtrar con la etiqueta select
+   * http://live.datatables.net/vepedopa/10/edit
+   * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
+   */
+  Route::get('filtrar-con-select', 'filters')->name('users.filters');
+
+  Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
+});

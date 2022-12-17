@@ -151,6 +151,8 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/colreorder/1.6.1/js/dataTables.colReorder.min.js"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('plugins/dataTables/TableCheckAll.js') }}"></script>
     <script src="{{ asset('js/filter-export.js') }}"></script>
 
     {{-- 
@@ -200,10 +202,10 @@
         });
 
         /* $('#reset').click( function (e) {
-        e.preventDefault();
-         
-        DT1.colReorder.reset();
-    } ); */
+          e.preventDefault();
+          
+          DT1.colReorder.reset();
+        }); */
 
         $(".selectAll").on( "click", function(e) {
           if ($(this).is( ":checked" )) {
@@ -224,6 +226,131 @@
         $('#field2').on('change', () => {            
           DT1.search($("#field2").val()).draw();
         });
+      });
+    </script>
+
+    {{-- Cómo eliminar múltiples registros usando checkbox
+    https://dev.to/codeanddeploy/how-to-delete-multiple-records-using-checkbox-in-laravel-8-4c0n --}}
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(".delete-table").TableCheckAll();
+
+        $('#multi-delete').on('click', function() {
+          var button = $(this);
+          var selected = [];
+
+          $('.delete-table .check:checked').each(function() {
+            selected.push($(this).val());
+          });
+
+          if (selected.length <= 0) {
+            // Swal.fire('Debe seleccionar al menos una fila.');
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Debe seleccionar al menos una fila!',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          } else {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Esta seguro?',
+              text: "Este registro se eliminará definitivamente!",
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, eliminar!',
+              cancelButtonText: 'No, cancelar!',
+              reverseButtons: true,
+              showDenyButton: false
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                $.ajax({
+                  type: 'post',
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  },
+                  url: button.data('route'),
+                  data: {
+                    'selected': selected
+                  },
+                  success: function (response, textStatus, xhr) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: response,
+                      showDenyButton: false,
+                      showCancelButton: false,
+                      // confirmButtonText: 'Si',
+                      timer: 2000,
+                      showConfirmButton: false
+                    }).then((result) => {
+                      // window.setTimeout("location.reload()", 1000); // window.location='/usuarios'
+                      location.reload();
+                    });
+                  }, // success
+                  /* success: function (response, textStatus, xhr) {
+                    Swal.fire(
+                      'Eliminado!',
+                      'El registro fue eliminado.',
+                      'success'
+                    ).then((result) => {
+                      window.setTimeout("location.reload()", 500); // window.location='/usuarios'
+                    });
+                  }, */
+                }); // $.ajax()
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Cancelado.',
+                  text: 'Los registros no fueron eliminados.!',
+                  timer: 2000,
+                  showConfirmButton: false
+                });
+              }
+            });
+          };
+        });
+
+        $('.delete-form').on('submit', function(e) {
+          e.preventDefault();
+          var button = $(this);
+
+          Swal.fire({
+            icon: 'warning',
+            title: '¿Está seguro de eliminar este registro?',
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: 'Si'
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+              $.ajax({
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: button.data('route'),
+                data: {
+                  '_method': 'delete'
+                },
+                success: function (response, textStatus, xhr) {
+                  Swal.fire({
+                    icon: 'success',
+                    title: response,
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si'
+                  }).then((result) => {
+                    window.setTimeout("location.reload()", 1000);
+                  });
+                }
+              });
+            }
+          });
+
+        })
       });
     </script>
 

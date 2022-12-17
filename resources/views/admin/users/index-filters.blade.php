@@ -3,6 +3,23 @@
 
   @section('content')
     <div class="flow-root w-full mx-auto shadow bg-white rounded mt-24 py-6 px-4">
+      @if(Session::get('success', false))
+        <?php $data = Session::get('success'); ?>
+        @if (is_array($data))
+            @foreach ($data as $msg)
+                <div class="alert alert-success" role="alert">
+                    <i class="fa fa-check"></i>
+                    {{ $msg }}
+                </div>
+            @endforeach
+        @else
+            <div class="alert alert-success" role="alert">
+                <i class="fa fa-check"></i>
+                {{ $data }}
+            </div>
+        @endif
+      @endif
+      
       <div class="grid grid-cols-6 gap-x-10 gap-y-8">
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
@@ -30,13 +47,21 @@
             </select>
           </div>
         </div>
+        
+        <div class="col-span-6 sm:col-span-3">
+          <div class="group relative">
+            <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition' id="multi-delete" data-route="{{ route('users.multipleDelete') }}">
+              <i class="fa-solid fa-trash mr-2"></i>Eliminar todos
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="px-4 py-4">
         @if ($users->count())
           @include('admin.users._table-filters')
         @else
-          <div class="flex justify-center px-4 mt-14 mb-2 space-x-4 text-green-600">
+          <div class="flex justify-center px-4 mt-14 mb-2 space-x-4 text-blue-600">
             No hay registros creados
           </div>
         @endif
