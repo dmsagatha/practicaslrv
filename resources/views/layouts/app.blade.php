@@ -243,7 +243,7 @@
             selected.push($(this).val());
           });
 
-          if (selected.length <=0) {
+          if (selected.length <= 0) {
             // Swal.fire('Debe seleccionar al menos una fila.');
             Swal.fire({
               icon: 'error',
@@ -299,15 +299,16 @@
                       window.setTimeout("location.reload()", 500); // window.location='/usuarios'
                     });
                   }, */
-                  error: function (response, textStatus, xhr) {
-                    Swal.fire(
-                      'Cancelado',
-                      'Los registros no fueron eliminados!',
-                      'error'
-                    )
-                  }
+                }); // $.ajax()
+              } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Cancelado.',
+                  text: 'Los registros no fueron eliminados.!',
+                  timer: 2000,
+                  showConfirmButton: false
                 });
-              } // if (result.isConfirmed) {
+              }
             });
           };
         });
