@@ -276,7 +276,7 @@
                   data: {
                     'selected': selected
                   },
-                  success: function (response, textStatus, xhr) {
+                  success: function(response, textStatus, xhr) {
                     Swal.fire({
                       icon: 'success',
                       title: response,
@@ -289,16 +289,10 @@
                       // window.setTimeout("location.reload()", 1000); // window.location='/usuarios'
                       location.reload();
                     });
-                  }, // success
-                  /* success: function (response, textStatus, xhr) {
-                    Swal.fire(
-                      'Eliminado!',
-                      'El registro fue eliminado.',
-                      'success'
-                    ).then((result) => {
-                      window.setTimeout("location.reload()", 500); // window.location='/usuarios'
-                    });
-                  }, */
+                  },
+                  error: function(response, textStatus, xhr) {
+                    alert(data.responseText);
+                  }
                 }); // $.ajax()
               } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire({
