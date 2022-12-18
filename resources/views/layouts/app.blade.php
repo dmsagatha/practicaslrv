@@ -233,13 +233,13 @@
     https://dev.to/codeanddeploy/how-to-delete-multiple-records-using-checkbox-in-laravel-8-4c0n --}}
     <script type="text/javascript">
       $(document).ready(function() {
-        $(".delete-table").TableCheckAll();
+        $(".delete_table").TableCheckAll();
 
-        $('#multi-delete').on('click', function() {
-          var button = $(this);
-          var selected = [];
+        $('#multiple_delete').on('click', function() {
+          let button   = $(this);
+          let selected = []
 
-          $('.delete-table .check:checked').each(function() {
+          $('.delete_table .check:checked').each(function() {
             selected.push($(this).val());
           });
 

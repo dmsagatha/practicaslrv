@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <div class="w-full">
     <div class="border-b border-gray-300 shadow">
-      <table id="exampleFilters" class="delete-table table stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+      <table id="exampleFilters" class="delete_table table stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
         <thead>
           <tr>
             <th><input type="checkbox" class="check-all"></th>
