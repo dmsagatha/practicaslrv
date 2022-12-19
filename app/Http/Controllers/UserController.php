@@ -54,10 +54,12 @@ class UserController extends Controller
     $ids = $request->ids;
 
     try {
-      User::whereIn('id',explode(",",$ids))->delete();
+      User::whereIn('id', explode(",", $ids))->delete();
 
       // return response("Registros eliminados satisfactoriamente.", 200);
-      return response()->json(['success'=>"Products Deleted successfully."]);
+      return response()->json([
+        'success' => "Registros eliminados satisfactoriamente."
+      ], 200);
     } catch(\Exception $e) {
       report($e);
     }

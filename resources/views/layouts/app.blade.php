@@ -138,7 +138,10 @@
       });
     </script>
 
-    {{-- https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/ --}}
+    {{-- 
+      Eliminación masiva de datos y contador de seleccionados
+      https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/
+    --}}
     {{-- 
       #bulk_delete  -> seleccionar todas las casillas de verificación
       .check_item -> seleccionar por item 
