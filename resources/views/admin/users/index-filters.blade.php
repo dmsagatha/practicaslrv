@@ -71,7 +71,7 @@
             <table id="exampleFilters" class="table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
               <thead>
                 <tr>
-                  <th><input type="checkbox" id="check_all"></th>
+                  <th><input type="checkbox" id="bulk_delete"></th>
                   <th>ID</th>
                   <th>Nombres</th>
                   <th>Apellidos</th>
