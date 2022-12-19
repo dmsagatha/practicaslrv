@@ -627,6 +627,14 @@ a:hover{
   margin-right: 0.25rem;
 }
 
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
+.mb-20{
+  margin-bottom: 5rem;
+}
+
 .block{
   display: block;
 }
@@ -864,6 +872,11 @@ a:hover{
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.py-10{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .pt-8{

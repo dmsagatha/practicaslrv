@@ -56,10 +56,10 @@ class UserController extends Controller
     try {
       User::whereIn('id', explode(",", $ids))->delete();
 
-      // return response("Registros eliminados satisfactoriamente.", 200);
-      return response()->json([
+      return response("Registros eliminados satisfactoriamente.", 200);
+      /* return response()->json([
         'success' => "Registros eliminados satisfactoriamente."
-      ], 200);
+      ], 200); */
     } catch(\Exception $e) {
       report($e);
     }

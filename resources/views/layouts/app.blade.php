@@ -43,7 +43,7 @@
         </nav>
       </div>
       
-      <div class="container-fluid ">
+      <div class="container-fluid">
         @yield('content')
       </div>
     </div>
@@ -141,6 +141,7 @@
     {{-- 
       Eliminación masiva de datos y contador de seleccionados
       https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/
+      https://github.com/mbere250/Laravel-8-Ajax-CRUD-with-Yajra-Datatable
     --}}
     {{-- 
       #bulk_delete  -> seleccionar todas las casillas de verificación
@@ -162,7 +163,7 @@
                 this.checked = false;
             });
         }
-        toggledeleteAllBtn();
+        toggleDeleteAllBtn();
       }); */
       $(document).on('click', '#bulk_delete', function() {
         if($(this).is(':checked',true)) {
@@ -170,7 +171,7 @@
         } else {
           $(".check_item").prop('checked',false);
         }
-        toggledeleteAllBtn();
+        toggleDeleteAllBtn();
       });
       	
 	    /* $(document).on('click', '.check_item', function() {
@@ -180,7 +181,7 @@
           $('#bulk_delete').prop('checked', false);
         }
         // $("#select_count").html($("input.check_item:checked").length+"");
-        toggledeleteAllBtn();
+        toggleDeleteAllBtn();
       }); */
       	
         $(document).on('click', '.check_item', function() {
@@ -189,20 +190,19 @@
           } else {
             $('#bulk_delete').prop('checked', false);
           }
-          toggledeleteAllBtn();
+          toggleDeleteAllBtn();
         });
 
       // Eliminar los registros seleccionados
       $('#delete_records').on('click', function(e) {
+        e.preventDefault();
         let ids_records = [];
 
-        $(".check_item:checked").each(function() {  
+        $('.check_item:checked').each(function() {  
           ids_records.push($(this).data('id'));
         });
         	
 	      if(ids_records.length <=0) {
-          // alert("Seleccionar al menos un registro!");
-          // Swal.fire('Debe seleccionar al menos una fila.');
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -211,37 +211,65 @@
             showConfirmButton: false
           });
         } else {
-          // WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(ids_records.length>1?"estas":"esta")+" fila?";
-          WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(ids_records.length>1?"estas filas?":"esta fila?");
-          let checked = confirm(WRN_PROFILE_DELETE);
+          let selected_values = ids_records.join(",");
 
-          if(checked == true) {
-            let selected_values = ids_records.join(",");
-
-            $.ajax({
-              type: 'post',
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              // url: button.data('route'),
-              url: $(this).data('route'),
-              // url: "{{ route('users.multipleDelete') }}",
-              data: 'ids='+selected_values,
-              /* data: {
-                'selected': selected
-              }, */
-              success: function(response, textStatus, xhr) {
-                alert('success');
-                location.reload();
-              }
-            });
-          }
+          Swal.fire({
+            icon: 'warning',
+            title: 'Esta seguro?',
+            // text: "Este registro se eliminará definitivamente!",
+            text: "Esta seguro de eliminar "+(ids_records.length>1?"estas filas?":"esta fila?"),
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            showDenyButton: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              $.ajax({
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: $(this).data('route'),
+                // url: button.data('route'),
+                // url: "{{ route('users.multipleDelete') }}",
+                // data: 'ids='+selected_values,
+                data: {ids: selected_values},
+                success: function(response, textStatus, xhr) {
+                  Swal.fire({
+                    icon: 'success',
+                    // title: 'Registros eliminados satisfactoriamente.',
+                    title: response,
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    timer: 2000,
+                    showConfirmButton: false
+                  }).then((result) => {
+                    location.reload();
+                  });
+                }
+              });
+            } else if(result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Cancelado.',
+                text: 'Los registros no fueron eliminados.!',
+                timer: 3000,
+                showConfirmButton: false
+              });
+              location.reload();
+            }
+          });
         }
       });
 
-      function toggledeleteAllBtn() {
+      function toggleDeleteAllBtn() {
         if( $('.check_item:checked').length > 0 ) {
-          $('button#delete_records').text('Eliminar ('+$('.check_item:checked').length+')').show();
+          // $('button#delete_records').text('Eliminar seleccionados ('+$('.check_item:checked').length+')').show();
+          $('button#delete_records').show();
+          $("#select_count").html($("input.check_item:checked").length+"").show();
         } else {
           $('button#delete_records').hide();
         }
