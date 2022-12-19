@@ -140,7 +140,7 @@
 
     {{-- https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/ --}}
     {{-- 
-      #check_all   -> seleccionar todas las casillas de verificación
+      #check_all  -> seleccionar todas las casillas de verificación
       .check_item -> seleccionar por item 
     --}}
     <script>
@@ -161,20 +161,29 @@
 
       // Eliminar los registros seleccionados
       $('#delete_records').on('click', function(e) {
-        let employee = [];
+        let ids_records = [];
 
         $(".check_item:checked").each(function() {  
-          employee.push($(this).data('id'));
+          ids_records.push($(this).data('id'));
         });
         	
-	      if(employee.length <=0) {
-          alert("Seleccionar al menos un registro!");
+	      if(ids_records.length <=0) {
+          // alert("Seleccionar al menos un registro!");
+          // Swal.fire('Debe seleccionar al menos una fila.');
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Debe seleccionar al menos una fila!',
+            timer: 2000,
+            showConfirmButton: false
+          });
         } else {
-          WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(employee.length>1?"estas":"este")+" fila?";
+          // WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(ids_records.length>1?"estas":"esta")+" fila?";
+          WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(ids_records.length>1?"estas filas?":"esta fila?");
           let checked = confirm(WRN_PROFILE_DELETE);
 
           if(checked == true) {
-            let selected_values = employee.join(",");
+            let selected_values = ids_records.join(",");
 
             $.ajax({
               type: 'post',
