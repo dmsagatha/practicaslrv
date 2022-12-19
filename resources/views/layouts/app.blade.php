@@ -141,29 +141,30 @@
     {{-- https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/ --}}
     {{-- 
       #check_all   -> seleccionar todas las casillas de verificación
-      .emp_checkbox -> seleccionar por item 
+      .check_item -> seleccionar por item 
     --}}
     <script>
       $(document).on('click', '#check_all', function() {
-        $(".emp_checkbox").prop("checked", this.checked);
-		    $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
+        $(".check_item").prop("checked", this.checked);
+		    // $("#select_count").html($("input.check_item:checked").length+" Seleccionados");
+		    $("#select_count").html($("input.check_item:checked").length+"");
       });
       	
-	    $(document).on('click', '.emp_checkbox', function() {
-        if ($('.emp_checkbox:checked').length == $('.emp_checkbox').length) {
+	    $(document).on('click', '.check_item', function() {
+        if ($('.check_item:checked').length == $('.check_item').length) {
           $('#check_all').prop('checked', true);
         } else {
           $('#check_all').prop('checked', false);
         }
-        $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
+        $("#select_count").html($("input.check_item:checked").length+"");
       });
 
       // Eliminar los registros seleccionados
       $('#delete_records').on('click', function(e) {
         let employee = [];
 
-        $(".emp_checkbox:checked").each(function() {  
-          employee.push($(this).data('emp-id'));
+        $(".check_item:checked").each(function() {  
+          employee.push($(this).data('id'));
         });
         	
 	      if(employee.length <=0) {

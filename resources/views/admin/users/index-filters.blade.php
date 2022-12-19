@@ -58,22 +58,8 @@
         
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
-            <span class="rows_selected" id="select_count">0 Seleccionados</span>
-			      {{-- <a type="button" id="delete_records" class="btn btn-primary pull-right">Eliminar</a> --}}
-
-            {{-- <a type="button" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
-            </a> --}}
-
-            {{-- <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
-            </button> --}}
-
-            {{-- <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}">
-              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
-            </button> --}}
-            <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' id="delete_records" data-route="{{ route('users.multipleDelete') }}">
-              <i class="fa-solid fa-trash mr-2"></i>Eliminar seleccionados
+            <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}">
+              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar seleccionados (<span class="rows_selected" id="select_count"></span>)
             </button>
           </div>
         </div>
@@ -98,7 +84,7 @@
                 @foreach ($users as $item)
                   <tr id="tr_{{ $item->id }}">
                     <td>
-                      <input type="checkbox" class="emp_checkbox" data-emp-id="{{ $item->id }}">
+                      <input type="checkbox" class="check_item" data-id="{{ $item->id }}">
                     </td>
                     <td class="text-center">{{ $item->id }}</td>
                     <td>{{ $item->first_name}}</td>
