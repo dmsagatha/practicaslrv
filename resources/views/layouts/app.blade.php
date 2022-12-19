@@ -139,21 +139,61 @@
     </script>
 
     {{-- https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/ --}}
-    #select_all   -> seleccionar todas las casillas de verificación
-    .emp_checkbox -> seleccionar por item
+    {{-- 
+      #check_all   -> seleccionar todas las casillas de verificación
+      .emp_checkbox -> seleccionar por item 
+    --}}
     <script>
-      $(document).on('click', '#select_all', function() {
+      $(document).on('click', '#check_all', function() {
         $(".emp_checkbox").prop("checked", this.checked);
 		    $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
       });
       	
 	    $(document).on('click', '.emp_checkbox', function() {
         if ($('.emp_checkbox:checked').length == $('.emp_checkbox').length) {
-          $('#select_all').prop('checked', true);
+          $('#check_all').prop('checked', true);
         } else {
-          $('#select_all').prop('checked', false);
+          $('#check_all').prop('checked', false);
         }
         $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
+      });
+
+      // Eliminar los registros seleccionados
+      $('#delete_records').on('click', function(e) {
+        let employee = [];
+
+        $(".emp_checkbox:checked").each(function() {  
+          employee.push($(this).data('emp-id'));
+        });
+        	
+	      if(employee.length <=0) {
+          alert("Seleccionar al menos un registro!");
+        } else {
+          WRN_PROFILE_DELETE = "Esta seguro de eliminar "+(employee.length>1?"estas":"este")+" fila?";
+          let checked = confirm(WRN_PROFILE_DELETE);
+
+          if(checked == true) {
+            let selected_values = employee.join(",");
+
+            $.ajax({
+              type: 'post',
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              // url: button.data('route'),
+              url: $(this).data('route'),
+              // url: "{{ route('users.multipleDelete') }}",
+              data: 'ids='+selected_values,
+              /* data: {
+                'selected': selected
+              }, */
+              success: function(response, textStatus, xhr) {
+                alert('success');
+                location.reload();
+              }
+            });
+          }
+        }
       });
     </script>
 

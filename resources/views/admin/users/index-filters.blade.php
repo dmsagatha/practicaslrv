@@ -61,9 +61,20 @@
             <span class="rows_selected" id="select_count">0 Seleccionados</span>
 			      {{-- <a type="button" id="delete_records" class="btn btn-primary pull-right">Eliminar</a> --}}
 
-            <a type="button" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+            {{-- <a type="button" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
               <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
-            </a>
+            </a> --}}
+
+            {{-- <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
+            </button> --}}
+
+            {{-- <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}">
+              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
+            </button> --}}
+            <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' id="delete_records" data-route="{{ route('users.multipleDelete') }}">
+              <i class="fa-solid fa-trash mr-2"></i>Eliminar seleccionados
+            </button>
           </div>
         </div>
       </div>
@@ -74,7 +85,7 @@
             <table id="exampleFilters" class="table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
               <thead>
                 <tr>
-                  <th><input type="checkbox" id="select_all"></th>
+                  <th><input type="checkbox" id="check_all"></th>
                   <th>ID</th>
                   <th>Nombres</th>
                   <th>Apellidos</th>
