@@ -138,6 +138,25 @@
       });
     </script>
 
+    {{-- https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/ --}}
+    #select_all   -> seleccionar todas las casillas de verificación
+    .emp_checkbox -> seleccionar por item
+    <script>
+      $(document).on('click', '#select_all', function() {
+        $(".emp_checkbox").prop("checked", this.checked);
+		    $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
+      });
+      	
+	    $(document).on('click', '.emp_checkbox', function() {
+        if ($('.emp_checkbox:checked').length == $('.emp_checkbox').length) {
+          $('#select_all').prop('checked', true);
+        } else {
+          $('#select_all').prop('checked', false);
+        }
+        $("#select_count").html($("input.emp_checkbox:checked").length+" Seleccionados");
+      });
+    </script>
+
     @stack('scripts')
   </body>
 </html>

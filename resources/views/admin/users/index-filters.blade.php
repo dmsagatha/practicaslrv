@@ -55,9 +55,62 @@
             </button>
           </div>
         </div>
+        
+        <div class="col-span-6 sm:col-span-3">
+          <div class="group relative">
+            <span class="rows_selected" id="select_count">0 Seleccionados</span>
+			      {{-- <a type="button" id="delete_records" class="btn btn-primary pull-right">Eliminar</a> --}}
+
+            <a type="button" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+              <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar
+            </a>
+          </div>
+        </div>
       </div>
 
-      <div class="px-4 py-4">
+      <div class="flex flex-col">
+        <div class="w-full">
+          <div class="border-b border-gray-300 shadow">
+            <table id="exampleFilters" class="table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="select_all"></th>
+                  <th>ID</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Correo Electrónico</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($users as $item)
+                  <tr id="tr_{{ $item->id }}">
+                    <td>
+                      <input type="checkbox" class="emp_checkbox" data-emp-id="{{ $item->id }}">
+                    </td>
+                    <td class="text-center">{{ $item->id }}</td>
+                    <td>{{ $item->first_name}}</td>
+                    <td>{{ $item->last_name }}</td>
+                    <td>{{ $item->email }}</td>
+                    <td class="text-xs text-center">
+                      {{ date("Y/m/d", strtotime($item->created_at))}}
+                    </td>
+                    <td>
+                        {{-- <form method="post" class="delete-form" data-route="{{route('posts.destroy',$post->id)}}">
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form> --}}
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {{-- <div class="px-4 py-4">
         @if ($users->count())
           @include('admin.users._table-filters')
         @else
@@ -65,7 +118,7 @@
             No hay registros creados
           </div>
         @endif
-      </div>
+      </div> --}}
     </div>
   @endsection
 
