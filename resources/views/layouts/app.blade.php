@@ -147,20 +147,50 @@
       .check_item -> seleccionar por item 
     --}}
     <script>
-      $(document).on('click', '#bulk_delete', function() {
+      /* $(document).on('click', '#bulk_delete', function() {
         $(".check_item").prop("checked", this.checked);
 		    // $("#select_count").html($("input.check_item:checked").length+" Seleccionados");
 		    $("#select_count").html($("input.check_item:checked").length+"");
+      }); */
+      /* $(document).on('click', '#bulk_delete', function() {
+        if(this.checked){
+          $(".check_item").each(function() {
+              this.checked = true;
+          });
+        }else{
+            $(".check_item").each(function() {
+                this.checked = false;
+            });
+        }
+        toggledeleteAllBtn();
+      }); */
+      $(document).on('click', '#bulk_delete', function() {
+        if($(this).is(':checked',true)) {
+          $(".check_item").prop('checked', true);
+        } else {
+          $(".check_item").prop('checked',false);
+        }
+        toggledeleteAllBtn();
       });
       	
-	    $(document).on('click', '.check_item', function() {
+	    /* $(document).on('click', '.check_item', function() {
         if ($('.check_item:checked').length == $('.check_item').length) {
           $('#bulk_delete').prop('checked', true);
         } else {
           $('#bulk_delete').prop('checked', false);
         }
-        $("#select_count").html($("input.check_item:checked").length+"");
-      });
+        // $("#select_count").html($("input.check_item:checked").length+"");
+        toggledeleteAllBtn();
+      }); */
+      	
+        $(document).on('click', '.check_item', function() {
+          if ($('.check_item').length == $('.check_item:checked').length) {
+            $('#bulk_delete').prop('checked', true);
+          } else {
+            $('#bulk_delete').prop('checked', false);
+          }
+          toggledeleteAllBtn();
+        });
 
       // Eliminar los registros seleccionados
       $('#delete_records').on('click', function(e) {
@@ -208,6 +238,14 @@
           }
         }
       });
+
+      function toggledeleteAllBtn() {
+        if( $('.check_item:checked').length > 0 ) {
+          $('button#delete_records').text('Eliminar ('+$('.check_item:checked').length+')').show();
+        } else {
+          $('button#delete_records').hide();
+        }
+      };
     </script>
 
     @stack('scripts')
