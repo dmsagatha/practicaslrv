@@ -20,6 +20,7 @@ Route::get('/laravelMix', function () {
  */
 Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
 Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
+Route::delete('usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
 Route::controller(UserController::class)->group(function () {
@@ -30,5 +31,10 @@ Route::controller(UserController::class)->group(function () {
    */
   Route::get('filtrar-con-select', 'filters')->name('users.filters');
 
+  /**
+   * Eliminación masiva de datos y contador de seleccionados
+   * https://www.phpzag.com/delete-multiple-rows-with-checkbox-using-jquery-php-mysql/
+   * https://github.com/mbere250/Laravel-8-Ajax-CRUD-with-Yajra-Datatable
+   */
   Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
 });

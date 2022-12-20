@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "alpinejs": "^3.10.5",
         "autoprefixer": "^10.4.8",
         "axios": "^0.27",
         "browser-sync": "^2.27.10",

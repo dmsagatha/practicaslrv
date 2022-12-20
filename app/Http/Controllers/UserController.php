@@ -38,18 +38,26 @@ class UserController extends Controller
     return view('admin.users.index-filters', compact('users'));
   }
 
+  public function destroy(User $user)
+  {
+    $user->delete();
+
+    return to_route('users.filters');
+  }
+
   public function multipleDelete(Request $request)
   {
+    $ids = $request->ids;
+
     try {
-      User::whereIn('id', $request->get('selected'))->delete();
+      User::whereIn('id', explode(",", $ids))->delete();
 
       return response("Registros eliminados satisfactoriamente.", 200);
+      /* return response()->json([
+        'success' => "Registros eliminados satisfactoriamente."
+      ], 200); */
     } catch(\Exception $e) {
       report($e);
     }
-
-    /* return response()->json([
-      'success' => "Registros eliminados satisfactoriamente.",
-    ],200); */
   }
 }
