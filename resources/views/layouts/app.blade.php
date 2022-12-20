@@ -10,7 +10,8 @@
 
     <title>Practicas Laravel - @yield('title')</title>
     
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    {{-- <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"> --}}
+    <link rel="icon" href="{{ url('/favicon.ico') }}">
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
@@ -23,6 +24,7 @@
     @stack('styles')
 
     <script src="{{ mix('js/app.js') }}" defer></script>
+    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

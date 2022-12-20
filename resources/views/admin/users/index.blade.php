@@ -6,7 +6,7 @@
       <form  action="{{route('users.search')}}" method ="POST">
         @csrf
 
-        <div class="grid grid-cols-6 gap-x-10 gap-y-8">
+        <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
           <div class="col-span-6 sm:col-span-3">
             <div class="group relative">
               <label for="names" class='form-label inline-block font-medium text-md text-gray-700'>
