@@ -4,9 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos de la App */
-@import "styleApp.css";
-
 @layer base {
   a {
     @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600
