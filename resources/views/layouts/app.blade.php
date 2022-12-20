@@ -140,6 +140,40 @@
       });
     </script>
 
+    <script>
+      // Eliminar un registro
+      window.deleteConfirm = function(formId) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Esta seguro?',
+          text: "Este registro se eliminará definitivamente!",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar!',
+          cancelButtonText: 'No, cancelar!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Eliminado!',
+              'El registro fue eliminado.',
+              'success'
+            )
+            document.getElementById(formId).submit();
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Cancelado.',
+              text: 'El registro no fue eliminado.!',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          }
+        })
+      }
+    </script>
+
     @stack('scripts')
   </body>
 </html>

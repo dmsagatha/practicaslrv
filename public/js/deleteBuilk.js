@@ -186,42 +186,4 @@ function toggleDeleteAllBtn() {
       });
     };
   });
-
-  $('.delete-form').on('submit', function(e) {
-    e.preventDefault();
-    var button = $(this);
-
-    Swal.fire({
-      icon: 'warning',
-      title: '¿Está seguro de eliminar este registro?',
-      showDenyButton: false,
-      showCancelButton: true,
-      confirmButtonText: 'Si'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type: 'post',
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url: button.data('route'),
-          data: {
-            '_method': 'delete'
-          },
-          success: function (response, textStatus, xhr) {
-            Swal.fire({
-              icon: 'success',
-              title: response,
-              showDenyButton: false,
-              showCancelButton: false,
-              confirmButtonText: 'Si'
-            }).then((result) => {
-              window.setTimeout("location.reload()", 1000);
-            });
-          }
-        });
-      }
-    });
-
-  })
 }); */

@@ -20,6 +20,7 @@ Route::get('/laravelMix', function () {
  */
 Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
 Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
+Route::delete('usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
 Route::controller(UserController::class)->group(function () {

@@ -1,7 +1,7 @@
 <div class="flex flex-col">
   <div class="w-full">
     <div class="border-b border-gray-300 shadow">
-      <table id="exampleFilters" class="table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+      <table id="exampleFilters" class="delete_table table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
         <thead>
           <tr>
             <th><input type="checkbox" id="bulk_delete"></th>
@@ -27,10 +27,14 @@
                 {{ date("Y/m/d", strtotime($item->created_at))}}
               </td>
               <td>
-                  {{-- <form method="post" class="delete-form" data-route="{{route('posts.destroy',$post->id)}}">
-                      @method('delete')
-                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                  </form> --}}
+                <form id="{{ route('users.destroy', $item) }}" action="{{ route('users.destroy', $item) }}" method="POST">
+                @csrf @method('DELETE')
+
+                  <a type="button" href="#" onclick="deleteConfirm('{{ route('users.destroy', $item) }}')"
+                    class="text-red-600 hover:text-red-900" title="Eliminar">
+                    <i class="fas fa-trash-alt text-red-600"></i>
+                  </a>
+                </form>
               </td>
             </tr>
           @endforeach

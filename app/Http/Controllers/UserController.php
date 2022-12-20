@@ -38,6 +38,13 @@ class UserController extends Controller
     return view('admin.users.index-filters', compact('users'));
   }
 
+  public function destroy(User $user)
+  {
+    $user->delete();
+
+    return to_route('users.filters');
+  }
+
   public function multipleDelete(Request $request)
   {
     $ids = $request->ids;
