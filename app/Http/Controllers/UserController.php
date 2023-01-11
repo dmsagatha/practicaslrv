@@ -3,11 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\UploadFileRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+  public function import(UploadFileRequest $request)
+  {
+    $file = $request->file('upload_file');
+
+    $file = fopen($request->upload_file->getRealPath(), 'r');
+
+    while ($csvColumn = fgetcsv($file)) {
+      // FUNCIONA
+      /*User::updateOrCreate(
+        ['email' => $csvColumn[1]],
+        [
+          'name'     => $csvColumn[0],
+          'email'    => $csvColumn[1],
+          'password' => bcrypt($csvColumn[2]),
+        ]
+      );*/
+      // FUNCIONA
+      User::upsert(
+        [
+          'first_name' => $csvColumn[0],
+          'last_name'  => $csvColumn[1],
+          'email'      => $csvColumn[2],
+          'password'   => bcrypt($csvColumn[3]),
+        ],
+        ['email' => $csvColumn[2]],
+      );
+    }
+    
+    fclose($file);
+
+    return to_route('users.filters');
+  }
+
   public function index()
   {
     // $users = DB::table('users')->select()->get();

@@ -13,7 +13,7 @@ if (mix.inProduction()) {
 }
 
 mix.browserSync({
-  proxy: "practicaslrv.test/usuarios",
+  proxy: "practicaslrv.test",
   browser: "Google Chrome",
   open: false});
 

@@ -79,9 +79,60 @@
             </select>
           </div>
         </div>
-        
+
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
+            <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
+              <div class="flex justify-between items-center">
+                <h4 class="text-md font-bold">Subir archivo (Xlsx, Xls)</h4>
+              </div>
+              <div>
+                <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="file" id="upload_file" name="upload_file"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md" multiple data-max-file-size="3MB" data-max-files="3" />
+                  
+                  {{-- <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB" data-max-files="3" /> --}}
+
+                  {{-- <div class="max-w-xl">
+                    <label
+                        class="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                        <span class="flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <span class="font-medium text-gray-600">
+                                Drop files to Attach, or
+                                <span class="text-blue-600 underline">browse</span>
+                            </span>
+                        </span>
+                        <input type="file" name="file_upload" class="hidden">
+                    </label>
+                  </div>
+                  
+                  <div class="py-2 text-sm">
+                    <label class="block mb-6">
+                      <input type="file" name="photo" class="block w-full mt-1 border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-sm" />
+                    </label>
+                  </div> --}}
+
+                  <div class="flex justify-end space-x-6">
+                    {{-- <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm
+                     text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"><a href="{{ route('users.filters') }}">Cancelar</a>
+                    </button> --}}
+                    <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">Subir datos
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-span-6 sm:col-span-3">
+          <div class="group relative mt-4">
             <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}" style="display:none;">
               <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar seleccionados (<span class="rows_selected" id="select_count"></span>)
             </button>
