@@ -41,13 +41,19 @@
         <?php $data = Session::get('success'); ?>
         @if (is_array($data))
           @foreach ($data as $msg)
-            <div class="alert alert-success" role="alert">
-              <i class="fa fa-check text-red-200"></i>{{ $msg }}
+            <div class="flex items-center w-1/2 px-6 py-4 text-yellow-700 bg-yellow-100 rounded">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </span>
+              <p class="ml-2 text-medium">{{ $msg }}/p>
             </div>
           @endforeach
         @else
-          <div class="alert alert-success" role="alert">
-            <i class="fa fa-check"></i>{{ $data }}
+          <div class="flex items-center w-1/2 px-6 py-4 text-green-700 bg-green-100 rounded">
+            <i class="fa fa-check mr-2"></i>{{ $data }}
           </div>
         @endif
       @endif
@@ -89,28 +95,6 @@
               <div>
                 <form action="{{ route('users.uploadData') }}" method="POST" enctype="multipart/form-data">
                   @csrf
-                  {{-- <input type="file" id="upload_file" name="upload_file"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md" multiple data-max-file-size="3MB" data-max-files="3" /> --}}
-                  
-                  {{-- <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB" data-max-files="3" /> --}}
-
-                  {{-- <div class="max-w-xl">
-                    <label
-                        class="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
-                        <span class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <span class="font-medium text-gray-600">
-                                Drop files to Attach, or
-                                <span class="text-blue-600 underline">browse</span>
-                            </span>
-                        </span>
-                        <input type="file" name="file_upload" class="hidden">
-                    </label>
-                  </div> --}}
                   
                   <div class="py-2 text-sm">
                     <label class="block mb-6">
@@ -119,9 +103,9 @@
                   </div>
 
                   <div class="flex justify-end space-x-6">
-                    {{-- <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm
-                     text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition"><a href="{{ route('users.filters') }}">Cancelar</a>
-                    </button> --}}
+                    <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
+                      <a href="{{ route('users.filters') }}">Cancelar</a>
+                    </button>
                     <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">Subir datos
                     </button>
                   </div>

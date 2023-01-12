@@ -19,16 +19,8 @@ class UserController extends Controller
     $file->move('excelImport', $filename);
 
     (new FastExcel)->import(public_path('excelImport/'.$filename), function ($line) {
+      // FUNCIONA
       /* return User::updateOrCreate(
-        ['email' => $line['email']],
-        [
-          'email'      => $line['email'],
-          'first_name' => $line['first_name'],
-          'last_name'  => $line['last_name'],
-          'password'   => bcrypt($line['claves'])
-        ]
-      ); */
-      return User::updateOrCreate(
         ['email' => $line['email']],
         [
           'email'      => $line['email'],
@@ -36,7 +28,17 @@ class UserController extends Controller
           'last_name'  => $line['last_name'],
           'password'   => bcrypt($line['password'])
         ]
-      );      
+      ); */
+      // FUNCIONA
+      return User::upsert(
+        [
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'email'      => $line['email'],
+          'password'   => bcrypt($line['password'])
+        ],
+        ['email' => $line['email']]
+      );
     });
 
     File::delete(public_path('excel/'.$filename));
