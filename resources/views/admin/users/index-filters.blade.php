@@ -114,6 +114,35 @@
             </div>
           </div>
         </div>
+
+        <div class="col-span-6 sm:col-span-3">
+          <div class="group relative">
+            <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
+              <div class="flex justify-between items-center">
+                <h4 class="text-md font-bold">Subir archivo (Xlsx, Xls)</h4>
+              </div>
+              <div>
+                <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  
+                  <div class="py-2 text-sm">
+                    <label class="block mb-6">
+                      <input type="file" name="file_data" class="block w-full mt-1 border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-sm" />
+                    </label>
+                  </div>
+
+                  <div class="flex justify-end space-x-6">
+                    <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
+                      <a href="{{ route('users.filters') }}">Cancelar</a>
+                    </button>
+                    <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">Subir datos
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative mt-4">

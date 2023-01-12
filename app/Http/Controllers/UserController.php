@@ -48,9 +48,9 @@ class UserController extends Controller
 
   public function import(UploadFileRequest $request)
   {
-    $file = $request->file('upload_file');
+    $file = $request->file('file_data');
 
-    $file = fopen($request->upload_file->getRealPath(), 'r');
+    $file = fopen($request->file_data->getRealPath(), 'r');
 
     while ($csvColumn = fgetcsv($file)) {
       // FUNCIONA
