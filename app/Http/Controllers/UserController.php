@@ -3,12 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\UploadFileRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Rap2hpoutre\FastExcel\FastExcel;
+use App\Http\Requests\UploadFileRequest;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+  public function uploadData(UploadFileRequest $request)
+  {
+    $file = $request->file('upload_file');
+
+    $nameFile = rand().$file->getClientOriginalName();
+    $file->move('excelImport', $nameFile);
+
+    (new FastExcel)->import(public_path('excelImport/'.$nameFile), function ($line) {
+      return User::updateOrCreate(
+        ['email' => $line['email']],
+        [
+          'email'      => $line['email'],
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'password'   => bcrypt($line['claves'])
+        ]
+      );      
+    });
+
+    File::delete(public_path('excel/'.$nameFile));
+
+    return to_route('users.filters');
+  }
+
   public function import(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
@@ -20,9 +46,10 @@ class UserController extends Controller
       /*User::updateOrCreate(
         ['email' => $csvColumn[1]],
         [
-          'name'     => $csvColumn[0],
-          'email'    => $csvColumn[1],
-          'password' => bcrypt($csvColumn[2]),
+          'first_name' => $csvColumn[0],
+          'last_name'  => $csvColumn[1],
+          'email'      => $csvColumn[1],
+          'password'   => bcrypt($csvColumn[2]),
         ]
       );*/
       // FUNCIONA

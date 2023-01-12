@@ -87,10 +87,10 @@
                 <h4 class="text-md font-bold">Subir archivo (Xlsx, Xls)</h4>
               </div>
               <div>
-                <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('users.uploadData') }}" method="POST" enctype="multipart/form-data">
                   @csrf
-                  <input type="file" id="upload_file" name="upload_file"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md" multiple data-max-file-size="3MB" data-max-files="3" />
+                  {{-- <input type="file" id="upload_file" name="upload_file"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md" multiple data-max-file-size="3MB" data-max-files="3" /> --}}
                   
                   {{-- <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB" data-max-files="3" /> --}}
 
@@ -110,13 +110,13 @@
                         </span>
                         <input type="file" name="file_upload" class="hidden">
                     </label>
-                  </div>
+                  </div> --}}
                   
                   <div class="py-2 text-sm">
                     <label class="block mb-6">
-                      <input type="file" name="photo" class="block w-full mt-1 border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-sm" />
+                      <input type="file" name="upload_file" class="block w-full mt-1 border focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-sm" />
                     </label>
-                  </div> --}}
+                  </div>
 
                   <div class="flex justify-end space-x-6">
                     {{-- <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm
@@ -140,7 +140,7 @@
         </div>
       </div>
 
-      <div class="px-4 py-4">
+      <div class="px-4 py-4 pb-10">
         @if ($users->count())
           @include('admin.users._table-filters')
         @else

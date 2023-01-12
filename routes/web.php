@@ -40,4 +40,7 @@ Route::controller(UserController::class)->group(function () {
 
 
   Route::post('usuarios/importar', 'import')->name('users.import');
+
+
+  Route::post('usuarios/import', 'uploadData')->name('users.uploadData');
 });

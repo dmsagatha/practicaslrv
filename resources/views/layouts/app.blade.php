@@ -21,9 +21,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/styleApp.css') }}">
 
-    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
-
     @stack('styles')
 
     <script src="{{ mix('js/app.js') }}" defer></script>
@@ -32,33 +29,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <style>
-      /**
-      * FilePond Custom Styles
-      */
-      .filepond--drop-label {
-        color: #4c4e53;
-      }
-
-      .filepond--label-action {
-        text-decoration-color: #babdc0;
-      }
-
-      .filepond--panel-root {
-        border-radius: 2em;
-        background-color: #edf0f4;
-        height: 1em;
-      }
-
-      .filepond--item-panel {
-        background-color: #595e68;
-      }
-
-      .filepond--drip-blob {
-        background-color: #7f8a9a;
-      }
-    </style>
   </head>
   <body class="h-screen bg-gray-100 font-sans antialiased leading-normal tracking-normal">
     <div class="w-full text-gray-900">
@@ -105,12 +75,6 @@
     <script src="{{ asset('plugins/dataTables/TableCheckAll.js') }}"></script>
     <script src="{{ asset('js/filter-export.js') }}"></script>
     <script src="{{ asset('js/deleteBuilk.js') }}"></script>
-
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
     {{-- 
       Filtrar con la etiqueta select
@@ -218,37 +182,6 @@
           }
         })
       }
-    </script>
-
-    {{-- <script>
-      /*
-      We want to preview images, so we need to register the Image Preview plugin
-      */
-      FilePond.registerPlugin(
-        // encodes the file as base64 data
-        FilePondPluginFileEncode,
-        
-        // validates the size of the file
-        FilePondPluginFileValidateSize,
-        
-        // corrects mobile image orientation
-        FilePondPluginImageExifOrientation,
-        
-        // previews dropped images
-        FilePondPluginImagePreview
-      );
-
-      // Select the file input and use create() to turn it into a pond
-      FilePond.create(
-        document.querySelector('input')
-      );
-    </script> --}}
-    <script>
-      // Get a reference to the file input element
-      const inputElement = document.querySelector('input[type="file"]');
-
-      // Create a FilePond instance
-      const pond = FilePond.create(inputElement);
     </script>
 
     @stack('scripts')

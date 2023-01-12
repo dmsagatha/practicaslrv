@@ -810,6 +810,14 @@ a:hover{
   margin-bottom: 0.5rem;
 }
 
+.mb-1{
+  margin-bottom: 0.25rem;
+}
+
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+
 .block{
   display: block;
 }
@@ -1160,6 +1168,10 @@ a:hover{
 
 .pt-6{
   padding-top: 1.5rem;
+}
+
+.pb-10{
+  padding-bottom: 2.5rem;
 }
 
 .text-center{
