@@ -42,7 +42,7 @@
         @if (is_array($data))
           @foreach ($data as $msg)
             <div class="alert alert-success" role="alert">
-              <i class="fa fa-check"></i>{{ $msg }}
+              <i class="fa fa-check text-red-200"></i>{{ $msg }}
             </div>
           @endforeach
         @else

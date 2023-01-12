@@ -42,5 +42,12 @@ Route::controller(UserController::class)->group(function () {
   Route::post('usuarios/importar', 'import')->name('users.import');
 
 
+  /**
+   * Fast Excel - https://github.com/rap2hpoutre/fast-excel
+   * https://github.com/crusherblack/laravel-import-export-excel/blob/master/app/Http/Controllers/PegawaiController.php#L41
+   * https://www.youtube.com/watch?v=lWQnxOdbTi0&ab_channel=ArtisansWeb
+   * https://artisansweb.net/how-to-integrate-excel-exports-and-imports-in-laravel/
+   * 
+   */
   Route::post('usuarios/import', 'uploadData')->name('users.uploadData');
 });
