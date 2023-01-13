@@ -14,7 +14,7 @@ class UserController extends Controller
   public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
-
+    
     $uploadData = (new FastExcel)->import($file, function ($line) {
       // FUNCIONA
       /* return User::updateOrCreate(
