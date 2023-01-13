@@ -15,12 +15,7 @@ class UserController extends Controller
   {
     $file = $request->file('upload_file');
 
-    
-
-    $filename = rand().$file->getClientOriginalName();
-    $file->move('excelImport', $filename);
-
-    (new FastExcel)->import(public_path('excelImport/'.$filename), function ($line) {
+    $uploadData = (new FastExcel)->import($file, function ($line) {
       // FUNCIONA
       /* return User::updateOrCreate(
         ['email' => $line['email']],
@@ -43,7 +38,33 @@ class UserController extends Controller
       );
     });
 
-    File::delete(public_path('excel/'.$filename));
+    /* $filename = rand().$file->getClientOriginalName();
+    $file->move('excelImport', $filename);
+
+    (new FastExcel)->import(public_path('excelImport/'.$filename), function ($line) {
+      // FUNCIONA
+      return User::updateOrCreate(
+        ['email' => $line['email']],
+        [
+          'email'      => $line['email'],
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'password'   => bcrypt($line['password'])
+        ]
+      );
+      // FUNCIONA
+      return User::upsert(
+        [
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'email'      => $line['email'],
+          'password'   => bcrypt($line['password'])
+        ],
+        ['email' => $line['email']]
+      );
+    });
+
+    File::delete(public_path('excel/'.$filename)); */
 
     return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
   }

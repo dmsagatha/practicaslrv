@@ -237,5 +237,6 @@ return [
     'state.serial'      => 'Serial',
     'state.size'        => 'Tamaño',
     'state.brand_id'    => 'Marca',
+    'upload_file'       => 'subir archivo',
   ],
 ];
