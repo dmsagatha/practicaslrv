@@ -135,7 +135,7 @@ class UserController extends Controller
     return view('admin.users.index', compact('users'));
   }
 
-  public function filters()
+  public function indexFilters()
   {
     $users = User::with('area')->orderBy('first_name')->get();
 

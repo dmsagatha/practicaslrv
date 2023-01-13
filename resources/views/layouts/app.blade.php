@@ -130,9 +130,9 @@
 
         $(".selectAll").on( "click", function(e) {
           if ($(this).is( ":checked" )) {
-              DT1.rows(  ).select();        
+              DT1.rows(  ).select();
           } else {
-              DT1.rows(  ).deselect(); 
+              DT1.rows(  ).deselect();
           }
         });
       
@@ -140,11 +140,11 @@
           DT1.search($('#search').val()).draw();
         });
 
-        $('#field1').on('change', () => {            
+        $('#field1').on('change', () => {
           DT1.search($("#field1").val()).draw();
         });
 
-        $('#field2').on('change', () => {            
+        $('#field2').on('change', () => {
           DT1.search($("#field2").val()).draw();
         });
       });
