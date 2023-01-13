@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Area;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UploadFileRequest;
 use Illuminate\Support\Facades\File;
@@ -11,7 +12,49 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+  private $areas;
+
+  /**
+   * Colección de datos
+   */
+  public function __construct()
+  {
+    $this->areas = Area::pluck('id', 'acronym');
+  }
+
   public function uploadData(UploadFileRequest $request)
+  {
+    $file = $request->file('upload_file');
+    
+    $uploadData = (new FastExcel)->import($file, function ($line) {
+      // FUNCIONA
+      /* return User::updateOrCreate(
+        ['email' => $line['email']],
+        [
+          'email'      => $line['email'],
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'password'   => bcrypt($line['password'])
+          'area_id'    => $this->areas[$line['acronym']]
+        ]
+      ); */
+      // FUNCIONA
+      return User::upsert(
+        [
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'email'      => $line['email'],
+          'password'   => bcrypt($line['password']),
+          'area_id'    => $this->areas[$line['acronym']]
+        ],
+        ['email' => $line['email']]
+      );
+    });
+
+    return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
+  }
+
+  public function otro(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
     
@@ -72,7 +115,7 @@ class UserController extends Controller
   public function index()
   {
     // $users = DB::table('users')->select()->get();
-    $users = User::orderBy('first_name')->get();
+    $users = User::with('area')->orderBy('first_name')->get();
 
     return view('admin.users.index', compact('users'));
   }
@@ -94,7 +137,7 @@ class UserController extends Controller
 
   public function filters()
   {
-    $users = User::orderBy('first_name')->get();
+    $users = User::with('area')->orderBy('first_name')->get();
 
     return view('admin.users.index-filters', compact('users'));
   }

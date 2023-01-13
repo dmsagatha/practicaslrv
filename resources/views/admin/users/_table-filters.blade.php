@@ -8,6 +8,7 @@
             <th>ID</th>
             <th>Nombres</th>
             <th>Apellidos</th>
+            <th>Areas</th>
             <th>Correo Electrónico</th>
             <th>Fecha</th>
             <th>Acciones</th>
@@ -22,19 +23,20 @@
               <td class="text-center">{{ $item->id }}</td>
               <td>{{ $item->first_name}}</td>
               <td>{{ $item->last_name }}</td>
+              <td>{{ $item->area->name }}</td>
               <td>{{ $item->email }}</td>
               <td class="text-xs text-center">
                 {{ date("Y/m/d", strtotime($item->created_at))}}
               </td>
               <td>
-                <form id="{{ route('users.destroy', $item) }}" action="{{ route('users.destroy', $item) }}" method="POST">
+                {{-- <form id="{{ route('users.destroy', $item) }}" action="{{ route('users.destroy', $item) }}" method="POST">
                 @csrf @method('DELETE')
 
                   <a type="button" href="#" onclick="deleteConfirm('{{ route('users.destroy', $item) }}')"
                     class="text-red-600 hover:text-red-900" title="Eliminar">
                     <i class="fas fa-trash-alt text-red-600"></i>
                   </a>
-                </form>
+                </form> --}}
               </td>
             </tr>
           @endforeach

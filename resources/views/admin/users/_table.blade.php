@@ -1,12 +1,13 @@
 <div class="flex flex-col">
   <div class="w-full">
     <div class="border-b border-gray-300 shadow">
-      <table id="example" class="table stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
+      <table id="example" class="table table-condensed stripe hover" style="width:100%; padding-top: 1em; padding-bottom: 1em;">
         <thead>
           <tr>
             <th>ID</th>
             <th class="head">Nombres</th>
             <th class="head">Apellidos</th>
+            <th class="head">Areas</th>
             <th class="head">Correo Electrónico</th>
             <th class="head">Fecha</th>
           </tr>
@@ -23,6 +24,7 @@
             <th></th>
             <th class="text-center">Nombres</th>
             <th>Apellidos</th>
+            <th>Areas</th>
             <th>Correo Electrónico</th>
             <th>Fecha</th>
           </tr>
@@ -33,6 +35,7 @@
               <td class="text-center">{{ $item->id }}</td>
               <td>{{ $item->first_name}}</td>
               <td>{{ $item->last_name }}</td>
+              <td>{{ $item->area->name }}</td>
               <td>{{ $item->email }}</td>
               <td class="text-xs text-center">
                 {{ date("Y/m/d", strtotime($item->created_at))}}
