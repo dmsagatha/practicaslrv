@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use App\Http\Requests\UploadFileRequest;
-use Rap2hpoutre\FastExcel\Facades\FastExcel;
+use Illuminate\Support\Facades\File;
+use Rap2hpoutre\FastExcel\FastExcel;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
   public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
+
+    
 
     $filename = rand().$file->getClientOriginalName();
     $file->move('excelImport', $filename);
