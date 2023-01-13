@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Rap2hpoutre\FastExcel\FastExcel;
 use App\Http\Requests\UploadFileRequest;
-use Illuminate\Http\Request;
+use Rap2hpoutre\FastExcel\Facades\FastExcel;
 
 class UserController extends Controller
 {
@@ -44,40 +44,6 @@ class UserController extends Controller
     File::delete(public_path('excel/'.$filename));
 
     return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
-  }
-
-  public function import(UploadFileRequest $request)
-  {
-    $file = $request->file('file_data');
-
-    $file = fopen($request->file_data->getRealPath(), 'r');
-
-    while ($csvColumn = fgetcsv($file)) {
-      // FUNCIONA
-      /*User::updateOrCreate(
-        ['email' => $csvColumn[1]],
-        [
-          'first_name' => $csvColumn[0],
-          'last_name'  => $csvColumn[1],
-          'email'      => $csvColumn[1],
-          'password'   => bcrypt($csvColumn[2]),
-        ]
-      );*/
-      // FUNCIONA
-      User::upsert(
-        [
-          'first_name' => $csvColumn[0],
-          'last_name'  => $csvColumn[1],
-          'email'      => $csvColumn[2],
-          'password'   => bcrypt($csvColumn[3]),
-        ],
-        ['email' => $csvColumn[2]],
-      );
-    }
-    
-    fclose($file);
-
-    return to_route('users.filters');
   }
 
   public function index()

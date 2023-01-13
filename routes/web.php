@@ -38,10 +38,6 @@ Route::controller(UserController::class)->group(function () {
    */
   Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
 
-
-  Route::post('usuarios/importar', 'import')->name('users.import');
-
-
   /**
    * Fast Excel - https://github.com/rap2hpoutre/fast-excel
    * https://github.com/crusherblack/laravel-import-export-excel/blob/master/app/Http/Controllers/PegawaiController.php#L41
