@@ -6,18 +6,18 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInserts, WithChunkReading, WithValidation
+class UsersImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation
 // class UsersImport implements ToCollection, WithHeadingRow
 {
-  use Importable;
+  use Importable, SkipsFailures;
 
   // ToModel
   public function model(array $row)
@@ -35,11 +35,6 @@ class UsersImport implements ToModel, WithHeadingRow, WithUpserts, WithBatchInse
     return [
       '*.email'  => ['required', 'email', 'unique:users,email']
     ];
-  }
-
-  public function uniqueBy()
-  {
-    return 'email';
   }
     
   public function batchSize(): int
