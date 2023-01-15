@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -43,7 +44,11 @@ class UsersImport implements
   public function rules(): array
   {
     return [
-      '*.email'  => ['required', 'email', 'unique:users,email']
+      // '*.email'  => ['required', 'email', 'unique:users,email']
+      '*.email'  => [
+        'required', 'email', 
+        Rule::unique(User::class, 'email')
+        ]
     ];
   }
     
