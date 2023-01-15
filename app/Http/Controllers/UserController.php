@@ -3,11 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\UploadFileRequest;
 
 class UserController extends Controller
 {
+  public function uploadData(UploadFileRequest $request) 
+  {
+    $file = $request->file('upload_file');
+
+    // Excel::import(new UsersImport, $file);
+    (new UsersImport)->import($file);
+    
+    return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
+  }
+
+  public function filters()
+  {
+    $users = User::orderBy('first_name')->get();
+
+    return view('admin.users.index-filters', compact('users'));
+  }
+
   public function index()
   {
     // $users = DB::table('users')->select()->get();
@@ -29,13 +49,6 @@ class UserController extends Controller
       ->get();
 
     return view('admin.users.index', compact('users'));
-  }
-
-  public function filters()
-  {
-    $users = User::orderBy('first_name')->get();
-
-    return view('admin.users.index-filters', compact('users'));
   }
 
   public function destroy(User $user)
