@@ -57,6 +57,8 @@
            <li>{{ $error }}</li>
         @endforeach
       @endif
+
+      @include('partials.failures')
       
       <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
         <div class="col-span-6 sm:col-span-3">
