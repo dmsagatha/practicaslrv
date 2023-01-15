@@ -52,11 +52,11 @@
         </div>
       @endif
 
-      @if (isset($errors) && $errors->any())
-        @foreach ($errors->all() as $error)
+      {{-- @if (isset($errors) && $errors->any())
+        @foreach($errors->all() as $error)
            <li>{{ $error }}</li>
         @endforeach
-      @endif
+      @endif --}}
 
       @include('partials.failures')
       

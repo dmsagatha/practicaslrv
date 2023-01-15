@@ -14,10 +14,14 @@ class UserController extends Controller
   public function uploadData(UploadFileRequest $request) 
   {
     $file = $request->file('upload_file');
-
-    // Excel::import(new UsersImport, $file);
-    (new UsersImport)->import($file);
     
+    $import = new UsersImport();
+    $import->import($file);
+
+    if ($import->failures()->isNotEmpty()) {
+      return back()->withFailures($import->failures());
+    }
+  
     return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
   }
 
