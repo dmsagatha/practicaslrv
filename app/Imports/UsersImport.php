@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, ToCollection};
+use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, ToCollection, WithUpserts};
 use Maatwebsite\Excel\Concerns\{WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation};
 
 class UsersImport implements ToModel, 
@@ -16,7 +16,8 @@ class UsersImport implements ToModel,
   WithChunkReading, 
   WithValidation,
   SkipsOnError,
-  SkipsOnFailure
+  SkipsOnFailure,
+  WithUpserts
 /* class UsersImport implements ToCollection, 
     WithHeadingRow, 
     WithBatchInserts, 
@@ -28,6 +29,7 @@ class UsersImport implements ToModel,
   use Importable, SkipsErrors, SkipsFailures;
 
   // ToModel
+  // https://lukaa.me/working-with-excel-files-in-laravel-importing/
   public function model(array $row)
   {
     /* return new User([
@@ -36,7 +38,7 @@ class UsersImport implements ToModel,
       'email'      => $row['email'],
       'password'   => Hash::make($row['password'])
     ]); */
-    $user = User::updateOrCreate(
+     return User::firstOrCreate(
       ['email' => $row['email']],
       [
         'email'      => $row['email'],
@@ -88,6 +90,10 @@ class UsersImport implements ToModel,
         Rule::unique(User::class, 'email')
       ]
     ];
+  }
+  public function uniqueBy()
+  {
+    return 'email';
   }
     
   public function batchSize(): int
