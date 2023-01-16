@@ -54,6 +54,7 @@ class UsersImport implements ToModel,
   {
     foreach ($rows as $row)
     {
+      // User::firstOrCreate(
       User::updateOrCreate(
         ['email' => $row['email']],
         [
@@ -91,9 +92,15 @@ class UsersImport implements ToModel,
       ]
     ];
   }
+
   public function uniqueBy()
   {
     return 'email';
+  }
+
+  public function upsertColumns()
+  {
+    return ['first_name', 'last_name', 'password'];
   }
     
   public function batchSize(): int

@@ -16,7 +16,7 @@ class UserController extends Controller
   public function uploadData(UploadFileRequest $request) 
   {
     $file = $request->file('upload_file');
-    
+
     $import = new UsersImport();
     $import->import($file);
 

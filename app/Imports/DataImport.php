@@ -6,23 +6,22 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, ToCollection, WithUpserts};
+use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, WithUpserts};
 use Maatwebsite\Excel\Concerns\{WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation};
 
 class DataImport implements ToModel,
   WithHeadingRow, 
   WithBatchInserts, 
   WithChunkReading, 
-  WithValidation,
   SkipsOnError,
   SkipsOnFailure,
   WithUpserts
 {
   use Importable, SkipsErrors, SkipsFailures;
-
-  // ToModel
+  
   public function model(array $row)
   {
+    // pleannon@example.com
     return new User([
       'first_name' => $row['first_name'],
       'last_name'  => $row['last_name'],
@@ -31,7 +30,7 @@ class DataImport implements ToModel,
     ]);
   }
 
-  public function rules(): array
+  /* public function rules(): array
   {
     return [
       // '*.email'  => ['required', 'email', 'unique:users,email']
@@ -40,10 +39,16 @@ class DataImport implements ToModel,
         Rule::unique(User::class, 'email')
       ]
     ];
-  }
+  } */
+  
   public function uniqueBy()
   {
     return 'email';
+  }
+
+  public function upsertColumns()
+  {
+    return ['first_name', 'last_name', 'password'];
   }
     
   public function batchSize(): int
