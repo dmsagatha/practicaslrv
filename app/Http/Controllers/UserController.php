@@ -34,12 +34,12 @@ class UserController extends Controller
           'email'      => $line['email'],
           'first_name' => $line['first_name'],
           'last_name'  => $line['last_name'],
-          'password'   => bcrypt($line['password'])
+          'password'   => bcrypt($line['password']),
           'area_id'    => $this->areas[$line['acronym']]
         ]
       ); */
       // FUNCIONA
-      return User::upsert(
+      /* return User::upsert(
         [
           'first_name' => $line['first_name'],
           'last_name'  => $line['last_name'],
@@ -48,7 +48,17 @@ class UserController extends Controller
           'area_id'    => $this->areas[$line['acronym']]
         ],
         ['email' => $line['email']]
-      );
+      ); */
+      return User::firstOrCreate(
+        ['email' => $line['email']],
+        [
+          'email'      => $line['email'],
+          'first_name' => $line['first_name'],
+          'last_name'  => $line['last_name'],
+          'password'   => bcrypt($line['password']),
+          'area_id'    => $this->areas[$line['acronym']]
+        ]
+      )->id;
     });
 
     return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
