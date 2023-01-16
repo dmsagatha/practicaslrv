@@ -7,55 +7,36 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, ToCollection, WithUpserts};
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, WithUpserts};
 use Maatwebsite\Excel\Concerns\{WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation};
 
-class UsersImport implements ToModel, 
+/* class UsersImport implements ToModel, 
   WithHeadingRow, 
   WithBatchInserts, 
   WithChunkReading, 
   WithValidation,
   SkipsOnError,
   SkipsOnFailure,
-  WithUpserts
-/* class UsersImport implements ToCollection, 
+  WithUpserts */
+class UsersImport implements ToCollection, 
     WithHeadingRow, 
     WithBatchInserts, 
     WithChunkReading, 
     WithValidation,
     SkipsOnError,
-    SkipsOnFailure */
+    SkipsOnFailure,
+    WithUpserts
 {
   use Importable, SkipsErrors, SkipsFailures;
 
-  // ToModel
-  // https://lukaa.me/working-with-excel-files-in-laravel-importing/
-  public function model(array $row)
-  {
-    /* return new User([
-      'first_name' => $row['first_name'],
-      'last_name'  => $row['last_name'],
-      'email'      => $row['email'],
-      'password'   => Hash::make($row['password'])
-    ]); */
-     return User::firstOrCreate(
-      ['email' => $row['email']],
-      [
-        'email'      => $row['email'],
-        'first_name' => $row['first_name'],
-        'last_name'  => $row['last_name'],
-        'password'   => Hash::make($row['password'])
-      ]
-    );
-  }
-
   // ToCollection
-  /* public function collection(Collection $rows)
+  public function collection(Collection $rows)
   {
     foreach ($rows as $row)
     {
-      // User::firstOrCreate(
-      User::updateOrCreate(
+      User::firstOrCreate(
+      // User::updateOrCreate(
         ['email' => $row['email']],
         [
           'email'      => $row['email'],
@@ -65,7 +46,7 @@ class UsersImport implements ToModel,
         ]
       );
     }
-  } */
+  }
   /* public function collection(Collection $collection)
   {
     $collection->each(function($row) {
