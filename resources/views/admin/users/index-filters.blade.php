@@ -118,6 +118,21 @@
             </div>
           </div>
         </div>
+
+        <h3>Importer</h3>
+
+        <p>Sélectionnez un fichier Excel (.xlsx) pour importer les données dans la table "clients".<br><strong>Les colonnes : </strong>name, email, phone, address</p>
+
+        <form method="POST" action="{{ route('users.simpleExcel') }}" enctype="multipart/form-data" >
+
+            <!-- CSRF Token -->
+            @csrf
+
+            <input type="file" name="fichier" >
+
+            <button type="submit" >Importer</button>
+
+        </form>
         
         <!-- Eliminación masiva -->
         <div class="col-span-6 sm:col-span-3">

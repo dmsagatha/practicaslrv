@@ -6,13 +6,38 @@ use App\Models\User;
 use App\Imports\DataImport;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\UploadFileRequest;
+use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
+  public function simpleExcel(Request $request) 
+  {
+    $this->validate($request, [
+      'fichier' => 'bail|required|file|mimes:xlsx'
+    ]);
+
+    $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
+    $reader = SimpleExcelReader::create($fichier);
+    $rows = $reader->getRows()->filter(function ($ligne) {
+      return filter_var($ligne['email'], FILTER_VALIDATE_EMAIL) === true;
+    });
+
+    $status = User::insert($rows->toArray());
+
+    if ($status) {
+      // 5. On supprime le fichier uploadé
+      $reader->close(); // On ferme le $reader
+      unlink($fichier);
+
+      // 6. Retour vers le formulaire avec un message $msg
+      return back()->withMsg("Importation réussie !");
+    } else { abort(500); }
+  }
+
   public function uploadData(UploadFileRequest $request) 
   {
     $file = $request->file('upload_file');

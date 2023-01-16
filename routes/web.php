@@ -40,4 +40,7 @@ Route::controller(UserController::class)->group(function () {
 
   // https://docs.laravel-excel.com/
   Route::post('usuarios/import', 'uploadData')->name('users.uploadData');
+
+  // https://github.com/spatie/simple-excel
+  Route::post("simple-excel/import", 'simpleExcel')->name('users.simpleExcel');
 });
