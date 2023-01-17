@@ -89,7 +89,7 @@
         </div>
 
         <!-- Importar -->
-        <div class="col-span-6 sm:col-span-3">
+        {{-- <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
             <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
               <div class="flex justify-between items-center">
@@ -117,11 +117,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
 
         <h3>Importer</h3>
 
-        <p>Sélectionnez un fichier Excel (.xlsx) pour importer les données dans la table "clients".<br><strong>Les colonnes : </strong>name, email, phone, address</p>
+        <p>Subir información</p>
 
         <form method="POST" action="{{ route('users.simpleExcel') }}" enctype="multipart/form-data" >
 
@@ -130,7 +130,7 @@
 
             <input type="file" name="fichier" >
 
-            <button type="submit" >Importer</button>
+            <button type="submit" >Importar</button>
 
         </form>
         

@@ -16,26 +16,64 @@ class UserController extends Controller
 {
   public function simpleExcel(Request $request) 
   {
-    $this->validate($request, [
+    /* $this->validate($request, [
       'fichier' => 'bail|required|file|mimes:xlsx'
-    ]);
+    ]); */
 
-    $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
-    $reader = SimpleExcelReader::create($fichier);
-    $rows = $reader->getRows()->filter(function ($ligne) {
+    /* $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
+    $reader  = SimpleExcelReader::create($fichier);
+    //$rows = $reader->getRows();
+    $rows    = $reader->getRows()->filter(function ($ligne) {
       return filter_var($ligne['email'], FILTER_VALIDATE_EMAIL) === true;
     });
 
     $status = User::insert($rows->toArray());
 
     if ($status) {
-      // 5. On supprime le fichier uploadé
       $reader->close(); // On ferme le $reader
       unlink($fichier);
-
-      // 6. Retour vers le formulaire avec un message $msg
+      
       return back()->withMsg("Importation réussie !");
-    } else { abort(500); }
+    } else { abort(500); } */
+
+    /* SimpleExcelReader::create($request->fichier, 'xlsx')->getRows()
+      ->each(function (array $rowProperties) {
+        if (!User::where('email', $rowProperties['email'])->exists()) {
+            User::firstOrCreate($rowProperties);
+        }
+    }); */
+
+    if (!$request->file('fichier')) {
+      return response()->json('You need to upload an excel file!', 400);
+    }
+
+    // $data = SimpleExcelReader::create($request->file('fichier'), 'csv')->getRows();
+    SimpleExcelReader::create($request->file('fichier'), 'csv')
+      ->getRows()
+      ->each(function(array $row) {
+        // return User::firstWhere('email', $row['email'])->update(
+        return User::upsert(
+          [
+            'email'      => $row['email'],
+            'first_name' => $row['first_name'],
+            'last_name'  => $row['last_name'],
+            'password'   => Hash::make($row['password'])
+          ], ['email' => $row['email']]
+        );
+      });
+    /* $data->each(function ($row) {
+      return User::firstOrCreate(
+        ['email' => $row['email']],
+        [
+          'email'      => $row['email'],
+          'first_name' => $row['first_name'],
+          'last_name'  => $row['last_name'],
+          'password'   => Hash::make($row['password'])
+        ]
+      );
+    }); */
+    
+    return back()->withMsg("Importation réussie !");
   }
 
   public function uploadData(UploadFileRequest $request) 
