@@ -43,4 +43,7 @@ Route::controller(UserController::class)->group(function () {
 
   // https://github.com/spatie/simple-excel
   Route::post("simple-excel/import", 'simpleExcel')->name('users.simpleExcel');
+
+  // https://medium.com/technology-hits/how-to-import-a-csv-excel-file-in-laravel-d50f93b98aa4
+  Route::post("upload-content/import", 'uploadContent')->name('users.uploadContent');
 });

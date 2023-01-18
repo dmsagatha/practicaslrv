@@ -88,6 +88,8 @@
           </div>
         </div>
 
+
+
         <!-- Importar -->
         {{-- <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
@@ -119,20 +121,24 @@
           </div>
         </div> --}}
 
+
         <h3>Importer</h3>
 
         <p>Subir información</p>
 
-        <form method="POST" action="{{ route('users.simpleExcel') }}" enctype="multipart/form-data" >
+        <form method="POST" action="{{ route('users.uploadContent') }}" enctype="multipart/form-data" >
+            @csrf
 
-            <!-- CSRF Token -->
+            <input type="file" name="uploaded_file" >
+            <button type="submit" >Importar</button>
+        </form>
+
+        {{-- <form method="POST" action="{{ route('users.simpleExcel') }}" enctype="multipart/form-data" >
             @csrf
 
             <input type="file" name="fichier" >
-
             <button type="submit" >Importar</button>
-
-        </form>
+        </form> --}}
         
         <!-- Eliminación masiva -->
         <div class="col-span-6 sm:col-span-3">
