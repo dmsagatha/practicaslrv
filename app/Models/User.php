@@ -35,6 +35,7 @@ class User extends Authenticatable
     if ($value->count() == 0)
     {
       DB::table('users')->insert($data);
+      // DB::table('users')->updateOrInsert($data);
     }
   }
 }
