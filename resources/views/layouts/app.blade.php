@@ -86,7 +86,7 @@
         var DT1 = $('#exampleFilters').DataTable({
           responsive: true,
           lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          pageLength: 15,
+          pageLength: 25,
           processing: true,
           language: {
             url: "{{ asset('plugins/dataTables/Spanish.json') }}"

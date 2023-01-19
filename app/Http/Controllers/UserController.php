@@ -2,113 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use App\Http\Requests\UploadFileRequest;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
   public function uploadContent(Request $request)
   {
-    if ($request->input('submit') != null ) 
+    $data = [];
+
+    // Validación del archivo
+    $request->validate([
+      "uploaded_file" => "required",
+    ]);
+
+    $file = $request->file("uploaded_file");
+    $csvData = file_get_contents($file);
+
+    $rows = array_map("str_getcsv", explode("\n", $csvData));
+    $header = array_shift($rows);
+
+    foreach ($rows as $row)
     {
-      $file = $request->file('uploaded_file');
+      if (isset($row[0]))
+      {
+        if ($row[0] != "")
+        {
+          $row = array_combine($header, $row);
 
-      // File Details 
-      $filename = $file->getClientOriginalName();
-      $extension = $file->getClientOriginalExtension();
-      $tempPath = $file->getRealPath();
-      $fileSize = $file->getSize();
-      $mimeType = $file->getMimeType();
+          // Datos maestros de usuario
+          $userData = [
+            "first_name" => $row['first_name'],
+            "last_name"  => $row['last_name'],
+            "email"      => $row["email"],
+            "password"   => $row["password"],
+          ];
 
-      // Valid File Extensions
-      $valid_extension = array("csv");
+          // ----------- Comprobar si el correo electrónico ya existe ----------------
+          $checkUser = User::where("email", "=", $row["email"])->first();
 
-      // 2MB in Bytes
-      $maxFileSize = 2097152; 
+          if (!is_null($checkUser))
+          {
+            $updateUser = User::where("email", "=", $row["email"])->update($userData);
 
-      // Check file extension
-      if(in_array(strtolower($extension),$valid_extension)){
+            if ($updateUser == true)
+            {
+              $data["status"]  = "failed";
+              $data["message"] = "Registros actualizados exitosamente";
+            }
+          } else {
+            $user = User::create($userData);
 
-        // Check file size
-        if($fileSize <= $maxFileSize){
-
-          // File upload location
-          $location = 'uploads';
-
-          // Upload file
-          $file->move($location,$filename);
-
-          // Import CSV to Database
-          $filepath = public_path($location."/".$filename);
-
-          // Reading file
-          $file = fopen($filepath,"r");
-
-          $importData_arr = array();
-          $i = 0;
-
-          while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-             $num = count($filedata );
-             
-             // Omitir la primera fila (elimine el comentario a continuación si desea omitir la primera fila)
-             if($i == 0){
-                $i++;
-                continue; 
-             }
-             for ($c=0; $c < $num; $c++) {
-                $importData_arr[$i][] = $filedata [$c];
-             }
-             $i++;
+            if (!is_null($user))
+            {
+              $data["status"]  = "success";
+              $data["message"] = "Registros importados exitosamente";
+            }
           }
-          fclose($file);
-
-          // Insert to MySQL database
-          foreach($importData_arr as $importData){
-            $insertData = [
-              'first_name' => $importData[0],
-              'last_name'  => $importData[1],
-              'email'      => $importData[2],
-              'password'   => Hash::make($importData[3]),
-            ];
-            User::insertData($insertData);
-          }
-
-          return back()->with('success', 'Datos importados.');
-        }else{
-          return back()->with('success', 'Archivo demasiado grande. El archivo debe tener menos de 2 MB.');
         }
-      }else{
-        return back()->with('success', 'Extensión de archivo inválida.');
       }
     }
-    
-    return back()->with('success', "Noooo Importación exitosa !");
-  }
-  
-/* 
-  'first_name' => $value[0],
-  'last_name'  => $value[1],
-  'email'      => $value[2],
-  'password'   => Hash::make($value[3]),
 
-  'first_name' => $value['first_name'],
-  'last_name'  => $value['last_name'],
-  'email'      => $value['email'],
-  'password'   => Hash::make($value['password']),
-   */
+    return back()->with($data["status"], $data["message"]);
+  }
 
   public function simpleExcel(Request $request)
   {
-    /* $this->validate($request, [
+    $this->validate($request, [
     'fichier' => 'bail|required|file|mimes:xlsx'
-    ]); */
+    ]);
 
     /* $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
     $reader  = SimpleExcelReader::create($fichier);
@@ -126,20 +94,53 @@ class UserController extends Controller
     return back()->withMsg("Importation réussie !");
     } else { abort(500); } */
 
-    /* SimpleExcelReader::create($request->fichier, 'xlsx')->getRows()
-    ->each(function (array $rowProperties) {
-    if (!User::where('email', $rowProperties['email'])->exists()) {
-    User::firstOrCreate($rowProperties);
-    }
-    }); */
+    SimpleExcelReader::create($request->fichier, 'xlsx')->getRows()->each(function (array $row) {
+      $checkUser = User::where("email", "=", $row["email"])->first();
 
-    if (!$request->file('fichier'))
+      if (!is_null($checkUser))
+      {
+        $updateUser = User::where("email", "=", $row["email"])->update(
+          [
+            "first_name" => $row['first_name'],
+            "last_name"  => $row['last_name'],
+            "email"      => $row["email"],
+            "password"   => $row["password"],
+          ]
+        );
+
+        if ($updateUser == true)
+        {
+          $data["status"]  = "failed";
+          $data["message"] = "Registros actualizados exitosamente";
+        }
+      } else {
+        $user = User::create(
+          [
+            "first_name" => $row['first_name'],
+            "last_name"  => $row['last_name'],
+            "email"      => $row["email"],
+            "password"   => $row["password"],
+          ]);
+
+        if (!is_null($user))
+        {
+          $data["status"]  = "success";
+          $data["message"] = "Registros importados exitosamente";
+        }
+      }
+      
+      /* if (!User::where('email', $row['email'])->exists()) {
+        User::firstOrCreate($row);
+      } */
+    });
+
+    /* if (!$request->file('fichier'))
     {
       return response()->json('You need to upload an excel file!', 400);
-    }
+    } */
 
     // $data = SimpleExcelReader::create($request->file('fichier'), 'csv')->getRows();
-    SimpleExcelReader::create($request->file('fichier'), 'csv')
+    /* SimpleExcelReader::create($request->file('fichier'), 'csv')
       ->getRows()
       ->each(function (array $row)
     {
@@ -152,7 +153,7 @@ class UserController extends Controller
             'password'   => Hash::make($row['password']),
           ], ['email' => $row['email']]
         );
-      });
+      }); */
     /* $data->each(function ($row) {
     return User::firstOrCreate(
     ['email' => $row['email']],
