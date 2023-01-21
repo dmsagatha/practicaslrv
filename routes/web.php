@@ -52,5 +52,5 @@ Route::controller(UserController::class)->group(function () {
 
 
 
-  Route::post('usuarios/dataImport', 'dataImport')->name('users.dataImport');
+  Route::post('usuarios/datosImport', 'datosImport')->name('users.datosImport');
 });

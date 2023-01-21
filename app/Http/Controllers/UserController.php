@@ -10,10 +10,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\UploadFileRequest;
+use App\Imports\DatosImport;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
+  public function datosImport(Request $request)
+  {
+    $file = $request->file('upload_file');
+
+    // Excel::import(new DatosImport, $file);
+    // (new DatosImport)->import($file); // Importable
+
+    // SkipsOnError,  WithValidation, SkipsOnFailure
+    $import = new DatosImport;
+    $import->import($file);
+    // dd($import->errors());
+
+    return back()->with(['success' => "Registros importados exitosamente."]);
+  }
+
   public function simpleExcel(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
