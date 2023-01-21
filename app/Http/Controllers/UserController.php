@@ -69,6 +69,8 @@ class UserController extends Controller
       report($e);
     }
   }
+
+  // Laravel Excel
   public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
@@ -118,6 +120,7 @@ class UserController extends Controller
     return back()->with(['success' => "Registros importados exitosamente."]);
   }
 
+  // https://github.com/spatie/simple-excel
   public function simpleExcel(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
@@ -211,7 +214,7 @@ class UserController extends Controller
         }
       }
     }
-
+    
     return back()->with($data["status"], $data["message"]);
   }
 }
