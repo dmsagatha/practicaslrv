@@ -11,12 +11,65 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\UploadFileRequest;
-use App\Imports\DatosImport;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
-  public function datosImport(Request $request)
+
+  public function filters()
+  {
+    $users = User::orderBy('last_name')->get();
+
+    return view('admin.users.index-filters', compact('users'));
+  }
+
+  public function index()
+  {
+    // $users = DB::table('users')->select()->get();
+    $users = User::orderBy('last_name')->get();
+
+    return view('admin.users.index', compact('users'));
+  }
+
+  public function search(Request $request)
+  {
+    $names = $request->input('names');
+    $surnames = $request->input('surnames');
+    // $other    = $request->input('other');
+
+    $users = DB::table('users')->select()
+      ->orWhere('first_name', '=', $names)
+      ->orWhere('last_name', '=', $surnames)
+    // ->orWhere('email', 'LIKE','%'.$other.'%')
+      ->get();
+
+    return view('admin.users.index', compact('users'));
+  }
+
+  public function destroy(User $user)
+  {
+    $user->delete();
+
+    return to_route('users.filters');
+  }
+
+  public function multipleDelete(Request $request)
+  {
+    $ids = $request->ids;
+
+    try {
+      User::whereIn('id', explode(",", $ids))->delete();
+
+      return response()->json([
+        'success' => "Registros eliminados satisfactoriamente.",
+      ], 200);
+    }
+    catch (\Exception$e)
+    {
+      report($e);
+    }
+  }
+  public function uploadData(Request $request)
   {
     $file = $request->file('upload_file');
     
@@ -25,17 +78,18 @@ class UserController extends Controller
      * Laravel Excel y hacer la vericiación en el controldor
      */
 
-    // Excel::import(new DatosImport, $file);
-    // (new DatosImport)->import($file); // Importable
+    // Excel::import(new UsersImport, $file);
+    // (new UsersImport)->import($file); // Importable
 
     // SkipsOnError,  WithValidation, SkipsOnFailure
-    /* $import = new DatosImport;
+    /* $import = new UsersImport;
     $import->import($file); */
     // dd($import->errors());
 
+    // DESDE AQUÍ
     // SkipsOnError,  WithValidation, SkipsOnFailure, SkipsOnFailure
     // use Importable, SkipsErrors, SkipsFailures;
-    /* $import = new DatosImport;
+    /* $import = new UsersImport;
     $import->import($file);
 
     if ($import->failures()->isNotEmpty()) {
@@ -54,7 +108,7 @@ class UserController extends Controller
      * UsersImport => Verificar que si el correo electrónico ya existe, 
      * actualizar los datos de lo contrario crearlos
      */
-    $import = new DatosImport;
+    $import = new UsersImport;
     $import->import($file);
 
     if ($import->failures()->isNotEmpty()) {
@@ -159,74 +213,5 @@ class UserController extends Controller
     }
 
     return back()->with($data["status"], $data["message"]);
-  }
-
-  public function uploadData(UploadFileRequest $request)
-  {
-    $file = $request->file('upload_file');
-
-    $import = new UsersImport();
-    $import->import($file);
-
-    /* if ($import->failures()->isNotEmpty())
-    {
-      return back()->withFailures($import->failures());
-    } */
-
-    return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
-  }
-
-  public function filters()
-  {
-    $users = User::orderBy('last_name')->get();
-
-    return view('admin.users.index-filters', compact('users'));
-  }
-
-  public function index()
-  {
-    // $users = DB::table('users')->select()->get();
-    $users = User::orderBy('first_name')->get();
-
-    return view('admin.users.index', compact('users'));
-  }
-
-  public function search(Request $request)
-  {
-    $names = $request->input('names');
-    $surnames = $request->input('surnames');
-    // $other    = $request->input('other');
-
-    $users = DB::table('users')->select()
-      ->orWhere('first_name', '=', $names)
-      ->orWhere('last_name', '=', $surnames)
-    // ->orWhere('email', 'LIKE','%'.$other.'%')
-      ->get();
-
-    return view('admin.users.index', compact('users'));
-  }
-
-  public function destroy(User $user)
-  {
-    $user->delete();
-
-    return to_route('users.filters');
-  }
-
-  public function multipleDelete(Request $request)
-  {
-    $ids = $request->ids;
-
-    try {
-      User::whereIn('id', explode(",", $ids))->delete();
-
-      return response()->json([
-        'success' => "Registros eliminados satisfactoriamente.",
-      ], 200);
-    }
-    catch (\Exception$e)
-    {
-      report($e);
-    }
   }
 }

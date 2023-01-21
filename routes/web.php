@@ -39,18 +39,13 @@ Route::controller(UserController::class)->group(function () {
   Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
 
   // https://docs.laravel-excel.com/
-  Route::post('usuarios/import', 'uploadData')->name('users.uploadData');
+  Route::post('usuarios/importar', 'uploadData')->name('users.uploadData');
 
   // https://github.com/spatie/simple-excel
-  Route::post("simple-excel/import", 'simpleExcel')->name('users.simpleExcel');
+  Route::post("simple-excel/importar", 'simpleExcel')->name('users.simpleExcel');
 
   // https://medium.com/technology-hits/how-to-import-a-csv-excel-file-in-laravel-d50f93b98aa4
   // How to Import CSV File Data in Laravel 6
   // https://programmingfields.com/how-to-import-csv-file-data-in-laravel-6/
-  Route::post("upload-content/import", 'uploadContent')->name('users.uploadContent');
-
-
-
-
-  Route::post('usuarios/datosImport', 'datosImport')->name('users.datosImport');
+  Route::post("upload-content/importar", 'uploadContent')->name('users.uploadContent');
 });
