@@ -69,7 +69,7 @@ class UserController extends Controller
       report($e);
     }
   }
-  public function uploadData(Request $request)
+  public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
     
