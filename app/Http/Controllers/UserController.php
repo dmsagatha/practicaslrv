@@ -143,6 +143,7 @@ class UserController extends Controller
       }
     }); */
 
+    // https://www.csrhymes.com/2021/01/31/testing-a-laravel-console-command.html
     $rows = SimpleExcelReader::create($file, 'xlsx')->getRows();
     $rows->each(function (array $row) {
       User::updateOrCreate(
@@ -214,7 +215,7 @@ class UserController extends Controller
         }
       }
     }
-    
+
     return back()->with($data["status"], $data["message"]);
   }
 }
