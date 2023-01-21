@@ -48,4 +48,9 @@ Route::controller(UserController::class)->group(function () {
   // How to Import CSV File Data in Laravel 6
   // https://programmingfields.com/how-to-import-csv-file-data-in-laravel-6/
   Route::post("upload-content/import", 'uploadContent')->name('users.uploadContent');
+
+
+
+
+  Route::post('usuarios/dataImport', 'dataImport')->name('users.dataImport');
 });

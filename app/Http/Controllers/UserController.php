@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UploadFileRequest;
-use App\Imports\UsersImport;
 use App\Models\User;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Requests\UploadFileRequest;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
@@ -18,38 +19,20 @@ class UserController extends Controller
     $file = $request->file('upload_file');
 
     SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
+      $userData = [
+        "first_name" => $row['first_name'],
+        "last_name"  => $row['last_name'],
+        "email"      => $row["email"],
+        "password"   => $row["password"]
+      ];
+
       $checData = User::where("email", "=", $row["email"])->first();
 
       if (!is_null($checData))
       {
-        $updateUser = User::where("email", "=", $row["email"])->update(
-          [
-            "first_name" => $row['first_name'],
-            "last_name"  => $row['last_name'],
-            "email"      => $row["email"],
-            "password"   => Hash::make($row["password"])
-          ]
-        );
-        
-        if ($updateUser == true)
-        {
-          $data["status"]  = "failed";
-          $data["message"] = "Registros actualizados exitosamente";
-        }
+        User::where("email", "=", $row["email"])->update($userData);
       } else {
-        $user = User::create(
-          [
-            "first_name" => $row['first_name'],
-            "last_name"  => $row['last_name'],
-            "email"      => $row["email"],
-            "password"   => Hash::make($row["password"])
-          ]);
-
-        if (!is_null($user))
-        {
-          $data["status"]  = "success";
-          $data["message"] = "Registros importados exitosamente";
-        }
+        User::create($userData);
       }
     });
 
@@ -122,10 +105,10 @@ class UserController extends Controller
     $import = new UsersImport();
     $import->import($file);
 
-    if ($import->failures()->isNotEmpty())
+    /* if ($import->failures()->isNotEmpty())
     {
       return back()->withFailures($import->failures());
-    }
+    } */
 
     return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
   }
