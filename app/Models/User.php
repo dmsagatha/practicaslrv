@@ -28,14 +28,4 @@ class User extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
-
-  public static function insertData($data)
-  {
-    $value = DB::table('users')->where('email', $data['email'])->get();
-    if ($value->count() == 0)
-    {
-      DB::table('users')->insert($data);
-      // DB::table('users')->updateOrInsert($data);
-    }
-  }
 }

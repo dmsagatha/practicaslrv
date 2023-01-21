@@ -13,6 +13,49 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
+  public function simpleExcel(UploadFileRequest $request)
+  {
+    $file = $request->file('upload_file');
+
+    SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
+      $checData = User::where("email", "=", $row["email"])->first();
+
+      if (!is_null($checData))
+      {
+        $updateUser = User::where("email", "=", $row["email"])->update(
+          [
+            "first_name" => $row['first_name'],
+            "last_name"  => $row['last_name'],
+            "email"      => $row["email"],
+            "password"   => Hash::make($row["password"])
+          ]
+        );
+        
+        if ($updateUser == true)
+        {
+          $data["status"]  = "failed";
+          $data["message"] = "Registros actualizados exitosamente";
+        }
+      } else {
+        $user = User::create(
+          [
+            "first_name" => $row['first_name'],
+            "last_name"  => $row['last_name'],
+            "email"      => $row["email"],
+            "password"   => Hash::make($row["password"])
+          ]);
+
+        if (!is_null($user))
+        {
+          $data["status"]  = "success";
+          $data["message"] = "Registros importados exitosamente";
+        }
+      }
+    });
+
+    return back()->with(['success' => "Registros importados exitosamente."]);
+  }
+
   public function uploadContent(Request $request)
   {
     $data = [];
@@ -45,9 +88,9 @@ class UserController extends Controller
           ];
 
           // ----------- Comprobar si el correo electrónico ya existe ----------------
-          $checkUser = User::where("email", "=", $row["email"])->first();
+          $checData = User::where("email", "=", $row["email"])->first();
 
-          if (!is_null($checkUser))
+          if (!is_null($checData))
           {
             $updateUser = User::where("email", "=", $row["email"])->update($userData);
 
@@ -70,103 +113,6 @@ class UserController extends Controller
     }
 
     return back()->with($data["status"], $data["message"]);
-  }
-
-  public function simpleExcel(Request $request)
-  {
-    $this->validate($request, [
-    'fichier' => 'bail|required|file|mimes:xlsx'
-    ]);
-
-    /* $fichier = $request->fichier->move(public_path(), $request->fichier->hashName());
-    $reader  = SimpleExcelReader::create($fichier);
-    //$rows = $reader->getRows();
-    $rows    = $reader->getRows()->filter(function ($ligne) {
-    return filter_var($ligne['email'], FILTER_VALIDATE_EMAIL) === true;
-    });
-
-    $status = User::insert($rows->toArray());
-
-    if ($status) {
-    $reader->close(); // On ferme le $reader
-    unlink($fichier);
-
-    return back()->withMsg("Importation réussie !");
-    } else { abort(500); } */
-
-    SimpleExcelReader::create($request->fichier, 'xlsx')->getRows()->each(function (array $row) {
-      $checkUser = User::where("email", "=", $row["email"])->first();
-
-      if (!is_null($checkUser))
-      {
-        $updateUser = User::where("email", "=", $row["email"])->update(
-          [
-            "first_name" => $row['first_name'],
-            "last_name"  => $row['last_name'],
-            "email"      => $row["email"],
-            "password"   => $row["password"],
-          ]
-        );
-
-        if ($updateUser == true)
-        {
-          $data["status"]  = "failed";
-          $data["message"] = "Registros actualizados exitosamente";
-        }
-      } else {
-        $user = User::create(
-          [
-            "first_name" => $row['first_name'],
-            "last_name"  => $row['last_name'],
-            "email"      => $row["email"],
-            "password"   => $row["password"],
-          ]);
-
-        if (!is_null($user))
-        {
-          $data["status"]  = "success";
-          $data["message"] = "Registros importados exitosamente";
-        }
-      }
-      
-      /* if (!User::where('email', $row['email'])->exists()) {
-        User::firstOrCreate($row);
-      } */
-    });
-
-    /* if (!$request->file('fichier'))
-    {
-      return response()->json('You need to upload an excel file!', 400);
-    } */
-
-    // $data = SimpleExcelReader::create($request->file('fichier'), 'csv')->getRows();
-    /* SimpleExcelReader::create($request->file('fichier'), 'csv')
-      ->getRows()
-      ->each(function (array $row)
-    {
-        // return User::firstWhere('email', $row['email'])->update(
-        return User::upsert(
-          [
-            'email'      => $row['email'],
-            'first_name' => $row['first_name'],
-            'last_name'  => $row['last_name'],
-            'password'   => Hash::make($row['password']),
-          ], ['email' => $row['email']]
-        );
-      }); */
-    /* $data->each(function ($row) {
-    return User::firstOrCreate(
-    ['email' => $row['email']],
-    [
-    'email'      => $row['email'],
-    'first_name' => $row['first_name'],
-    'last_name'  => $row['last_name'],
-    'password'   => Hash::make($row['password'])
-    ]
-    );
-    }); */
-
-    return back()->withMsg("Importation réussie !");
   }
 
   public function uploadData(UploadFileRequest $request)
