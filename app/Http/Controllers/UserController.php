@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr; 
 use App\Models\User;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
@@ -18,14 +19,47 @@ class UserController extends Controller
   public function datosImport(Request $request)
   {
     $file = $request->file('upload_file');
+    
+    /**
+     * Opción 1 - Funciona
+     * Laravel Excel y hacer la vericiación en el controldor
+     */
 
     // Excel::import(new DatosImport, $file);
     // (new DatosImport)->import($file); // Importable
 
     // SkipsOnError,  WithValidation, SkipsOnFailure
+    /* $import = new DatosImport;
+    $import->import($file); */
+    // dd($import->errors());
+
+    // SkipsOnError,  WithValidation, SkipsOnFailure, SkipsOnFailure
+    // use Importable, SkipsErrors, SkipsFailures;
+    /* $import = new DatosImport;
+    $import->import($file);
+
+    if ($import->failures()->isNotEmpty()) {
+      return back()->withFailures($import->failures());
+    }
+    // dd($import->failures());
+
+    collect(head($import))->each(function ($row, $key) {
+      DB::table('users')
+          ->where('email', $row['email'])
+          ->update(Arr::except($row, ['email']));
+    }); */
+
+    /**
+     * Opción 2- Funciona
+     * UsersImport => Verificar que si el correo electrónico ya existe, 
+     * actualizar los datos de lo contrario crearlos
+     */
     $import = new DatosImport;
     $import->import($file);
-    // dd($import->errors());
+
+    if ($import->failures()->isNotEmpty()) {
+      return back()->withFailures($import->failures());
+    }
 
     return back()->with(['success' => "Registros importados exitosamente."]);
   }
@@ -34,12 +68,12 @@ class UserController extends Controller
   {
     $file = $request->file('upload_file');
 
-    SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
+    /* SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
       $userData = [
         "first_name" => $row['first_name'],
         "last_name"  => $row['last_name'],
         "email"      => $row["email"],
-        "password"   => $row["password"]
+        "password"   => Hash::make($row['password'])
       ];
 
       $checData = User::where("email", "=", $row["email"])->first();
@@ -50,6 +84,19 @@ class UserController extends Controller
       } else {
         User::create($userData);
       }
+    }); */
+
+    $rows = SimpleExcelReader::create($file, 'xlsx')->getRows();
+    $rows->each(function (array $row) {
+      User::updateOrCreate(
+        ['email' => $row['email']],
+        [
+          'first_name' => $row['first_name'],
+          'last_name'  => $row['last_name'],
+          'password'   => Hash::make($row['password'])
+        ]
+      );
+      // $this->info("Imported {$row['email']}");
     });
 
     return back()->with(['success' => "Registros importados exitosamente."]);
@@ -131,7 +178,7 @@ class UserController extends Controller
 
   public function filters()
   {
-    $users = User::orderBy('first_name')->get();
+    $users = User::orderBy('last_name')->get();
 
     return view('admin.users.index-filters', compact('users'));
   }

@@ -1,5 +1,5 @@
 @if (session()->has('failures'))
-  <div class="flex items-center justify-center mt-20 px-4 py-4">
+  <div class="flex items-center justify-center px-4 py-4">
     <table class="table">
       <tr>
         <th>Fila</th>

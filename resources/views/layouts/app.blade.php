@@ -119,7 +119,7 @@
             style:    'os',
             selector: 'td:first-child'
           },
-          order: [[1, 'asc']]
+          // order: [[2, 'asc']]
         });
 
         /* $('#reset').click( function (e) {
@@ -150,8 +150,8 @@
       });
     </script>
 
+    {{-- Eliminar un registro --}}
     <script>
-      // Eliminar un registro
       window.deleteConfirm = function(formId) {
         Swal.fire({
           icon: 'warning',
