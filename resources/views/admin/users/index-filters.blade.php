@@ -96,7 +96,7 @@
                 <h4 class="text-md font-bold">Importar SimpleExcel (Con encabezados Xlsx)</h4>
               </div>
               <div>
-                <form action="{{ route('users.dataImport') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('users.uploadData') }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   
                   <div class="py-2 text-sm">
