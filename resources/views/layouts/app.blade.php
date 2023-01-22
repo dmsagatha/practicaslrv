@@ -38,8 +38,16 @@
             <div class="md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
               <nav>
                 <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
-                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">Filtrar | TFoot</a></li>
-                  <li><a class="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">Filtrar | Select tag</a></li>
+                  <li>
+                    <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">
+                      Filtrar | Select tag <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">
+                      Filtrar | TFoot
+                    </a>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -78,7 +86,7 @@
         var DT1 = $('#exampleFilters').DataTable({
           responsive: true,
           lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          pageLength: 10,
+          pageLength: 25,
           processing: true,
           language: {
             url: "{{ asset('plugins/dataTables/Spanish.json') }}"
@@ -111,7 +119,7 @@
             style:    'os',
             selector: 'td:first-child'
           },
-          order: [[1, 'asc']]
+          // order: [[2, 'asc']]
         });
 
         /* $('#reset').click( function (e) {
@@ -142,8 +150,8 @@
       });
     </script>
 
+    {{-- Eliminar un registro --}}
     <script>
-      // Eliminar un registro
       window.deleteConfirm = function(formId) {
         Swal.fire({
           icon: 'warning',

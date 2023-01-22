@@ -5,8 +5,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th class="head">Nombres</th>
             <th class="head">Apellidos</th>
+            <th class="head">Nombres</th>
             <th class="head">Correo Electrónico</th>
             <th class="head">Fecha</th>
           </tr>
@@ -21,8 +21,8 @@
         <tfoot>
           <tr>
             <th></th>
-            <th class="text-center">Nombres</th>
             <th>Apellidos</th>
+            <th class="text-center">Nombres</th>
             <th>Correo Electrónico</th>
             <th>Fecha</th>
           </tr>

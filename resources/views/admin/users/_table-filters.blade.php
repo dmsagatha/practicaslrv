@@ -6,8 +6,8 @@
           <tr>
             <th><input type="checkbox" id="bulk_delete"></th>
             <th>ID</th>
-            <th>Nombres</th>
             <th>Apellidos</th>
+            <th>Nombres</th>
             <th>Correo Electrónico</th>
             <th>Fecha</th>
             <th>Acciones</th>
@@ -20,8 +20,8 @@
                 <input type="checkbox" class="check_item" data-id="{{ $item->id }}">
               </td>
               <td class="text-center">{{ $item->id }}</td>
-              <td>{{ $item->first_name}}</td>
               <td>{{ $item->last_name }}</td>
+              <td>{{ $item->first_name}}</td>
               <td>{{ $item->email }}</td>
               <td class="text-xs text-center">
                 {{ date("Y/m/d", strtotime($item->created_at))}}

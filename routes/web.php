@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 }); */
 
-Route::get('/laravelMix', function () {
+/* Route::get('/laravelMix', function () {
   return view('layouts.app');
-});
+}); */
 
 /**
  * 𝗦𝗼𝗲𝗻𝗴 𝗦𝗼𝘂𝘆 - Search with date range in Laravel MySQL
@@ -29,7 +29,7 @@ Route::controller(UserController::class)->group(function () {
    * http://live.datatables.net/vepedopa/10/edit
    * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
    */
-  Route::get('filtrar-con-select', 'filters')->name('users.filters');
+  Route::get('/', 'filters')->name('users.filters');
 
   /**
    * Eliminación masiva de datos y contador de seleccionados
@@ -37,4 +37,15 @@ Route::controller(UserController::class)->group(function () {
    * https://github.com/mbere250/Laravel-8-Ajax-CRUD-with-Yajra-Datatable
    */
   Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
+
+  // https://docs.laravel-excel.com/
+  Route::post('usuarios/importar', 'uploadData')->name('users.uploadData');
+
+  // https://github.com/spatie/simple-excel
+  Route::post("simple-excel/importar", 'simpleExcel')->name('users.simpleExcel');
+
+  // https://medium.com/technology-hits/how-to-import-a-csv-excel-file-in-laravel-d50f93b98aa4
+  // How to Import CSV File Data in Laravel 6
+  // https://programmingfields.com/how-to-import-csv-file-data-in-laravel-6/
+  Route::post("upload-content/importar", 'uploadContent')->name('users.uploadContent');
 });
