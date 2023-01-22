@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\{Importable, SkipsFailures, SkipsErrors, SkipsOnError, SkipsOnFailure, WithUpserts};
-use Maatwebsite\Excel\Concerns\{WithBatchInserts, WithChunkReading, WithHeadingRow, WithValidation};
+use Maatwebsite\Excel\Concerns\{WithHeadingRow, WithBatchInserts, WithChunkReading, WithValidation};
 
 class UsersImport implements ToModel, 
   WithHeadingRow, 
@@ -55,9 +55,9 @@ class UsersImport implements ToModel,
       "email"      => $row["email"],
       "password"   => Hash::make($row['password'])
     ];
-    $checData = User::where("email", "=", $row["email"])->first();
+    $checkData = User::where("email", "=", $row["email"])->first();
 
-    if (!is_null($checData))
+    if (!is_null($checkData))
     {
       User::where("email", "=", $row["email"])->update($userData);
     } else {

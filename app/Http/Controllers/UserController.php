@@ -133,9 +133,9 @@ class UserController extends Controller
         "password"   => Hash::make($row['password'])
       ];
 
-      $checData = User::where("email", "=", $row["email"])->first();
+      $checkData = User::where("email", "=", $row["email"])->first();
 
-      if (!is_null($checData))
+      if (!is_null($checkData))
       {
         User::where("email", "=", $row["email"])->update($userData);
       } else {
@@ -192,9 +192,9 @@ class UserController extends Controller
           ];
 
           // ----------- Comprobar si el correo electrónico ya existe ----------------
-          $checData = User::where("email", "=", $row["email"])->first();
+          $checkData = User::where("email", "=", $row["email"])->first();
 
-          if (!is_null($checData))
+          if (!is_null($checkData))
           {
             $updateUser = User::where("email", "=", $row["email"])->update($userData);
 
