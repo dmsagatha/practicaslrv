@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
 use App\Models\User;
@@ -59,12 +60,22 @@ class UserController extends Controller
   {
     $image = $request->file('image');
 
-    foreach ($image as $images) {
+    /* foreach ($image as $images) {
       $imagename = uniqid() . "." . $images->getClientOriginalExtension();
       $images->move(storage_path('dropzone'), $imagename);
     }
 
-    return $imagename;
+    return $imagename; */
+
+    if ($request->hasFile(('image'))) {
+      foreach ($image as $images) {
+        $imagename = uniqid() . "-" . time() . "." . $images->getClientOriginalExtension();
+        // $images->move(storage_path('avatars'), $imagename);
+        $images->storeAs('users', $imagename);
+      }
+
+      return $imagename;
+    }
   }
 
   public function removefile(Request $request)
