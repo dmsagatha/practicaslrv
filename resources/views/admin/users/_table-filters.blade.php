@@ -21,6 +21,8 @@
               </td>
               <td class="text-center">{{ $item->id }}</td>
               <td>
+                <img src="{{ URL::to('/assets/users/'. $item->avatar) }}" alt="Image">
+
                 <img class="w-10 h-10 rounded-full" src="{{ $item->image }}" alt="Image" >
 
                 <img src="{{ asset($item->image) }}" alt="{{ asset($item->image) }}"
