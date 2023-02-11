@@ -44,7 +44,7 @@
   <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
   <script type="text/javascript">
-    var newimage = [];
+    let newimage = [];
     Dropzone.autoDiscover = false;
 
     var myDropzone = new Dropzone("#dropzone", {
@@ -56,8 +56,10 @@
       // url:"/dropzonestore",
       parallelUploads: 1,
       uploadMultiple: true,
-      acceptedFiles: '.png,.jpg,.jpeg',
+      // acceptedFiles: '.png,.jpg,.jpeg',
+      acceptedFiles: 'image/*',
       addRemoveLinks: true,
+      paramName: 'image',     // Cambiar 'file' por 'image'
       dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
 
       removedfile: function(file) {

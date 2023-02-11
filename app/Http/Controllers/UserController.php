@@ -52,14 +52,12 @@ class UserController extends Controller
 
     User::create($request->all());
 
-    Session()->flash('statusCode', 'success');
-
     return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
   }
 
   public function dropzonestore(Request $request)
   {
-    $image = $request->file('file');
+    $image = $request->file('image');
 
     foreach ($image as $images) {
       $imagename = uniqid() . "." . $images->getClientOriginalExtension();
