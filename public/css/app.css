@@ -559,6 +559,10 @@ a:hover{
   top: -0.75rem;
 }
 
+.right-2{
+  right: 0.5rem;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -1053,6 +1057,11 @@ a:hover{
 .px-10{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+
+.py-1{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .pt-8{

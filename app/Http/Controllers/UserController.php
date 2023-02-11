@@ -57,6 +57,27 @@ class UserController extends Controller
     return to_route('users.filters');
   }
 
+  public function dropzonestore(Request $request)
+  {
+    $image = $request->file('file');
+
+    foreach ($image as $images) {
+      $imagename = uniqid() . "." . $images->getClientOriginalExtension();
+      $images->move(public_path('dropzone'), $imagename);
+    }
+
+    return $imagename;
+  }
+
+  public function removefile(Request $request)
+  {
+    $image = $request['removeimageName'];
+    $imagepath=public_path('dropzone/');
+    unlink($imagepath.$request['removeimageName']);
+    
+    return $image;
+  }
+
   public function search(Request $request)
   {
     $names    = $request->input('names');

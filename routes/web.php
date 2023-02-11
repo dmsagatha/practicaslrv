@@ -24,6 +24,8 @@ Route::resource('usuarios', UserController::class)
 
 Route::controller(UserController::class)->group(function () {
   Route::post('usuarios/buscar', 'search')->name('users.search');
+  Route::post('/dropzonestore', 'dropzonestore')->name('dropzone.store');
+  Route::post('/removefile', 'removefile')->name('remove.file');
   /**
    * Filtrar con la etiqueta select
    * http://live.datatables.net/vepedopa/10/edit
