@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
  * http://live.datatables.net/hokacefu/3/edit
  * http://live.datatables.net/ruyezofa/1/edit
  */
-Route::get('usuarios',  [UserController::class, 'index'])->name('users.index');
-Route::post('usuarios', [UserController::class, 'search'])->name('users.search');
-Route::delete('usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
+Route::resource('usuarios', UserController::class)
+  ->parameters(['usuarios' => 'user'])
+  ->names('users');
 
 Route::controller(UserController::class)->group(function () {
+  Route::post('usuarios/buscar', 'search')->name('users.search');
   /**
    * Filtrar con la etiqueta select
    * http://live.datatables.net/vepedopa/10/edit

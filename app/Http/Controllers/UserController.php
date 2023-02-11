@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Arr; 
 use App\Models\User;
+use Illuminate\Contracts\Support\Renderable;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -29,6 +30,25 @@ class UserController extends Controller
     $users = User::orderBy('last_name')->get();
 
     return view('admin.users.index', compact('users'));
+  }
+
+  protected function form($view, User $user)
+  {
+    return view($view, ['user' => $user]);
+  }
+
+  public function create(): Renderable
+  {
+    return $this->form('admin.users.createUpdate', new User);
+  }
+  
+  public function store(Request $request)
+  {
+    User::create($request->validated());
+
+    Session()->flash('statusCode', 'success');
+
+    return to_route('admin.users.index')->withStatus('Registro creado satisfactoriamente!');
   }
 
   public function search(Request $request)
@@ -70,7 +90,7 @@ class UserController extends Controller
     }
   }
 
-  // Laravel Excel
+  // Importar datos - Laravel Excel
   public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
@@ -160,6 +180,7 @@ class UserController extends Controller
     return back()->with(['success' => "Registros importados exitosamente."]);
   }
 
+  // Importar datos
   public function uploadContent(Request $request)
   {
     $data = [];
