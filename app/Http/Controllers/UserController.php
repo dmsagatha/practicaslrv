@@ -54,7 +54,7 @@ class UserController extends Controller
 
     Session()->flash('statusCode', 'success');
 
-    return to_route('users.filters');
+    return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
   }
 
   public function dropzonestore(Request $request)
@@ -74,7 +74,7 @@ class UserController extends Controller
     $image = $request['removeimageName'];
     $imagepath=public_path('dropzone/');
     unlink($imagepath.$request['removeimageName']);
-    
+
     return $image;
   }
 

@@ -48,51 +48,50 @@
     Dropzone.autoDiscover = false;
 
     var myDropzone = new Dropzone("#dropzone", {
-        url: '{{ route('dropzone.store') }}',
-        // type='post',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        // url:"/dropzonestore",
-        parallelUploads: 1,
-        uploadMultiple: true,
-        acceptedFiles: '.png,.jpg,.jpeg',
-        addRemoveLinks: true,
-        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
+      url: '{{ route('dropzone.store') }}',
+      // type='post',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      // url:"/dropzonestore",
+      parallelUploads: 1,
+      uploadMultiple: true,
+      acceptedFiles: '.png,.jpg,.jpeg',
+      addRemoveLinks: true,
+      dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
 
-        removedfile: function(file) {
-            var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('remove.file') }}',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    removeimageName: removeimageName
-                },
-                success: function(data) {
-                    console.log(data);
-                    for (var i = 0; i < newimage.length; i++) {
-                        if (newimage[i] === data) {
-                            newimage.splice(i, 1);
-                        }
-                    }
-                    $(".newimage").val(newimage);
-                }
-            });
-            var _ref;
-            return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) :
-                void 0;
-        },
-        success: function(file, response) {
-            console.log(file);
-            newimage.push(response);
-            console.log(newimage);
+      removedfile: function(file) {
+        var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+        $.ajax({
+          type: 'POST',
+          url: '{{ route('remove.file') }}',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            removeimageName: removeimageName
+          },
+          success: function(data) {
+            console.log(data);
+            for (var i = 0; i < newimage.length; i++) {
+              if (newimage[i] === data) {
+                newimage.splice(i, 1);
+              }
+            }
             $(".newimage").val(newimage);
-            $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
-            $(file.previewTemplate).find('.dz-filename span').html(response);
-        }
+          }
+        });
+        var _ref;
+        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+      },
+      success: function(file, response) {
+        console.log(file);
+        newimage.push(response);
+        console.log(newimage);
+        $(".newimage").val(newimage);
+        $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+        $(file.previewTemplate).find('.dz-filename span').html(response);
+      }
     });
   </script>
 @endpush
