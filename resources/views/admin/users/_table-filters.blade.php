@@ -21,7 +21,15 @@
               </td>
               <td class="text-center">{{ $item->id }}</td>
               <td>
-                <img class="w-10 h-10 rounded-full" src="{{ $item->image }}" alt="Image">
+                <img class="w-10 h-10 rounded-full" src="{{ $item->image }}" alt="Image" >
+
+                <img src="{{ asset($item->image) }}" alt="{{ asset($item->image) }}"
+                class="w-12 h-12">
+
+                <img src="{{ empty($item->image) ? asset('storage/users/noavatar.png') : asset('storage/' . $item->image) }}" style="width: 80px;height: 70px" alt="image">
+
+                <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" >
+
                 {{ $item->last_name }}
               </td>
               <td>{{ $item->first_name}}</td>
