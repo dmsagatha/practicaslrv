@@ -61,7 +61,7 @@ class UserController extends Controller
 
     foreach ($image as $images) {
       $imagename = uniqid() . "." . $images->getClientOriginalExtension();
-      $images->move(public_path('dropzone'), $imagename);
+      $images->move(storage_path('dropzone'), $imagename);
     }
 
     return $imagename;
@@ -70,7 +70,7 @@ class UserController extends Controller
   public function removefile(Request $request)
   {
     $image = $request['removeimageName'];
-    $imagepath=public_path('dropzone/');
+    $imagepath=storage_path('dropzone/');
     unlink($imagepath.$request['removeimageName']);
 
     return $image;

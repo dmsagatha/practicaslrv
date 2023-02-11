@@ -20,7 +20,10 @@
                 <input type="checkbox" class="check_item" data-id="{{ $item->id }}">
               </td>
               <td class="text-center">{{ $item->id }}</td>
-              <td>{{ $item->last_name }}</td>
+              <td>
+                <img class="w-10 h-10 rounded-full" src="{{ $item->image }}" alt="Image">
+                {{ $item->last_name }}
+              </td>
               <td>{{ $item->first_name}}</td>
               <td>{{ $item->email }}</td>
               <td class="text-xs text-center">
