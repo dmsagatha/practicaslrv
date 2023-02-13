@@ -54,7 +54,6 @@
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      // url:"/dropzonestore",
       parallelUploads: 1,
       uploadMultiple: true,
       // acceptedFiles: '.png,.jpg,.jpeg',
