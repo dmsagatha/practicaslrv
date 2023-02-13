@@ -43,11 +43,12 @@
 @push('scripts')
   <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
+  {{-- Avatar --}}
   <script type="text/javascript">
     let newimage = [];
     Dropzone.autoDiscover = false;
 
-    var myDropzone = new Dropzone("#dropzone", {
+    let myDropzone = new Dropzone("#dropzone", {
       url: '{{ route('dropzone.store') }}',
       // type='post',
       headers: {

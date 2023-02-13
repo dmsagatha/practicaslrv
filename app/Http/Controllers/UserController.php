@@ -49,14 +49,25 @@ class UserController extends Controller
       'last_name'  => 'required',
       'email'      => 'required|email|unique:users',
       'password'   => 'required',
+      'image'   => 'nullable',
     ]);
 
-    User::create($request->all());
+    // User::create($request->all());
+
+    $user = new User();
+    // dd($request->all());
+
+    $user->first_name = $request['first_name'];
+    $user->last_name = $request['last_name'];
+    $user->email = $request['email'];
+    $user->image = $request['image'];
+    $user->password = Hash::make($request['password']);
+    $user->save();
 
     return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
   }
 
-  public function dropzonestore(Request $request)
+  public function dropzoneStore(Request $request)
   {
     $image = $request->file('image');
 
@@ -70,7 +81,8 @@ class UserController extends Controller
     if ($request->hasFile(('image'))) {
       foreach ($image as $images) {
         $imagename = uniqid() . "-" . time() . "." . $images->getClientOriginalExtension();
-        // $images->move(storage_path('avatars'), $imagename);
+        // $images->move(public_path('users'), $imagename);
+        // $images->move(storage_path('dropzone'), $imagename);
         $images->storeAs('users', $imagename);
       }
 

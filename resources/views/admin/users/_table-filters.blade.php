@@ -6,6 +6,7 @@
           <tr>
             <th><input type="checkbox" id="bulk_delete"></th>
             <th>ID</th>
+            <th>Avatar</th>
             <th>Apellidos</th>
             <th>Nombres</th>
             <th>Correo Electrónico</th>
@@ -20,20 +21,10 @@
                 <input type="checkbox" class="check_item" data-id="{{ $item->id }}">
               </td>
               <td class="text-center">{{ $item->id }}</td>
-              <td>
-                <img src="{{ URL::to('/assets/users/'. $item->avatar) }}" alt="Image">
-
-                <img class="w-10 h-10 rounded-full" src="{{ $item->image }}" alt="Image" >
-
-                <img src="{{ asset($item->image) }}" alt="{{ asset($item->image) }}"
-                class="w-12 h-12">
-
-                <img src="{{ empty($item->image) ? asset('storage/users/noavatar.png') : asset('storage/' . $item->image) }}" style="width: 80px;height: 70px" alt="image">
-
-                <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" >
-
-                {{ $item->last_name }}
+              <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                  <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" />
               </td>
+              <td>{{ $item->last_name}}</td>
               <td>{{ $item->first_name}}</td>
               <td>{{ $item->email }}</td>
               <td class="text-xs text-center">

@@ -52,7 +52,7 @@
   </div>
 </div>
 
-  {{-- Avatar --}}
+{{-- Avatar --}}
 <div class="relative form-group mt-8">
   <div class="dropzone" id="dropzone"></div>
   <input type="hidden" readonly class="newimage" name="image" value="">

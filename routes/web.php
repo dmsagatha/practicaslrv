@@ -24,7 +24,9 @@ Route::resource('usuarios', UserController::class)
 
 Route::controller(UserController::class)->group(function () {
   Route::post('usuarios/buscar', 'search')->name('users.search');
-  Route::post('/dropzonestore', 'dropzonestore')->name('dropzone.store');
+
+  // https://github.com/sahdevpalaniya/Dropzone-laravel/blob/dev/app/Http/Controllers/registration.php
+  Route::post('/dropzonestore', 'dropzoneStore')->name('dropzone.store');
   Route::post('/removefile', 'removefile')->name('remove.file');
   /**
    * Filtrar con la etiqueta select
