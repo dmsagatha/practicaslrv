@@ -59,6 +59,12 @@
       </div>
     @endif
 
+    @if (session()->has('danger'))
+      <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
+        {{ session('danger') }}
+      </div>
+    @endif
+
     @if (isset($errors) && $errors->any())
       @foreach($errors->all() as $error)
         <li>{{ $error }}</li>

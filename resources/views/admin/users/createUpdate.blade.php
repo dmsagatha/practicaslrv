@@ -37,65 +37,11 @@
 @endsection
 
 @push('styles')
-  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+  {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
 @endpush
 
 @push('scripts')
-  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  {{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
 
   {{-- Avatar --}}
-  <script type="text/javascript">
-    let newimage = [];
-    Dropzone.autoDiscover = false;
-
-    let myDropzone = new Dropzone("#dropzone", {
-      url: '{{ route('dropzone.store') }}',
-      // type='post',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      parallelUploads: 1,
-      uploadMultiple: true,
-      // acceptedFiles: '.png,.jpg,.jpeg',
-      acceptedFiles: 'image/*',
-      addRemoveLinks: true,
-      paramName: 'image',     // Cambiar 'file' por 'image'
-	    maxFiles: 1,
-      dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
-      dictRemoveFile:'Quitar',
-
-      removedfile: function(file) {
-        var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
-        $.ajax({
-          type: 'POST',
-          url: '{{ route('remove.file') }}',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: {
-            removeimageName: removeimageName
-          },
-          success: function(data) {
-            console.log(data);
-            for (var i = 0; i < newimage.length; i++) {
-              if (newimage[i] === data) {
-                newimage.splice(i, 1);
-              }
-            }
-            $(".newimage").val(newimage);
-          }
-        });
-        var _ref;
-        return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-      },
-      success: function(file, response) {
-        console.log(file);
-        newimage.push(response);
-        console.log(newimage);
-        $(".newimage").val(newimage);
-        $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
-        $(file.previewTemplate).find('.dz-filename span').html(response);
-      }
-    });
-  </script>
 @endpush

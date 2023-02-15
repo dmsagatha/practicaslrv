@@ -54,6 +54,8 @@
 
 {{-- Avatar --}}
 <div class="relative form-group mt-8">
-  <div class="dropzone" id="dropzone"></div>
-  <input type="hidden" readonly class="newimage" name="image" value="">
+  <label for="image" class="block mb-2 text-sm font-medium text-gray-900">
+    Avatar
+  </label>
+  <input type="file" id="image" name="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded">
 </div>

@@ -16,7 +16,6 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
-
   public function filters()
   {
     $users = User::orderBy('last_name')->get();
@@ -44,59 +43,24 @@ class UserController extends Controller
 
   public function store(Request $request)
   {
-    $this->validate($request, [
-      'first_name' => 'required',
-      'last_name'  => 'required',
-      'email'      => 'required|email|unique:users',
-      'password'   => 'required',
-      'image'      => 'nullable',
-    ]);
+    if ($request->hasFile('image')) {
+      $image     = $request->file('image');
+      $file_name = $image->getClientOriginalName();
+      $folder    = uniqid('user', true);
+      $image->storeAs('users/tmp/' . $folder, $file_name);
 
-    // User::create($request->all());
+      User::create([
+        'first_name' => $request->first_name,
+        'last_name'  => $request->last_name,
+        'email'      => $request->email,
+        'password'   => Hash::make($request['password']),
+        'image'      => $folder . '/' . $file_name
+      ]);
 
-    $user = new User();
-    // dd($request->all());
-
-    $user->first_name = $request['first_name'];
-    $user->last_name = $request['last_name'];
-    $user->email = $request['email'];
-    $user->image = $request['image'];
-    $user->password = Hash::make($request['password']);
-    $user->save();
-
-    return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
-  }
-
-  public function dropzoneStore(Request $request)
-  {
-    $image = $request->file('image');
-
-    /* foreach ($image as $images) {
-      $imagename = uniqid() . "." . $images->getClientOriginalExtension();
-      $images->move(storage_path('dropzone'), $imagename);
+      return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);
     }
 
-    return $imagename; */
-
-    if ($request->hasFile(('image'))) {
-      foreach ($image as $images) {
-        $imagename = uniqid() . "-" . time() . "." . $images->getClientOriginalExtension();
-        // $images->move(public_path('users'), $imagename);
-        // $images->move(storage_path('dropzone'), $imagename);
-        $images->storeAs('users', $imagename);
-      }
-
-      return $imagename;
-    }
-  }
-
-  public function removefile(Request $request)
-  {
-    $image = $request['removeimageName'];
-    $imagepath=storage_path('dropzone/');
-    unlink($imagepath.$request['removeimageName']);
-
-    return $image;
+    return redirect('/')->with(['danger' => "Por favor cargue la imagen."]);
   }
 
   public function search(Request $request)

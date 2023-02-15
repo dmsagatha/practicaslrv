@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
  * http://live.datatables.net/hokacefu/3/edit
  * http://live.datatables.net/ruyezofa/1/edit
  */
+
+// Laravel Upload Files with Filepond | Laravel Tutorial - https://www.youtube.com/watch?v=7bF3L78mIS4&ab_channel=Laraveller
 Route::resource('usuarios', UserController::class)
   ->parameters(['usuarios' => 'user'])
   ->names('users');
