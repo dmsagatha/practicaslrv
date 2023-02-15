@@ -10,7 +10,7 @@
 
     <title>Practicas Laravel - @yield('title')</title>
     
-    {{-- <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"> --}}
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     <link rel="icon" href="{{ url('/favicon.ico') }}">
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">

@@ -22,7 +22,7 @@
               </td>
               <td class="text-center">{{ $item->id }}</td>
               <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                  <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" />
+                <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" />
               </td>
               <td>{{ $item->last_name}}</td>
               <td>{{ $item->first_name}}</td>

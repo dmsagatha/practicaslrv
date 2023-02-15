@@ -49,7 +49,7 @@ class UserController extends Controller
       'last_name'  => 'required',
       'email'      => 'required|email|unique:users',
       'password'   => 'required',
-      'image'   => 'nullable',
+      'image'      => 'nullable',
     ]);
 
     // User::create($request->all());
