@@ -62,6 +62,7 @@
       paramName: 'image',     // Cambiar 'file' por 'image'
 	    maxFiles: 1,
       dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
+      dictRemoveFile:'Quitar',
 
       removedfile: function(file) {
         var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
