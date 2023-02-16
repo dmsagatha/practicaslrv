@@ -37,11 +37,32 @@
 @endsection
 
 @push('styles')
-  {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
+  <link href="https://unpkg.com/filepond/dist/filepond.min.css" rel="stylesheet">
 @endpush
 
 @push('scripts')
-  {{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
+  <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
-  {{-- Avatar --}}
+  <script>
+    // FilePond.setOptions({...en_EN, ...pt_BR});
+    // Obtener una referencia al elemento de entrada del archivo
+    const inputElement = document.querySelector('input[type="file"]');
+
+    // Crear una instancia de FilePond
+    const pond = FilePond.create(inputElement);
+
+    // FilePond.setOptions({ locale: 'es' })
+    FilePond.setOptions({
+      locales: {
+        es: () => import('filepond/locales/es_ES.json'),
+        ru: () => import('filepond/locales/ru_RU.json')
+      },
+      locale: 'es_ES'
+    });
+/* FilePond.setOptions({
+  locale: es_ES
+}); */
+/* import es_ES from 'filepond/locale/es-es.js';
+FilePond.setOptions(es_ES); */
+  </script>
 @endpush
