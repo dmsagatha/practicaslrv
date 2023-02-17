@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Arr; 
-use App\Models\User;
+use App\Models\{User, TemporaryFile};
 use App\Imports\UsersImport;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +32,7 @@ class UserController extends Controller
 
   public function store(Request $request)
   {
-    $request->validate([
+    /* $request->validate([
       'first_name' => 'required',
       'last_name'  => 'required',
       'email'      => 'required|email|unique:users',
@@ -44,7 +46,73 @@ class UserController extends Controller
       'password'   => Hash::make($request['password']),
     ]);
 
-    return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
+    return to_route('users.filters')->with(['success' => "Registros creado exitosamente."]); */
+
+    $validator = Validator::make($request->all(), [
+      'first_name' => 'required',
+      'last_name'  => 'required',
+      'email'      => 'required|email|unique:users',
+      'password'   => 'required'
+    ]);
+
+    $temp_file = TemporaryFile::where('folder', $request->image)->first();
+
+    if ($validator->fails() && $temp_file) {
+      Storage::deleteDirectory('users/tmp/'.$temp_file->folder);
+      $temp_file->delete();
+
+      return to_route('users.create')->withErrors($validator)->withInput();
+    } elseif ($validator->fails()) {
+      return to_route('users.create')->withErrors($validator)->withInput();
+    }
+
+    if ($temp_file) {
+      Storage::copy('public/users/tmp/'.$temp_file->folder.'/'.$temp_file->file, 'public/users/'.$temp_file->folder.'/'.$temp_file->file);
+
+      User::create([
+        'first_name' => $request->first_name,
+        'last_name'  => $request->last_name,
+        'email'      => $request->email,
+        'password'   => Hash::make($request['password']),
+      ]);
+      Storage::deleteDirectory('public/users/tmp/'.$temp_file->folder);
+      $temp_file->delete();
+    } else {
+      return to_route('users.create')->with('error', 'Por favor subir una imagen');
+    }
+
+    return to_route('users.filters')->with(['success' => "Registros creado exitosamente."]); 
+  }
+
+  public function tempUplaod(Request $request)
+  {
+    if ($request->hasFile('image')) {
+      $image = $request->file('image');
+      $file_name = $image->getClientOriginalName();
+      $folder = uniqid('user', true);
+      $image->storeAs('public/users/tmp/'.$folder, $file_name);
+
+      TemporaryFile::create([
+          'folder' => $folder,
+          'file' => $file_name,
+      ]);
+
+      return $folder;
+    } else {
+        return '';
+    }
+  }
+
+  public function tempDelete()
+  {
+    $temp_file = TemporaryFile::where('folder', request()->getContent())->first();
+
+    if ($temp_file) {
+      Storage::deleteDirectory('public/users/tmp/'.$temp_file->folder);
+      $temp_file->delete();
+
+      return response('');
+    }
   }
 
   public function index()
