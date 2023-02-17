@@ -10,8 +10,8 @@
 
     <title>Practicas Laravel - @yield('title')</title>
     
-    {{-- <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"> --}}
-    <link rel="icon" href="{{ url('/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    {{-- <link rel="icon" href="{{ url('/favicon.ico') }}"> --}}
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
@@ -40,7 +40,7 @@
                 <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
                   <li>
                     <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">
-                      Filtrar | Select tag <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
+                      Filtrar | Select tag
                     </a>
                   </li>
                   <li>

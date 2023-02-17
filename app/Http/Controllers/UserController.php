@@ -23,6 +23,30 @@ class UserController extends Controller
     return view('admin.users.index-filters', compact('users'));
   }
 
+  public function create()
+  {
+    return view('admin.users.create');
+  }
+
+  public function store(Request $request)
+  {
+    $request->validate([
+      'first_name' => 'required',
+      'last_name'  => 'required',
+      'email'      => 'required|email|unique:users',
+      'password'   => 'required'
+    ]);
+
+    User::create([
+      'first_name' => $request->first_name,
+      'last_name'  => $request->last_name,
+      'email'      => $request->email,
+      'password'   => Hash::make($request['password']),
+    ]);
+
+    return to_route('users.filters')->with(['success' => "Registros importados exitosamente."]);
+  }
+
   public function index()
   {
     // $users = DB::table('users')->select()->get();

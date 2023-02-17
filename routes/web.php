@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Route;
   return view('layouts.app');
 }); */
 
+Route::get('usuarios/crear', [UserController::class, 'create'])->name('users.create');
+Route::post('usuarios/store', [UserController::class, 'store'])->name('users.store');
+Route::post('/temp-upload', [UserController::class, 'tempUplaod']);
+Route::delete('/temp-delete', [UserController::class, 'tempDelete']);
+
 /**
  * 𝗦𝗼𝗲𝗻𝗴 𝗦𝗼𝘂𝘆 - Search with date range in Laravel MySQL
  * https://www.youtube.com/@SoengSouy/videos

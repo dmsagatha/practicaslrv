@@ -38,6 +38,12 @@
         </div>
       </div>
 
+      <div class="float-right flex px-4 py-3 space-x-2 text-green-800">
+        <a href="{{ route('users.create') }}" class="inline-flex items-center justify-center px-3 py-2 bg-slate-300 border border-transparent rounded-md font-semibold text-sm text-red-600 tracking-widest hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 active:bg-indigo-600 disabled:opacity-25 transition">
+          <i class="fa-solid fa-plus"></i>
+        </a>
+      </div>
+
       @if ($message = Session::get('success'))
         <div class="bg-green-100 mb-4 px-5 py-4 w-full border-l-4 border-green-500">
           <div class="flex justify-between">
@@ -58,9 +64,16 @@
         @endforeach
       @endif
 
+      @if (session()->has('error'))
+        <div class="alert alert-danger" role="alert">
+          {{ session()->get('error') }}
+        </div>
+      @endif
+
       @include('partials.failures')
       
       <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
+        <!-- Filtros -->
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
             <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid ">
