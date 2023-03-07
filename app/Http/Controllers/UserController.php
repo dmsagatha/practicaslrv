@@ -16,7 +16,6 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
-
   public function filters()
   {
     $users = User::orderBy('last_name')->get();
