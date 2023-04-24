@@ -6,6 +6,7 @@
   <div class="flow-root w-full mx-auto shadow bg-white rounded mt-24 py-6 px-4">
     <div class="flex justify-between py-2">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Filtrar con la Etiqueta Select <br><br>
         Total Usuarios <span class="px-1 rounded-md bg-blue-500 text-white">{{ count($users) }}</span>
       </h2>
       
