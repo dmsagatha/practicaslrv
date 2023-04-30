@@ -17,7 +17,13 @@ class User extends Authenticatable
     'last_name',
     'email',
     'password',
+    'area_id',
   ];
+
+  public function area()
+  {
+    return $this->belongsTo(Area::class);
+  }
 
   protected $hidden = [
     'password',
