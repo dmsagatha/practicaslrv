@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
+use App\Models\Area;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
@@ -16,11 +17,27 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
-  public function filters()
+  public function indexFilters(Request $request)
   {
-    $users = User::orderBy('last_name')->get();
-
-    return view('admin.users.index-filters', compact('users'));
+    /**
+     * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
+     */
+    $users = User::orderBy('last_name')
+      ->with('area')
+      ->when($request->area, function ($query) use ($request) {
+          $query->where('area_id', $request->area);
+        })
+      ->when($request->last_name, function ($query) use ($request) {
+          $query->where('last_name', $request->last_name);
+        })
+      ->get();
+    
+    return view('admin.users.indexFilters', [
+      'users'   => $users,
+      'areas'   => Area::orderBy('name')->get(),
+      'last_names' => User::orderBy('last_name')->pluck('last_name')->unique(),
+      'request' => $request,
+    ]);
   }
 
   public function index()
