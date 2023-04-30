@@ -39,9 +39,9 @@
               <nav>
                 <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
                   <li>
-                    <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">
+                    <a class="{{ request()->routeIs('users.filters') ? 'text-green-600':'' }} inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">
                       Filtrar | Select tag
-                      {{-- @if (count($users))
+                     {{--  @if (count($users))
                         Filtrar | Select tag <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
                       @else
                         Filtrar | Select tag
@@ -51,6 +51,11 @@
                   <li>
                     <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">
                       Filtrar | TFoot
+                      {{-- @if (count($users))
+                        Filtrar | TFoot <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
+                      @else
+                        Filtrar | TFoot
+                      @endif --}}
                     </a>
                   </li>
                 </ul>

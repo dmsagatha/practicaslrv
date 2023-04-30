@@ -78,9 +78,7 @@ $(document).ready(function() {
         var select = $('<select><option value="">Seleccionar</option></select>')
           .appendTo($(column.footer()).empty())
           .on('change', function () {
-            var val = $.fn.dataTable.util.escapeRegex(
-              $(this).val()
-            );
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
             column
               .search( val ? '^'+val+'$' : '', true, false )
