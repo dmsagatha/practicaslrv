@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
@@ -10,51 +9,38 @@ use App\Models\Area;
 use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
 {
+  /**
+   * Laravel Advance Filter | Multiple Filters | whereHas filter using Relatioship | Eloquent Query
+   * https://www.youtube.com/watch?v=PBSiQLPQDmQ&ab_channel=CodeOnline
+   */
   public function indexFilters(Request $request)
   {
-    /**
-     * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
-     */
-    /* $users = User::orderBy('last_name')
-      ->with('area')
-      ->when($request->area, function ($query) use ($request) {
-          $query->where('area_id', $request->area);
-        })
-      ->when($request->last_name, function ($query) use ($request) {
-          $query->where('last_name', $request->last_name);
-        })
-      ->get();
-    
-    return view('admin.users.indexFilters', [
-      'users'   => $users,
-      'areas'   => Area::orderBy('name')->get(),
-      'last_names' => User::orderBy('last_name')->pluck('last_name')->unique(),
-      'request' => $request,
-    ]); */
-    
-    $areas = Area::orderBy('name')->get();
-    $last_names = User::orderBy('last_name')->pluck('last_name')->unique();
     $query = User::query()->with('area')->orderBy('last_name');
 
     if (isset($request->names) && $request->names !== null) {
       $query->where('last_name', $request->names);
     }
 
-    /* if (isset($request->area) && $request->area !== null) {
-      $query->where('area_id', $request->area);
-    } */
+    if (isset($request->area) && $request->area !== null) {
+      $query->whereHas('area', function($q) use ($request) {
+        $q->where('name', $request->area);
+      });
+    }
 
     $users = $query->get();
-
-    return view('admin.users.indexFilters', compact('users', 'areas', 'last_names'));
+    
+    return view('admin.users.indexFilters', [
+      'users'   => $users,
+      'areas'   => Area::orderBy('name')->get(),
+      'last_names' => User::orderBy('last_name')->pluck('last_name')->unique(),
+      'request' => $request,
+    ]);
   }
 
   public function index()

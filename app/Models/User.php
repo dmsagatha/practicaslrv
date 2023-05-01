@@ -36,12 +36,20 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
   
-  public function scopeFilter(Builder $query, Request $request): Builder
+  /**
+   * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
+   */
+  public function scopeList()
   {
-    return $query->when($request->has('last_name'), function ($query) use ($request) {
-        return $query->where('last_name', $request->last_name);
-    })->when($request->has('area_id'), function ($query) use ($request) {
-        return $query->where('area_id', $request->area_id);
-    });
+    return User::query()
+      ->with('area')
+      ->when(request()->area, function ($query) {
+          $query->where('area_id', request('area'));
+        })
+      ->when(request()->last_name, function ($query) {
+          $query->where('last_name', request('last_name'));
+        })
+      ->orderBy('last_name')
+      ->get();
   }
 }

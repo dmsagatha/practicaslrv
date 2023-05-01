@@ -78,7 +78,7 @@
             <select id="field1" name="area" class='block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
               <option value="">Seleccionar</option>
               @foreach($areas as $item)
-                <option value="{{ $item->id }}" {{ (Request::get('area') == $item) ? 'selected' : '' }}>
+                <option value="{{ $item->name }}" {{ (Request::get('area') == $item) ? 'selected' : '' }}>
                   {{ $item->name }}
                 </option>
               @endforeach
