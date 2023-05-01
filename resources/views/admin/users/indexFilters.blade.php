@@ -90,7 +90,7 @@
             <select name="names" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
               <option value="">Seleccionar</option>
               @foreach ($last_names as $item)
-              <option value="{{ $item }}" {{ (Request::get('last_name') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+              <option value="{{ $item }}" {{ (Request::get('names') == $item) ? 'selected' : '' }}>{{ $item }}</option>
               @endforeach
             </select>
           </div>

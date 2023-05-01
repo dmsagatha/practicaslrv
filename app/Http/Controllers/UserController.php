@@ -42,7 +42,7 @@ class UserController extends Controller
     
     $areas = Area::orderBy('name')->get();
     $last_names = User::orderBy('last_name')->pluck('last_name')->unique();
-    $query = User::query()->with('area');
+    $query = User::query()->with('area')->orderBy('last_name');
 
     if (isset($request->names) && $request->names !== null) {
       $query->where('last_name', $request->names);
