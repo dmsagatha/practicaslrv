@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
@@ -22,7 +23,7 @@ class UserController extends Controller
     /**
      * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
      */
-    $users = User::orderBy('last_name')
+    /* $users = User::orderBy('last_name')
       ->with('area')
       ->when($request->area, function ($query) use ($request) {
           $query->where('area_id', $request->area);
@@ -37,7 +38,23 @@ class UserController extends Controller
       'areas'   => Area::orderBy('name')->get(),
       'last_names' => User::orderBy('last_name')->pluck('last_name')->unique(),
       'request' => $request,
-    ]);
+    ]); */
+    
+    $areas = Area::orderBy('name')->get();
+    $last_names = User::orderBy('last_name')->pluck('last_name')->unique();
+    $query = User::query()->with('area');
+
+    if (isset($request->names) && $request->names !== null) {
+      $query->where('last_name', $request->names);
+    }
+
+    /* if (isset($request->area) && $request->area !== null) {
+      $query->where('area_id', $request->area);
+    } */
+
+    $users = $query->get();
+
+    return view('admin.users.indexFilters', compact('users', 'areas', 'last_names'));
   }
 
   public function index()

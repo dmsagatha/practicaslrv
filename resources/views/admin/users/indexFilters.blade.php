@@ -87,7 +87,7 @@
 
           <div class="mr-3">
             <label for="" class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Apellidos</label>
-            <select name="last_name" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <select name="names" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
               <option value="">Seleccionar</option>
               @foreach ($last_names as $item)
               <option value="{{ $item }}" {{ (Request::get('last_name') == $item) ? 'selected' : '' }}>{{ $item }}</option>
