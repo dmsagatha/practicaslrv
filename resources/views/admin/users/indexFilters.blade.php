@@ -10,7 +10,7 @@
         Total Usuarios <span class="px-1 rounded-md bg-blue-500 text-white">{{ count($users) }}</span>
       </h2>
       
-      <!-- Dropdown toggle -->
+      <!-- Dropdown toggle lateral -->
       <div x-data="{ isOpen: false }" class="relative inline-block">
         <!-- Dropdown toggle button -->
         <button @click="isOpen = !isOpen" class="relative z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md dark:text-white focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:bg-gray-800 focus:outline-none">
@@ -40,7 +40,8 @@
       </div>
     </div>
 
-    <div class="float-right flex px-4 py-3 space-x-2 text-green-800">
+    <!-- CREATE -->
+    <div class="float-right flex px-4 py-1 space-x-2 text-green-800">
       <a href="{{ route('users.create') }}" class="inline-flex items-center justify-center px-3 py-2 bg-slate-300 border border-transparent rounded-md font-semibold text-sm text-red-600 tracking-widest hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 active:bg-indigo-600 disabled:opacity-25 transition">
         <i class="fa-solid fa-plus"></i>
       </a>
@@ -67,7 +68,56 @@
     @endif
 
     @include('partials.failures')
-    
+
+    <!-- FILTERS -->
+    <div class="flow-root w-full mx-auto shadow px-4 bg-white rounded sm:px-1 sm:py-2">
+      <div class="float-left flex px-4 py-1 space-x-2 text-green-800">
+        <form action="{{ route('users.filters') }}" id="filterRecords" class="inline-flex" method="get">
+          {{-- FIRST OPTION --}}
+          {{-- <div class="mr-3">
+            <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Areas</label>
+            <select id="field1" name="area" class='block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
+              <option value="">Seleccionar</option>
+              @foreach($areas as $item)
+                <option value="{{ $item->name }}" {{ (Request::get('area') == $item->name) ? 'selected' : '' }}>
+                  {{ $item->name }}
+                </option>
+              @endforeach
+            </select>
+          </div> --}}
+          
+          {{-- SECOND OPTION --}}
+          <div class="mr-3">
+            <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Areas</label>
+            <select id="field1" name="area" class='block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
+              <option value="">Seleccionar</option>
+              @foreach($areas as $item)
+                <option value="{{ $item->id }}" {{ (Request::get('area') == $item->id) ? 'selected' : '' }}>
+                  {{ $item->name }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+          
+          <div class="mr-3">
+            <label for="" class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Apellidos</label>
+            <select id="field2" name="lastName" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="">Seleccionar</option>
+              @foreach ($last_names as $item)
+              <option value="{{ $item }}" {{ (Request::get('lastName') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="row mr-3">
+            <button type="reset" onclick="window.location.href='{{ route('users.filters') }}'" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
+              <i class="fa-solid fa-filter mr-2"></i>Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <div class="py-10">
       <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
         <div class="col-span-6 sm:col-span-3">
@@ -97,7 +147,7 @@
           </div>
         </div>
 
-        <!-- Importar -->
+        <!-- IMPORT -->
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
             <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
@@ -128,7 +178,7 @@
           </div>
         </div>
         
-        <!-- Eliminación masiva -->
+        <!-- MASS DELETE -->
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative mt-4">
             <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}" style="display:none;">
@@ -142,7 +192,7 @@
     <!-- Listado de datos -->
     <div class="px-4 py-4 pb-10">
       @if ($users->count())
-        @include('admin.users._table-filters')
+        @include('admin.users._tableFilters')
       @else
         <div class="flex justify-center px-4 mt-14 mb-2 space-x-4 text-blue-600">
           No hay registros creados
@@ -151,8 +201,6 @@
     </div>
   </div>
 @endsection
-
-{{-- Banco de Occidente - Tuplus - estefani gonzalez 20/12/2022 --}}
 
 @push('scripts')
   {{-- Filtrar por columnas --}}

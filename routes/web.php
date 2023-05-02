@@ -33,7 +33,7 @@ Route::controller(UserController::class)->group(function () {
    * http://live.datatables.net/vepedopa/10/edit
    * Restablecer filtros - https://jsfiddle.net/2k07k5ba/2/ 
    */
-  Route::get('/', 'filters')->name('users.filters');
+  Route::get('/', 'indexFilters')->name('users.filters');
 
   /**
    * Eliminación masiva de datos y contador de seleccionados
