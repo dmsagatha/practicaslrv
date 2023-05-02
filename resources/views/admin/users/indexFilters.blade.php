@@ -72,37 +72,45 @@
     <!-- FILTERS -->
     <div class="flow-root w-full mx-auto shadow px-4 bg-white rounded sm:px-1 sm:py-2">
       <div class="float-left flex px-4 py-1 space-x-2 text-green-800">
-        <form action="{{ route('users.filters') }}" method="get" class="inline-flex">
+        <form action="{{ route('users.filters') }}" id="filterRecords" class="inline-flex" method="get">
+          {{-- FIRST OPTION --}}
+          {{-- <div class="mr-3">
+            <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Areas</label>
+            <select id="field1" name="area" class='block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
+              <option value="">Seleccionar</option>
+              @foreach($areas as $item)
+                <option value="{{ $item->name }}" {{ (Request::get('area') == $item->name) ? 'selected' : '' }}>
+                  {{ $item->name }}
+                </option>
+              @endforeach
+            </select>
+          </div> --}}
+          
+          {{-- SECOND OPTION --}}
           <div class="mr-3">
             <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Areas</label>
             <select id="field1" name="area" class='block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500'>
               <option value="">Seleccionar</option>
               @foreach($areas as $item)
-                <option value="{{ $item->name }}" {{ (Request::get('area') == $item) ? 'selected' : '' }}>
+                <option value="{{ $item->id }}" {{ (Request::get('area') == $item->id) ? 'selected' : '' }}>
                   {{ $item->name }}
                 </option>
               @endforeach
             </select>
           </div>
-
+          
           <div class="mr-3">
             <label for="" class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Apellidos</label>
-            <select name="names" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <select id="field2" name="lastName" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
               <option value="">Seleccionar</option>
               @foreach ($last_names as $item)
-              <option value="{{ $item }}" {{ (Request::get('names') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+              <option value="{{ $item }}" {{ (Request::get('lastName') == $item) ? 'selected' : '' }}>{{ $item }}</option>
               @endforeach
             </select>
           </div>
 
           <div class="row mr-3">
-            <button type='submit' class='inline-flex items-center justify-center px-6 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition' name="search">
-              <i class="fa-solid fa-magnifying-glass mr-2"></i>Filtrar
-            </button>
-          </div>
-
-          <div class="row mr-3">
-            <button type="reset" onclick="window.location.href='{{ route('users.filters') }}'" class="inline-flex items-center justify-center px-2 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition">
+            <button type="reset" onclick="window.location.href='{{ route('users.filters') }}'" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
               <i class="fa-solid fa-filter mr-2"></i>Limpiar
             </button>
           </div>
@@ -193,8 +201,6 @@
     </div>
   </div>
 @endsection
-
-{{-- Banco de Occidente - Tuplus - estefani gonzalez 20/12/2022 --}}
 
 @push('scripts')
   {{-- Filtrar por columnas --}}

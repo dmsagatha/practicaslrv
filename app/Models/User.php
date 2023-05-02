@@ -38,6 +38,9 @@ class User extends Authenticatable
   
   /**
    * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
+   * 
+   * Laravel Advance Filter | Multiple Filters | whereHas filter using Relatioship | Eloquent Query
+   * https://www.youtube.com/watch?v=PBSiQLPQDmQ&ab_channel=CodeOnline
    */
   public function scopeList()
   {
@@ -46,8 +49,8 @@ class User extends Authenticatable
       ->when(request()->area, function ($query) {
           $query->where('area_id', request('area'));
         })
-      ->when(request()->last_name, function ($query) {
-          $query->where('last_name', request('last_name'));
+      ->when(request()->lastName, function ($query) {
+          $query->where('last_name', request('lastName'));
         })
       ->orderBy('last_name')
       ->get();

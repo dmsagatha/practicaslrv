@@ -16,15 +16,18 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 class UserController extends Controller
 {
   /**
+   * Filtros - https://www.laravelia.com/post/dropdown-search-filter-in-laravel-10-tutorial
+   * 
    * Laravel Advance Filter | Multiple Filters | whereHas filter using Relatioship | Eloquent Query
    * https://www.youtube.com/watch?v=PBSiQLPQDmQ&ab_channel=CodeOnline
    */
   public function indexFilters(Request $request)
   {
-    $query = User::query()->with('area')->orderBy('last_name');
+    // FIRST OPTION
+    /* $query = User::query()->with('area')->orderBy('last_name');
 
-    if (isset($request->names) && $request->names !== null) {
-      $query->where('last_name', $request->names);
+    if (isset($request->lastName) && $request->lastName !== null) {
+      $query->where('last_name', $request->lastName);
     }
 
     if (isset($request->area) && $request->area !== null) {
@@ -33,13 +36,16 @@ class UserController extends Controller
       });
     }
 
-    $users = $query->get();
+    $users = $query->get(); */
+
+    // SECOND OPTION
+    $users = User::list();
     
     return view('admin.users.indexFilters', [
-      'users'   => $users,
-      'areas'   => Area::orderBy('name')->get(),
+      'users'      => $users,
+      'areas'      => Area::orderBy('name')->get(),
       'last_names' => User::orderBy('last_name')->pluck('last_name')->unique(),
-      'request' => $request,
+      'request'    => $request,
     ]);
   }
 

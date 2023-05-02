@@ -160,7 +160,26 @@
       });
     </script>
 
-    {{-- Eliminar un registro --}}
+    {{-- Apply filters automatically --}}
+    <script>
+      document.getElementById('field1').onchange = function() {
+        var valorSeleccionado = this.value;
+        console.log(valorSeleccionado);
+        document.getElementById('filterRecords').submit();
+      }
+
+      document.getElementById('field2').onchange = function() {
+        document.getElementById('filterRecords').submit();
+      }
+      
+      if (document.getElementById('field3')) {
+        document.getElementById('field3').onchange = function() {
+          document.getElementById('filterRecords').submit();
+        }
+      }
+    </script>
+
+    {{-- Delete a record --}}
     <script>
       window.deleteConfirm = function(formId) {
         Swal.fire({
