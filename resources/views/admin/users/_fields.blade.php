@@ -24,6 +24,26 @@
       @enderror
     </div>
   </div>
+  
+  <div class="col-span-6 sm:col-span-3 md:col-span-2">
+    <div class="relative form-group mt-8">
+      <label for="area_id" class="block text-sm font-medium text-gray-900 dark:text-gray-400 requerid">Area</label>
+      <select name="area_id" id="area_id" class="block w-full border-b-2 border-slate-300 bg-transparent text-gray-800 sm:text-xs placeholder-transparent focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <option selected value="">Seleccionar</option>
+        @foreach($areas as $area)
+          <option value="{{ $area->id }}" @selected(old('area_id', $user->area_id) == $area->id)>
+            {{ $area->name }}
+          </option>
+        @endforeach
+      </select>
+      
+      @error("area_id")
+        <p class="text-sm text-red-600">
+          {{ $message }}
+        </p>
+      @enderror
+    </div>
+  </div>
 
   <div class="col-span-6 sm:col-span-3 md:col-span-2">
     <div class="relative form-group mt-8">

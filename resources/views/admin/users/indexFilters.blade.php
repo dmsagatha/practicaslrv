@@ -205,4 +205,23 @@
 @push('scripts')
   {{-- Filtrar por columnas --}}
   <script src="{{ URL::to('js/export.js') }}"></script>
+  
+  {{-- Apply filters automatically --}}
+  <script>
+    document.getElementById('field1').onchange = function() {
+      var valorSeleccionado = this.value;
+      console.log(valorSeleccionado);
+      document.getElementById('filterRecords').submit();
+    }
+
+    document.getElementById('field2').onchange = function() {
+      document.getElementById('filterRecords').submit();
+    }
+    
+    if (document.getElementById('field3')) {
+      document.getElementById('field3').onchange = function() {
+        document.getElementById('filterRecords').submit();
+      }
+    }
+  </script>
 @endpush

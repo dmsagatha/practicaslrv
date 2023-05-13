@@ -23,7 +23,7 @@
               </td>
               <td class="text-center">{{ $item->id }}</td>
               <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                <img src="{{ asset('storage/users/'. $item->image) }}" class="w-10 h-10 rounded-full" />
+                <img src="{{ isset($item->image) ? asset('storage/users/'.$item->image) : asset('storage/noavatar.png') }}" class="w-10 h-10 rounded-full" alt="{{ ($item->first_name) }}" />
               </td>
               <td>{{ $item->last_name}}</td>
               <td>{{ $item->first_name}}</td>
