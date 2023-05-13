@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
+use App\Models\{User, Area};
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
-use App\Models\Area;
-use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,7 +57,10 @@ class UserController extends Controller
 
   protected function form($view, User $user)
   {
-    return view($view, ['user' => $user]);
+    return view($view, [
+      'user'  => $user,
+      'areas' => Area::orderBy('name')->get()
+    ]);
   }
 
   public function create(): Renderable
@@ -75,6 +76,7 @@ class UserController extends Controller
       'email'      => 'required|email|unique:users',
       'password'   => 'required',
       'image'      => 'nullable',
+      'area_id'    => 'required|exists:areas,id',
     ]);
 
     // User::create($request->all());
@@ -83,10 +85,11 @@ class UserController extends Controller
     // dd($request->all());
 
     $user->first_name = $request['first_name'];
-    $user->last_name = $request['last_name'];
-    $user->email = $request['email'];
-    $user->image = $request['image'];
-    $user->password = Hash::make($request['password']);
+    $user->last_name  = $request['last_name'];
+    $user->email      = $request['email'];
+    $user->image      = $request['image'];
+    $user->password   = Hash::make($request['password']);
+    $user->area_id    = $request['area_id'];
     $user->save();
 
     return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
@@ -96,18 +99,11 @@ class UserController extends Controller
   {
     $image = $request->file('image');
 
-    /* foreach ($image as $images) {
-      $imagename = uniqid() . "." . $images->getClientOriginalExtension();
-      $images->move(storage_path('dropzone'), $imagename);
-    }
-
-    return $imagename; */
-
     if ($request->hasFile(('image'))) {
       foreach ($image as $images) {
         $imagename = uniqid() . "-" . time() . "." . $images->getClientOriginalExtension();
         // $images->move(public_path('users'), $imagename);
-        // $images->move(storage_path('dropzone'), $imagename);
+        // $images->move(storage_path('users'), $imagename);
         $images->storeAs('users', $imagename);
       }
 

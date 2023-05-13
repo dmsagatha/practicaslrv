@@ -3,9 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +22,15 @@ class User extends Authenticatable
 
   public function area()
   {
-    return $this->belongsTo(Area::class);
+    return $this->belongsTo(Area::class, 'area_id');
+  }
+
+  /**
+   * Ordenar globalmente
+   */
+  protected static function booted()
+  {
+    static::addGlobalScope(fn ($query) => $query->orderBy('first_name'));
   }
 
   protected $hidden = [

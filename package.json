@@ -1,27 +1,20 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "@tailwindcss/forms": "^0.5.3",
-        "alpinejs": "^3.10.5",
-        "autoprefixer": "^10.4.8",
-        "axios": "^0.27",
-        "browser-sync": "^2.27.10",
-        "browser-sync-webpack-plugin": "^2.3.0",
-        "laravel-mix": "^6.0.49",
-        "lodash": "^4.17.19",
-        "postcss": "^8.4.16",
-        "tailwindcss": "^3.1.8"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.2.0"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "alpinejs": "^3.12.1",
+    "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
+    "laravel-vite-plugin": "^0.7.6",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.3.5"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0"
+  },
+  "type": "module"
 }

@@ -11,9 +11,9 @@
     <title>Practicas Laravel - @yield('title')</title>
     
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
-    <link rel="icon" href="{{ url('/favicon.ico') }}">
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
@@ -22,9 +22,6 @@
     <link rel="stylesheet" href="{{ asset('css/styleApp.css') }}">
 
     @stack('styles')
-
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -158,25 +155,6 @@
           DT1.search($("#field2").val()).draw();
         });
       });
-    </script>
-
-    {{-- Apply filters automatically --}}
-    <script>
-      document.getElementById('field1').onchange = function() {
-        var valorSeleccionado = this.value;
-        console.log(valorSeleccionado);
-        document.getElementById('filterRecords').submit();
-      }
-
-      document.getElementById('field2').onchange = function() {
-        document.getElementById('filterRecords').submit();
-      }
-      
-      if (document.getElementById('field3')) {
-        document.getElementById('field3').onchange = function() {
-          document.getElementById('filterRecords').submit();
-        }
-      }
     </script>
 
     {{-- Delete a record --}}
