@@ -4,11 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   a {
     @apply text-blue-600 hover:text-blue-800 visited:text-purple-600
   }
-}
+} */
 
 .table {
   @apply table-auto border border-b border-gray-300 divide-y divide-gray-300 font-light overflow-hidden;
