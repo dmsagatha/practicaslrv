@@ -3,3 +3,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  a {
+    @apply text-blue-600 hover:text-blue-800 visited:text-purple-600
+  }
+}
+
+.table {
+  @apply table-auto border border-b border-gray-300 divide-y divide-gray-300 font-light overflow-hidden;
+}
+
+.table thead {
+  @apply bg-blue-500 text-gray-50 text-xs text-center uppercase font-bold leading-4 tracking-wider;
+}
+
+.table thead tr {
+  @apply align-middle;
+}
+
+.table thead tr th {
+  @apply py-2;
+}
+
+.table tbody {
+  @apply bg-white divide-y divide-gray-300;
+}
+
+.table tbody tr {
+  @apply text-slate-900 text-sm hover:bg-gray-200;
+}
+
+.table tbody tr td {
+  @apply px-4 py-2;
+}
+
+.table tfoot tr th {
+  @apply text-center;
+}
