@@ -43,7 +43,8 @@ Route::controller(UserController::class)->group(function () {
   Route::post('usuarios/multipleDelete', 'multipleDelete')->name('users.multipleDelete');
 
   // https://docs.laravel-excel.com/
-  Route::post('usuarios/importar', 'uploadData')->name('users.uploadData');
+  // Route::post('usuarios/importar', 'uploadData')->name('users.uploadData');
+  Route::post('usuarios/importar', 'importUsers')->name('users.uploadData');
 
   // https://github.com/spatie/simple-excel
   Route::post("simple-excel/importar", 'simpleExcel')->name('users.simpleExcel');

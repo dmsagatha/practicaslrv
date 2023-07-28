@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
     //     'name' => 'Test User',
     //     'email' => 'test@example.com',
     // ]);
+    
     $areas = Area::pluck('id')->all();
     
-    for ($i = 0; $i < 500; $i++) {
+    /* for ($i = 0; $i < 500; $i++) {
       User::create([
         'first_name'        => fake()->firstName(),
         'last_name'         => fake()->lastName(),
@@ -37,6 +38,6 @@ class DatabaseSeeder extends Seeder
         'remember_token'    => Str::random(10),
         'area_id'           => fake()->randomElement($areas),
       ]);
-    }
+    } */
   }
 }

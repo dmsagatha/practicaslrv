@@ -42,7 +42,7 @@
 
     <!-- CREATE -->
     <div class="float-right flex px-4 py-1 space-x-2 text-green-800">
-      <a href="{{ route('users.create') }}" class="inline-flex items-center justify-center px-3 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-sm text-white tracking-widest hover:bg-sky-700 focus:outline-none focus:border-sky-700 focus:ring focus:ring-sky-200 active:bg-sky-600 disabled:opacity-25 transition">
+      <a href="{{ route('users.create') }}" class="inline-flex items-center justify-center px-3 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-sm text-white tracking-widest hover:bg-sky-700 focus:outline-none focus:border-sky-700 focus:ring focus:ring-sky-200 active:bg-sky-600 disabled:opacity-25 transition" title="crear">
         <i class="fa-solid fa-plus"></i>
       </a>
     </div>
@@ -120,6 +120,7 @@
 
     <div class="py-10">
       <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
+        <!-- FILTERS -->
         <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
             <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid ">
@@ -152,7 +153,11 @@
           <div class="group relative">
             <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
               <div class="flex justify-between items-center">
-                <h4 class="text-md font-bold">Importar SimpleExcel (Con encabezados Xlsx)</h4>
+                <h4 class="text-md font-bold">
+                  Importar Laravel Excel Csv (Con encabezados ) - 
+                  <span>public/ImportData/users.csv</span>
+                </h4>
+                
               </div>
               <div>
                 <form action="{{ route('users.uploadData') }}" method="POST" enctype="multipart/form-data">
