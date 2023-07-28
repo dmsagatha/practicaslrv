@@ -62,7 +62,7 @@
       addRemoveLinks: true,
       paramName: 'image',     // Cambiar 'file' por 'image'
 	    maxFiles: 1,
-      dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el(los) documento(s)<h3>",
+      dictDefaultMessage: "<h3 class='sbold'>Arrastre y suelte su avatar aquí o haga clic para cargar el(los) documento(s)<h3>",
       dictRemoveFile:'Quitar',
 
       removedfile: function(file) {

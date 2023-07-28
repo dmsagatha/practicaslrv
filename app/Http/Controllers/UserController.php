@@ -163,42 +163,7 @@ class UserController extends Controller
   public function uploadData(UploadFileRequest $request)
   {
     $file = $request->file('upload_file');
-
-    /**
-     * Opción 1 - Funciona
-     * Laravel Excel y hacer la vericiación en el controldor
-     */
-
-    // Excel::import(new UsersImport, $file);
-    // (new UsersImport)->import($file); // Importable
-
-    // SkipsOnError,  WithValidation, SkipsOnFailure
-    /* $import = new UsersImport;
-    $import->import($file); */
-    // dd($import->errors());
-
-    // DESDE AQUÍ
-    // SkipsOnError,  WithValidation, SkipsOnFailure, SkipsOnFailure
-    // use Importable, SkipsErrors, SkipsFailures;
-    /* $import = new UsersImport;
-    $import->import($file);
-
-    if ($import->failures()->isNotEmpty()) {
-    return back()->withFailures($import->failures());
-    }
-    // dd($import->failures());
-
-    collect(head($import))->each(function ($row, $key) {
-    DB::table('users')
-    ->where('email', $row['email'])
-    ->update(Arr::except($row, ['email']));
-    }); */
-
-    /**
-     * Opción 2- Funciona
-     * UsersImport => Verificar que si el correo electrónico ya existe,
-     * actualizar los datos de lo contrario crearlos
-     */
+    
     $import = new UsersImport;
     $import->import($file);
 
@@ -311,5 +276,46 @@ class UserController extends Controller
     }
 
     return back()->with($data["status"], $data["message"]);
+  }
+
+  // Importar Usuarios
+  public function importUsers(UploadFileRequest $request)
+  {
+    $arrays = collect(array_map('str_getcsv', file($request->file('upload_file')->getRealPath())));
+    
+    $headerRow = $arrays->shift();
+    
+    foreach ($arrays as $array)
+    {
+      $array = array_combine($headerRow, $array);
+      
+      User::updateOrCreate(
+        ['email' => $array['email']],
+        [
+          'first_name' => $array['first_name'],
+          'last_name'  => $array['last_name'],
+          'email'      => $array['email'],
+          'password'   => Hash::make($array['password']),
+          'area_id' 	 => $this->getAreaId($array['area']),
+        ]
+      );
+    }
+
+    return back()->with(['success' => "Registros importados exitosamente."]);
+  }
+
+  public function getAreaId($areaName)
+  {
+    $area = Area::whereName($areaName)->first();
+    
+    if ($area) {
+      return $area->id;
+    }
+    
+    $area = new Area();
+    $area->name = $areaName;
+		$area->save();
+
+    return $area->id;
   }
 }
