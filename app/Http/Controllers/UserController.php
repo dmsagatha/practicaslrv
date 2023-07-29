@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\{User, Area};
 use App\Http\Requests\UploadFileRequest;
 use App\Imports\UsersImport;
+use App\Mail\UserMail;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UserController extends Controller
@@ -158,62 +160,74 @@ class UserController extends Controller
       report($e);
     }
   }
-
-  // Importar datos - Laravel Excel
-  public function uploadData(UploadFileRequest $request)
+  
+  /**
+   * Importar Usuarios: Si la Area no existe, se crea -> getAreaId()
+   */
+  public function importUsers(UploadFileRequest $request)
   {
-    $file = $request->file('upload_file');
+    $arrays = collect(array_map('str_getcsv', file($request->file('upload_file')->getRealPath())));
     
-    $import = new UsersImport;
-    $import->import($file);
-
-    if ($import->failures()->isNotEmpty())
+    $headerRow = $arrays->shift();
+    
+    foreach ($arrays as $array)
     {
-      return back()->withFailures($import->failures());
+      $array = array_combine($headerRow, $array);
+      
+      User::updateOrCreate(
+        ['email' => $array['email']],
+        [
+          'first_name' => $array['first_name'],
+          'last_name'  => $array['last_name'],
+          'email'      => $array['email'],
+          'password'   => Hash::make($array['password']),
+          'area_id' 	 => $this->getAreaId($array['area']),
+        ]
+      );
     }
 
     return back()->with(['success' => "Registros importados exitosamente."]);
   }
 
-  // https://github.com/spatie/simple-excel
-  public function simpleExcel(UploadFileRequest $request)
+  public function getAreaId($areaName)
   {
-    $file = $request->file('upload_file');
-
-    /* SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
-    $userData = [
-    "first_name" => $row['first_name'],
-    "last_name"  => $row['last_name'],
-    "email"      => $row["email"],
-    "password"   => Hash::make($row['password'])
-    ];
-
-    $checkData = User::where("email", "=", $row["email"])->first();
-
-    if (!is_null($checkData))
-    {
-    User::where("email", "=", $row["email"])->update($userData);
-    } else {
-    User::create($userData);
+    $area = Area::whereName($areaName)->first();
+    
+    if ($area) {
+      return $area->id;
     }
-    }); */
+    
+    $area = new Area();
+    $area->name = $areaName;
+		$area->save();
 
-    // https://www.csrhymes.com/2021/01/31/testing-a-laravel-console-command.html
-    $rows = SimpleExcelReader::create($file, 'xlsx')->getRows();
-    $rows->each(function (array $row)
-    {
-      User::updateOrCreate(
-        ['email' => $row['email']],
-        [
-          'first_name' => $row['first_name'],
-          'last_name'  => $row['last_name'],
-          'password'   => Hash::make($row['password']),
-        ]
-      );
-      // $this->info("Imported {$row['email']}");
-    });
+    return $area->id;
+  }
 
-    return back()->with(['success' => "Registros importados exitosamente."]);
+  public function sendMail(Request $request)
+  {
+    $users = User::whereIn('id', $request->ids)->get();
+
+    if ($users->count() > 0) {
+      foreach($users as $key => $value) {
+        if (!empty($value->email)) {
+          $to = [
+            [
+              'email' => $value->email, 
+              'name'  => $value->first_name,
+            ]
+          ];
+          $details = [
+            'subject' => 'Envío de correos masivos',
+          ];
+
+          // Mail::to($value->email)->send(new UserMail($details));
+          Mail::to($to)->send(new UserMail($details, $value));
+        }
+      }
+    }
+
+    return response()->json(['Enviados']);
   }
 
   // Importar datos
@@ -278,44 +292,60 @@ class UserController extends Controller
     return back()->with($data["status"], $data["message"]);
   }
 
-  // Importar Usuarios
-  public function importUsers(UploadFileRequest $request)
+  // Importar datos - Laravel Excel
+  public function uploadData(UploadFileRequest $request)
   {
-    $arrays = collect(array_map('str_getcsv', file($request->file('upload_file')->getRealPath())));
+    $file = $request->file('upload_file');
     
-    $headerRow = $arrays->shift();
-    
-    foreach ($arrays as $array)
+    $import = new UsersImport;
+    $import->import($file);
+
+    if ($import->failures()->isNotEmpty())
     {
-      $array = array_combine($headerRow, $array);
-      
-      User::updateOrCreate(
-        ['email' => $array['email']],
-        [
-          'first_name' => $array['first_name'],
-          'last_name'  => $array['last_name'],
-          'email'      => $array['email'],
-          'password'   => Hash::make($array['password']),
-          'area_id' 	 => $this->getAreaId($array['area']),
-        ]
-      );
+      return back()->withFailures($import->failures());
     }
 
     return back()->with(['success' => "Registros importados exitosamente."]);
   }
 
-  public function getAreaId($areaName)
+  // https://github.com/spatie/simple-excel
+  public function simpleExcel(UploadFileRequest $request)
   {
-    $area = Area::whereName($areaName)->first();
-    
-    if ($area) {
-      return $area->id;
-    }
-    
-    $area = new Area();
-    $area->name = $areaName;
-		$area->save();
+    $file = $request->file('upload_file');
 
-    return $area->id;
+    /* SimpleExcelReader::create($file, 'xlsx')->getRows()->each(function (array $row) {
+    $userData = [
+    "first_name" => $row['first_name'],
+    "last_name"  => $row['last_name'],
+    "email"      => $row["email"],
+    "password"   => Hash::make($row['password'])
+    ];
+
+    $checkData = User::where("email", "=", $row["email"])->first();
+
+    if (!is_null($checkData))
+    {
+    User::where("email", "=", $row["email"])->update($userData);
+    } else {
+    User::create($userData);
+    }
+    }); */
+
+    // https://www.csrhymes.com/2021/01/31/testing-a-laravel-console-command.html
+    $rows = SimpleExcelReader::create($file, 'xlsx')->getRows();
+    $rows->each(function (array $row)
+    {
+      User::updateOrCreate(
+        ['email' => $row['email']],
+        [
+          'first_name' => $row['first_name'],
+          'last_name'  => $row['last_name'],
+          'password'   => Hash::make($row['password']),
+        ]
+      );
+      // $this->info("Imported {$row['email']}");
+    });
+
+    return back()->with(['success' => "Registros importados exitosamente."]);
   }
 }
