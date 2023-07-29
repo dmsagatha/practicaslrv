@@ -69,8 +69,8 @@
 
     @include('partials.failures')
 
-    <!-- FILTERS -->
     <div class="flow-root w-full mx-auto shadow px-4 bg-white rounded sm:px-1 sm:py-2">
+      <!-- FILTERS -->
       <div class="float-left flex px-4 py-1 space-x-2 text-green-800">
         <form action="{{ route('users.filters') }}" id="filterRecords" class="inline-flex" method="get">
           {{-- FIRST OPTION --}}
@@ -115,6 +115,21 @@
             </button>
           </div>
         </form>
+      </div>
+
+      <!-- SEND EMAILS -->
+      <div class="float-right flex px-4 py-3 space-x-2 text-green-800">
+        <div class="col-span-4 sm:col-span-3">
+          <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition send-mail" disabled>
+            <i class="fa-solid fa fa-envelope mr-2"></i>Enviar correos
+          </button>
+          <div class="flex items-center my-3 p-4 text-sm text-green-800 rounded-lg bg-green-50 success-mail" style="display: none;">
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Correos enviados!.</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -179,19 +194,6 @@
                   </div>
                 </form>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SEND EMAILS -->
-        <div class="col-span-4 sm:col-span-3">
-          <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition send-mail" disabled>
-            <i class="fa-solid fa fa-envelope mr-2"></i>Enviar correos
-          </button>
-          <div class="flex items-center my-3 p-4 text-sm text-green-800 rounded-lg bg-green-50 success-mail" style="display: none;">
-            <span class="sr-only">Info</span>
-            <div>
-              <span class="font-medium">Correos enviados satisfactoriamente!.</span>
             </div>
           </div>
         </div>

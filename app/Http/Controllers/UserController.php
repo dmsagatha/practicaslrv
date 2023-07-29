@@ -94,7 +94,7 @@ class UserController extends Controller
     $user->area_id    = $request['area_id'];
     $user->save();
 
-    return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);;
+    return to_route('users.filters')->with(['success' => "Registro creado exitosamente."]);
   }
 
   public function dropzoneStore(Request $request)
@@ -227,7 +227,13 @@ class UserController extends Controller
       }
     }
 
-    return response()->json(['Enviados']);
+    $data = [
+      'success' => true
+    ];
+
+    return response()->json($data);
+
+    // return response()->json(['Enviados']);
   }
 
   // Importar datos
