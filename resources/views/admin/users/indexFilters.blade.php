@@ -69,8 +69,8 @@
 
     @include('partials.failures')
 
-    <!-- FILTERS -->
     <div class="flow-root w-full mx-auto shadow px-4 bg-white rounded sm:px-1 sm:py-2">
+      <!-- FILTERS -->
       <div class="float-left flex px-4 py-1 space-x-2 text-green-800">
         <form action="{{ route('users.filters') }}" id="filterRecords" class="inline-flex" method="get">
           {{-- FIRST OPTION --}}
@@ -116,12 +116,27 @@
           </div>
         </form>
       </div>
+
+      <!-- SEND EMAILS -->
+      <div class="float-right flex px-4 py-3 space-x-2 text-green-800">
+        <div class="col-span-4 sm:col-span-3">
+          <button type="submit" class="inline-flex items-center justify-center px-2 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition send-mail" disabled>
+            <i class="fa-solid fa fa-envelope mr-2"></i>Enviar correos
+          </button>
+          <div class="flex items-center my-3 p-4 text-sm text-green-800 rounded-lg bg-green-50 success-mail" style="display: none;">
+            <span class="sr-only">Info</span>
+            <div>
+              <span class="font-medium">Correos enviados!.</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="py-10">
+    <div class="py-10 inline-flex">
       <div class="grid grid-cols-6 gap-x-10 gap-y-8 px-10">
         <!-- FILTERS -->
-        <div class="col-span-6 sm:col-span-3">
+        {{-- <div class="col-span-6 sm:col-span-3">
           <div class="group relative">
             <label class="block py-2 text-sm font-medium text-gray-900 dark:text-gray-400 requerid ">
               Nombres
@@ -146,10 +161,10 @@
               @endforeach
             </select>
           </div>
-        </div>
+        </div> --}}
 
         <!-- IMPORT -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-4 sm:col-span-3">
           <div class="group relative">
             <div class="bg-gray-50 py-2 px-3 rounded shadow-xl text-gray-800">
               <div class="flex justify-between items-center">
@@ -182,9 +197,9 @@
             </div>
           </div>
         </div>
-        
+          
         <!-- MASS DELETE -->
-        <div class="col-span-6 sm:col-span-3">
+        <div class="col-span-4 sm:col-span-3">
           <div class="group relative mt-4">
             <button type="submit" id="delete_records" class="inline-flex items-center justify-center px-2 py-2 bg-red-600 border border-transparent rounded-md font-medium text-sm text-white hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring-4 focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" data-route="{{ route('users.multipleDelete') }}" style="display:none;">
               <i class="fa-solid fa-trash-alt mr-1"></i>Eliminar seleccionados (<span class="rows_selected" id="select_count"></span>)
@@ -228,5 +243,54 @@
         document.getElementById('filterRecords').submit();
       }
     }
+  </script>
+
+  <script>
+    $('.user-all').change(function (e) {
+      var value = $('.user-all:checked').val();
+      if (value == 1) {
+        $('input[name="ckeck_user"]').prop('checked',true);
+        $('.send-mail').removeAttr('disabled');
+      } else {
+        $('input[name="ckeck_user"]').prop('checked',false);
+        $('.send-mail').attr('disabled','disabled');
+      }
+    });  
+
+    $("input[name='ckeck_user']").change(function () {
+      if ($("input[name='ckeck_user']:checked").length > 0) {
+        $('.send-mail').removeAttr('disabled');
+      } else {
+        $('.send-mail').attr('disabled','disabled');
+      }
+     });
+
+    $('.send-mail').click(function (e) {
+      e.preventDefault();
+      var ids = [];
+
+      $.each($('input[name="ckeck_user"]:checked'),function() {
+        ids.push($(this).data('id'));
+      });
+
+      if (ids != '') {
+        $(this).attr("disabled", true);
+        $(this).html('<i class="fa fa-spinner fa-spin"></i> Enviar correos');
+
+        $.ajax({
+          url: '{{ route('send.mail') }}',
+          type: 'POST',
+          data: {
+            _token:$('meta[name="csrf-token"]').attr('content'), 
+            ids:ids
+          },
+          success: function (data) {
+            $('.success-mail').css('display','block');
+            $('.send-mail').attr("disabled", false);
+            $('.send-mail').html('<i class="fa fa-envelope"></i> Enviar correos');
+          }
+        });
+      }
+    });
   </script>
 @endpush

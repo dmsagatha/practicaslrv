@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,7 +93,7 @@
         var DT1 = $('#exampleFilters').DataTable({
           responsive: true,
           lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Todos"]],
-          pageLength: 25,
+          pageLength: 10,
           processing: true,
           language: {
             url: "{{ asset('plugins/dataTables/Spanish.json') }}"

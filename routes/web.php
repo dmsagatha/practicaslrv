@@ -53,4 +53,8 @@ Route::controller(UserController::class)->group(function () {
   // How to Import CSV File Data in Laravel 6
   // https://programmingfields.com/how-to-import-csv-file-data-in-laravel-6/
   Route::post("upload-content/importar", 'uploadContent')->name('users.uploadContent');
+
+  // Enviar correo electrónico a múltiples usuarios
+  // https://www.nicesnippets.com/blog/laravel-send-email-to-multiple-user
+  Route::post('enviarCorreo', 'sendMail')->name('send.mail');
 });

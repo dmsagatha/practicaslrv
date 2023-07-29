@@ -5,6 +5,7 @@
         <thead>
           <tr>
             <th><input type="checkbox" id="bulk_delete"></th>
+            <th><input type="checkbox" value="1" name="user-all" class="user-all"></th>
             <th>ID</th>
             <th>Avatar</th>
             <th>Apellidos</th>
@@ -20,6 +21,9 @@
             <tr id="tr_{{ $item->id }}">
               <td>
                 <input type="checkbox" class="check_item" data-id="{{ $item->id }}">
+              </td>
+              <td>
+                <input type="checkbox" class="ckeck_user" name="ckeck_user" data-id="{{ $item->id }}" value="1">
               </td>
               <td class="text-center">{{ $item->id }}</td>
               <td scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
