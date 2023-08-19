@@ -38,11 +38,11 @@
             <div class="text-gray-700 font-semibold ml-2">Laravel 10</div>
           </a>
           <!-- Navbar Toggle Button -->
-          <button type="button" class="text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+          <button type="button" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="w-5 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           </button>
           <!-- Nav Links-->
-          <ul class="flex text-gray-700 text-base" id="navbar-main">
+          <ul class="hidden md:flex text-gray-700 text-base" id="navbar-main">
             <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
               <a href="#">Laravel</a>
             </li>
