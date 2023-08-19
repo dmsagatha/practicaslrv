@@ -27,40 +27,40 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   </head>
-  <body class="h-screen bg-gray-100 font-sans antialiased leading-normal tracking-normal">
-    <div class="w-full text-gray-900">
-      <div class="flex flex-col">
-        <nav class="flex justify-around py-2 bg-white/80 backdrop-blur-md shadow-md w-full fixed top-0 left-0 right-0 z-10">
-          <div class="w-full flex items-center justify-between mt-0 px-6 py-2">
-            <div class="md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
-              <nav>
-                <ul class="md:flex items-center justify-between text-base text-blue-600 pt-4 md:pt-0">
-                  <li>
-                    <a class="{{ request()->routeIs('users.filters') ? 'text-green-600':'' }} inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.filters') }}">
-                      Filtrar | Select tag
-                     {{--  @if (count($users))
-                        Filtrar | Select tag <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
-                      @else
-                        Filtrar | Select tag
-                      @endif --}}
-                    </a>
-                  </li>
-                  <li>
-                    <a class="inline-block no-underline hover:text-black font-semibold text-lg py-2 px-4 lg:-ml-2" href="{{ route('users.index') }}">
-                      Filtrar | TFoot
-                      {{-- @if (count($users))
-                        Filtrar | TFoot <span class=" text-red-300 font-semibold">({{ count($users) }})</span>
-                      @else
-                        Filtrar | TFoot
-                      @endif --}}
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </nav>
-      </div>
+  <body class="h-screen font-sans antialiased leading-normal tracking-normal">
+    <div class="w-full">
+      <nav class="border-b bg-slate-300">
+        <div class="container max-w-screen-lg mx-auto flex justify-between h-14">
+          <!-- Brand-->
+          <a href="#" class="flex items-center cursor-pointer hover:bg-purple-50 px-2 ml-3">
+            <!-- Logo-->
+            <div class="flex justify-center w-10 h-10 rounded bg-purple-400 text-white font-bold  text-3xl pt-0.5">L</div>
+            <div class="text-gray-700 font-semibold ml-2">Laravel 10</div>
+          </a>
+          <!-- Navbar Toggle Button -->
+          <button type="button" class="text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+            <svg class="w-5 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+          <!-- Nav Links-->
+          <ul class="flex text-gray-700 text-base" id="navbar-main">
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+              <a href="#">Laravel</a>
+            </li>
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+              <a href="#">Livewire</a>
+            </li>
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+              <a href="#">TailwindCSS</a>
+            </li>
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+              <a href="#">Alpine JS</a>
+            </li>
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+              <a href="#">About</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
       
       <div class="container-fluid">
         @yield('content')
