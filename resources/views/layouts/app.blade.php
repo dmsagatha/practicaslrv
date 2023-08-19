@@ -29,7 +29,7 @@
   </head>
   <body class="h-screen font-sans antialiased leading-normal tracking-normal">
     <div class="w-full">
-      <nav class="border-b bg-slate-300">
+      <nav class="border-b bg-slate-300 sticky top-0 z-30">
         <div x-data="{showMenu : false}" class="container max-w-screen-lg mx-auto flex justify-between h-14">
           <!-- Brand-->
           <a href="#" class="flex items-center cursor-pointer hover:bg-purple-50 px-2 ml-3">
