@@ -30,7 +30,7 @@
   <body class="h-screen font-sans antialiased leading-normal tracking-normal">
     <div class="w-full">
       <nav class="border-b bg-slate-300">
-        <div class="container max-w-screen-lg mx-auto flex justify-between h-14">
+        <div x-data="{showMenu : false}" class="container max-w-screen-lg mx-auto flex justify-between h-14">
           <!-- Brand-->
           <a href="#" class="flex items-center cursor-pointer hover:bg-purple-50 px-2 ml-3">
             <!-- Logo-->
@@ -38,24 +38,27 @@
             <div class="text-gray-700 font-semibold ml-2">Laravel 10</div>
           </a>
           <!-- Navbar Toggle Button -->
-          <button type="button" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+          <button @click="showMenu = !showMenu" type="button" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
             <svg class="w-5 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           </button>
           <!-- Nav Links-->
-          <ul class="hidden md:flex text-gray-700 text-base" id="navbar-main">
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+          <ul class="md:flex text-gray-700 text-base mr-3 origin-top" 
+            {{-- :class="showMenu ? 'block absolute top-14 border-b bg-white w-full p-2' : 'hidden'" --}}
+            :class="{ 'block absolute top-14 border-b bg-white w-full p-2': showMenu, 'hidden': !showMenu }"
+            id="navbar-main" x-cloak>
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
               <a href="#">Laravel</a>
             </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
               <a href="#">Livewire</a>
             </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
               <a href="#">TailwindCSS</a>
             </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
               <a href="#">Alpine JS</a>
             </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800">
+            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
               <a href="#">About</a>
             </li>
           </ul>
