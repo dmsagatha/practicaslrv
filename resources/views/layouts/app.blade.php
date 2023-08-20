@@ -27,15 +27,15 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   </head>
-  <body class="h-screen font-sans antialiased leading-normal tracking-normal">
-    <div class="w-full">
+  <body class="h-screen bg-gray-100 font-sans antialiased leading-normal tracking-normal">
+    <div class="w-full text-gray-800">
       <nav class="border-b bg-slate-300 sticky top-0 z-30">
         <div x-data="{showMenu : false}" class="container max-w-screen-lg mx-auto flex justify-between h-14">
           <!-- Brand-->
           <a href="#" class="flex items-center cursor-pointer hover:bg-purple-50 px-2 ml-3">
             <!-- Logo-->
             <div class="flex justify-center w-10 h-10 rounded bg-purple-400 text-white font-bold  text-3xl pt-0.5">L</div>
-            <div class="text-gray-700 font-semibold ml-2">Laravel 10</div>
+            <div class="text-gray-700 font-semibold ml-2">Practicas</div>
           </a>
           <!-- Navbar Toggle Button -->
           <button @click="showMenu = !showMenu" type="button" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:bg-slate-100 my-2 mr-5" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,19 +47,10 @@
             :class="{ 'block absolute top-14 border-b bg-white w-full p-2': showMenu, 'hidden': !showMenu }"
             id="navbar-main" x-cloak>
             <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
-              <a href="#">Laravel</a>
+              <a href="{{ route('users.filters') }}" class="">Filtrar | Select tag</a>
             </li>
             <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
-              <a href="#">Livewire</a>
-            </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
-              <a href="#">TailwindCSS</a>
-            </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
-              <a href="#">Alpine JS</a>
-            </li>
-            <li class="flex items-center px-3 cursor-pointer hover:bg-purple-50 hover:text-gray-800" :class="showMenu && 'py-1'">
-              <a href="#">About</a>
+              <a href="{{ route('users.index') }}">Filtrar | TFoot</a>
             </li>
           </ul>
         </div>
